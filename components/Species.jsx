@@ -16,15 +16,21 @@ let width = Dimensions.get("window").width;
 
 export default Species = ({ navigation }) => {
   const [birds, setBirds] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchBirds = async () => {
       try {
+        setLoading(true);
         const querySnapshot = await getDocs(collection(db, "birds"));
         const birdData = querySnapshot.docs.map((doc) => doc.data());
         setBirds(birdData);
       } catch (error) {
-        console.log(error);
+        console.log("Error fetching birds:", error.message);
+        setError("Failed to fetch bird data. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -35,6 +41,8 @@ export default Species = ({ navigation }) => {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.header}>All Birds</Text>
+        {loading && <Text>Loading...Please Wait</Text>}
+
         <Button title="Go Back" onPress={() => navigation.goBack()} />
 
         {birds.map((bird, index) => (
@@ -49,6 +57,7 @@ export default Species = ({ navigation }) => {
           </View>
         ))}
       </View>
+      {error && <Text>{error}</Text>}
     </ScrollView>
   );
 };
