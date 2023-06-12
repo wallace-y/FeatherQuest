@@ -37,17 +37,8 @@ useEffect(() => {
   }).catch((err) => {
     console.log(err);
   })
-  .then(() => {
-    pullBirdData()
-    .then((data) =>{
-      console.log(data);
-    })
-
-  })
-
 }, [])
 
-  console.log(user.profilePic);
   return (
     <View style={styles.container}>
       <Nav />

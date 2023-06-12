@@ -1,7 +1,15 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, getDocs, setDoc, doc, Firestore } from "firebase/firestore";
+// import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  Firestore,
+} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -14,16 +22,27 @@ const firebaseConfig = {
   storageBucket: "feather-quest-15e50.appspot.com",
   messagingSenderId: "896175282066",
   appId: "1:896175282066:web:911a685d20cfdef3a2934b",
-  measurementId: "G-621Y1M7ZYH"
+  measurementId: "G-621Y1M7ZYH",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
+// const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-export { db, auth, app };
+export { db, auth };
 
+// async function getData(){
+//     const arr = [];
+//     await getDocs(collection(db, "birds"))
+//     .then((data) => {
+//     data.forEach(bird=>{
+//     console.log(bird._document.data.value.mapValue.fields);
+//     arr.push(bird._document.data.value.mapValue.fields);
+//     })
+// });
+// return arr;
+// }
 
 // console.log(getData())
