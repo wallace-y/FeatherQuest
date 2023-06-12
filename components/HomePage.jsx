@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 export default HomePage = ({ navigation }) => {
@@ -13,9 +12,9 @@ export default HomePage = ({ navigation }) => {
       />
       <Button
         onPress={() => {
-          navigation.navigate("Map");
+          navigation.navigate("Maps");
         }}
-        title="Map"
+        title="Maps"
       />
       <Button
         onPress={() => {
@@ -31,7 +30,7 @@ export default HomePage = ({ navigation }) => {
       />
       <Button
         onPress={() => {
-          navigation.navigate("Sightings");
+          navigation.navigate("Sighting");
         }}
         title="Post sighting"
       />

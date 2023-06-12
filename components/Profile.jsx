@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
-export default Profile = () => {
+export default Profile = ({ navigation }) => {
   return (
     <View styles={styles.container}>
       <Text>Profile page can go here...</Text>
