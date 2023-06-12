@@ -40,6 +40,12 @@ export default HomePage = ({ navigation }) => {
         }}
         title="View sightings"
       />
+      <Button
+        onPress={() => {
+          navigation.navigate("LoginScreen");
+        }}
+        title="Login"
+      />
     </View>
   );
 };

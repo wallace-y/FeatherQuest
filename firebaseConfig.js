@@ -1,8 +1,18 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, getDocs, setDoc, doc, Firestore } from "firebase/firestore";
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+// import { getAuth } from "firebase/auth";
+// import {
+//   getFirestore,
+//   collection,
+//   getDocs,
+//   setDoc,
+//   doc,
+//   Firestore,
+// } from "firebase/firestore";
+
+import * as firebase from "firebase/app";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,16 +25,16 @@ const firebaseConfig = {
   storageBucket: "feather-quest-15e50.appspot.com",
   messagingSenderId: "896175282066",
   appId: "1:896175282066:web:911a685d20cfdef3a2934b",
-  measurementId: "G-621Y1M7ZYH"
+  measurementId: "G-621Y1M7ZYH",
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
-const auth = getAuth(app);
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+// const db = getFirestore(app);
+// const auth = getAuth(app);
 
-export { db, auth };
+// export { db, auth };
 
 // async function getData(){
 //     const arr = [];
@@ -39,3 +49,14 @@ export { db, auth };
 // }
 
 // console.log(getData())
+let app;
+console.log(firebase);
+if (firebase.apps.length === 0) {
+  app = firebase.initializeApp(firebaseConfig);
+} else {
+  app = firebase.app();
+}
+
+const auth = firebase.auth();
+
+export { auth };
