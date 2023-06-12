@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
-export default Sighting = () => {
+export default Sighting = ({ navigation }) => {
   return (
     <View styles={styles.container}>
       <Text>Sighting page can go here...</Text>
