@@ -22,17 +22,6 @@ export default Species = ({ navigation }) => {
   useEffect(() => {
     const fetchAllBirds = async () => {
       try {
-        // const birdsQuerySnapshot = await getDocs(collection(db, "birds"));
-        // const birdData = birdsQuerySnapshot.docs.map((doc) => doc.data());
-        // const sightingsQuerySnapshot = await getDocs(
-        //   collection(db, "sightings")
-        // );
-        // const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
-        //   doc.data()
-        // );
-        // const usersQuerySnapshot = await getDocs(collection(db, "users"));
-        // const usersData = usersQuerySnapshot.docs.map((doc) => doc.data());
-
         const [birdsQuerySnapshot, sightingsQuerySnapshot, usersQuerySnapshot] =
           await Promise.all([
             getDocs(collection(db, "birds")),
@@ -48,18 +37,14 @@ export default Species = ({ navigation }) => {
         setAllSightings(sightingsData);
         setAllBirds(birdData);
         setAllUsers(usersData);
-        console.log(sightingsData, "log 1");
+        
       } catch (error) {
-        console.log(error, "log 2");
+        console.log(error);
       }
     };
 
     fetchAllBirds();
   }, []);
-
-  // const mapSightings = () => {
-  //   sightingsData.map(bird.filter);
-  // };
 
   let matchedSightings = [];
   if (allSightings.length > 0 && allBirds.length > 0) {
