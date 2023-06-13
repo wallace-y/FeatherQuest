@@ -52,7 +52,7 @@ export default Species = ({ navigation }) => {
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("Bird", bird);
-                // console.log(bird);
+                navigation.navigate()
               }}
             >
               <Image
