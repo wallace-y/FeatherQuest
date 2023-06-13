@@ -18,6 +18,8 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
+import { db } from "../firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 
 export default LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -39,7 +41,20 @@ export default LoginScreen = ({ navigation }) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log("Registered with", user.email);
+        setDoc(doc(db, "users/" + user.uid), {
+          created_at: user.metadata.creationTime,
+          first_name: "",
+          follower_list: [],
+          friend_list: [],
+          last_name: "",
+          location: "",
+          perch_list: [],
+          profile_image_url: "",
+          screen_name: "",
+          spotted_list: [],
+        });
+      })
+      .then(() => {
         alert("Account Registered");
       })
       .catch((error) => {
@@ -74,6 +89,7 @@ export default LoginScreen = ({ navigation }) => {
           style={styles.input}
         />
         <TextInput
+          autoCapitalize="none"
           placeholder="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
