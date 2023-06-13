@@ -4,7 +4,7 @@ import { pullBirdsById } from '../utils/pullBirdsById';
 let width = Dimensions.get("window").width;
 
 
- function UserBirdSightings({birds, user}) {
+ function UserPerchAlerts({birds, user}) {
   const [userBird, setUserBird] = useState([]);
 
 useEffect(() =>{
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default  UserBirdSightings;
+export default  UserPerchAlerts;

@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
 import { getUserData } from "../utils/pullUserInfo";
 import { useEffect, useState } from "react";
-import UserBirdSightings from "./UserBirdSightings";
+import UserPerchAlerts from "./UserPerchAlerts";
 
 
 let width = Dimensions.get("window").width;
@@ -43,7 +43,7 @@ useEffect(() => {
         <Text style={styles.textStyling}>Username - {user.firstName}e</Text>
       </View>
       </View>
-      <UserBirdSightings birds = {user.perchList} user={user}/>
+      <UserPerchAlerts birds = {user.perchList} user={user}/>
     </View>
   );
 };
