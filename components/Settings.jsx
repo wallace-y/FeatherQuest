@@ -20,11 +20,19 @@ import {
 
 export default Settings = ({ navigation }) => {
   const [user, setUser] = useState({});
+  const [screenNameUpdated, setScreenNameUpdated] = useState(false);
+  const [firstNameUpdated, setFirstNameUpdated] = useState(false);
+  const [lastNameUpdated, setLastNameUpdated] = useState(false);
+  const [locationUpdated, setLocationUpdated] = useState(false);
+
   const [newScreenName, setNewScreenName] = useState("");
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
   const [newLocation, setNewLocation] = useState("");
-  const [inputValid, setValidInput] = useState(true);
+  const [newScreenNameValid, setNewScreenNameValid] = useState(true);
+  const [newFirstNameValid, setNewFirstNameValid] = useState(true);
+  const [newLastNameValid, setNewLastNameValid] = useState(true);
+  const [newLocationValid, setNewLocationValid] = useState(true);
 
   useEffect(() => {
     const getUser = async () => {
@@ -39,7 +47,7 @@ export default Settings = ({ navigation }) => {
     };
 
     getUser();
-  }, [user, updateScreenName]);
+  }, [user, handleSubmit]);
 
   const updateScreenName = async () => {
     try {
@@ -95,19 +103,21 @@ export default Settings = ({ navigation }) => {
   };
 
   function handleSubmit() {
-    if (inputValid) {
-      if (newScreenName.length > 1) {
-        updateScreenName();
-      }
-      if (newFirstName.length > 1) {
-        updatedFirstName();
-      }
-      if (newLocation.length > 1) {
-        updatedLocation();
-      }
-      if (newLastName.length > 1) {
-        updatedLastName();
-      }
+    if (newScreenNameValid && screenNameUpdated) {
+      updateScreenName();
+      setScreenNameUpdated(false);
+    }
+    if (newFirstNameValid && firstNameUpdated) {
+      updatedFirstName();
+      setFirstNameUpdated(false);
+    }
+    if (newLastNameValid && lastNameUpdated) {
+      updatedLastName();
+      setLastNameUpdated(false);
+    }
+    if (newLocationValid && locationUpdated) {
+      updatedLocation();
+      setLocationUpdated(false);
     } else {
       alert("Invalid entries please update the above fields.");
     }
@@ -121,84 +131,106 @@ export default Settings = ({ navigation }) => {
         <TextInput
           inputMode="text"
           textAlign="center"
-          onEndEditing={() => {
-            if (newScreenName.length < 5) {
-              alert("Username must be 6 or more characters");
-              setValidInput(false);
-            } else {
-              setValidInput(true);
-            }
-          }}
           autoCapitalize="none"
           style={styles.inputText}
           placeholder={user.screen_name}
           value={newScreenName}
-          onChangeText={(text) => setNewScreenName(text)}
+          onChangeText={(text) => {
+            setNewScreenName(text);
+            setScreenNameUpdated(true);
+            if (newScreenName.length < 6) {
+              setNewScreenNameValid(false);
+            } else {
+              setNewScreenNameValid(true);
+            }
+          }}
         />
       </View>
+      {!newScreenNameValid && (
+        <View>
+          <Text>Username must be 6 or more characters.</Text>
+        </View>
+      )}
 
       <View style={styles.inputGroup}>
         <Text>Change First Name:</Text>
         <TextInput
           inputMode="text"
           textAlign="center"
-          onEndEditing={() => {
-            if (newFirstName.length < 1) {
-              alert("First name must not be empty.");
-              setValidInput(false);
-            } else {
-              setValidInput(true);
-            }
-          }}
           autoCapitalize="none"
           style={styles.inputText}
           placeholder={user.first_name}
           value={newFirstName}
-          onChangeText={(text) => setNewFirstName(text)}
+          onChangeText={(text) => {
+            setNewFirstName(text);
+            setFirstNameUpdated(true);
+            if (newFirstName.length < 1) {
+              setNewFirstNameValid(false);
+            } else {
+              setNewFirstNameValid(true);
+            }
+          }}
         />
       </View>
+      {!newFirstNameValid && (
+        <View>
+          <Text>First name must not be empty.</Text>
+        </View>
+      )}
 
       <View style={styles.inputGroup}>
         <Text>Change Last Name:</Text>
         <TextInput
           inputMode="text"
           textAlign="center"
-          onEndEditing={() => {
-            if (newLastName.length < 1) {
-              alert("Last name must not be empty.");
-              setValidInput(false);
-            } else {
-              setValidInput(true);
-            }
-          }}
           autoCapitalize="none"
           style={styles.inputText}
           placeholder={user.last_name}
           value={newLastName}
-          onChangeText={(text) => setNewLastName(text)}
+          onChangeText={(text) => {
+            setNewLastName(text);
+            setLastNameUpdated(true);
+
+            if (newLastName.length < 1) {
+              setNewLastNameValid(false);
+            } else {
+              setNewLastNameValid(true);
+            }
+          }}
         />
       </View>
+      {!newLastNameValid && (
+        <View>
+          <Text>Last name must not be empty.</Text>
+        </View>
+      )}
 
       <View style={styles.inputGroup}>
         <Text>Change Location:</Text>
         <TextInput
           inputMode="text"
           textAlign="center"
-          onEndEditing={() => {
-            if (newLocation.length < 1) {
-              alert("Location must not be empty.");
-              setValidInput(false);
-            } else {
-              setValidInput(true);
-            }
-          }}
           autoCapitalize="none"
           style={styles.inputText}
           placeholder={user.location}
           value={newLocation}
-          onChangeText={(text) => setNewLocation(text)}
+          onChangeText={(text) => {
+            setNewLocation(text);
+            setLocationUpdated(true);
+
+            if (newLocation.length < 1) {
+              setNewLocationValid(false);
+            } else {
+              setNewLocationValid(true);
+            }
+          }}
         />
       </View>
+      {!newLocationValid && (
+        <View>
+          <Text>Location must not be empty.</Text>
+        </View>
+      )}
 
       <View style={styles.inputGroup}>
         <Text>Change Password:</Text>
