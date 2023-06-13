@@ -24,6 +24,7 @@ export default Settings = ({ navigation }) => {
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
   const [newLocation, setNewLocation] = useState("");
+  const [inputValid, setValidInput] = useState(true);
 
   useEffect(() => {
     const getUser = async () => {
@@ -93,12 +94,41 @@ export default Settings = ({ navigation }) => {
     }
   };
 
+  function handleSubmit() {
+    if (inputValid) {
+      if (newScreenName.length > 1) {
+        updateScreenName();
+      }
+      if (newFirstName.length > 1) {
+        updatedFirstName();
+      }
+      if (newLocation.length > 1) {
+        updatedLocation();
+      }
+      if (newLastName.length > 1) {
+        updatedLastName();
+      }
+    } else {
+      alert("Invalid entries please update the above fields.");
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>User Settings</Text>
       <View style={styles.inputGroup}>
         <Text>Change Username:</Text>
         <TextInput
+          inputMode="text"
+          textAlign="center"
+          onEndEditing={() => {
+            if (newScreenName.length < 5) {
+              alert("Username must be 6 or more characters");
+              setValidInput(false);
+            } else {
+              setValidInput(true);
+            }
+          }}
           autoCapitalize="none"
           style={styles.inputText}
           placeholder={user.screen_name}
@@ -110,6 +140,16 @@ export default Settings = ({ navigation }) => {
       <View style={styles.inputGroup}>
         <Text>Change First Name:</Text>
         <TextInput
+          inputMode="text"
+          textAlign="center"
+          onEndEditing={() => {
+            if (newFirstName.length < 1) {
+              alert("First name must not be empty.");
+              setValidInput(false);
+            } else {
+              setValidInput(true);
+            }
+          }}
           autoCapitalize="none"
           style={styles.inputText}
           placeholder={user.first_name}
@@ -121,6 +161,16 @@ export default Settings = ({ navigation }) => {
       <View style={styles.inputGroup}>
         <Text>Change Last Name:</Text>
         <TextInput
+          inputMode="text"
+          textAlign="center"
+          onEndEditing={() => {
+            if (newLastName.length < 1) {
+              alert("Last name must not be empty.");
+              setValidInput(false);
+            } else {
+              setValidInput(true);
+            }
+          }}
           autoCapitalize="none"
           style={styles.inputText}
           placeholder={user.last_name}
@@ -132,6 +182,16 @@ export default Settings = ({ navigation }) => {
       <View style={styles.inputGroup}>
         <Text>Change Location:</Text>
         <TextInput
+          inputMode="text"
+          textAlign="center"
+          onEndEditing={() => {
+            if (newLocation.length < 1) {
+              alert("Location must not be empty.");
+              setValidInput(false);
+            } else {
+              setValidInput(true);
+            }
+          }}
           autoCapitalize="none"
           style={styles.inputText}
           placeholder={user.location}
@@ -146,15 +206,7 @@ export default Settings = ({ navigation }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            updateScreenName();
-            updatedFirstName();
-            updatedLocation();
-            updatedLastName();
-          }}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>
