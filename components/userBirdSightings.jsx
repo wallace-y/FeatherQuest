@@ -8,12 +8,14 @@ let width = Dimensions.get("window").width;
   const [userBird, setUserBird] = useState([]);
 
 useEffect(() =>{
-pullBirdsById(birds)
-.then((data) => {
-    setUserBird([...data])
-})
-}, [user])
 
+if(user.firstName){
+  pullBirdsById(birds)
+  .then((data) => {
+      setUserBird([...data])
+  })
+}
+}, [user])
 
   return (
     <View style={styles.perchAlerts}>
@@ -23,8 +25,9 @@ pullBirdsById(birds)
         <ScrollView horizontal={true}>
     {
       userBird.map(bird=>{
+
         return (
-        <View>  
+        <View key={bird['id'] + bird["common_name"]}>  
         <Text style={styles.userSightingText}>{bird["common_name"]}</Text>
         <Image source={{uri: bird["bird_image_url"]}} style={styles.userSights} />
         </View>

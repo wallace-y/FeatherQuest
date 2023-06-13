@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
-import Nav from "./Nav";
 import { getUserData } from "../utils/pullUserInfo";
 import { useEffect, useState } from "react";
 import UserBirdSightings from "./UserBirdSightings";
@@ -9,22 +8,22 @@ import UserBirdSightings from "./UserBirdSightings";
 let width = Dimensions.get("window").width;
 
 
-export default Profile = ({ navigation }) => {
+export default Profile = () => {
   const [user, setUser] = useState({})
 
 
 useEffect(() => {
   getUserData().then((data) => {
     const perchAlert = [];
-    data[2].perch_list.arrayValue.values.forEach(birdId => {
+    data[3].perch_list.arrayValue.values.forEach(birdId => {
       perchAlert.push(birdId.integerValue)
     })
     setUser({
-      firstName: data[2].first_name.stringValue,
-      secondName: data[2].last_name.stringValue,
-      region: data[2].location.stringValue,
-      username: data[2].first_name.stringValue,
-      profilePic: data[2].profile_image_url.stringValue,
+      firstName: data[3].first_name.stringValue,
+      secondName: data[3].last_name.stringValue,
+      region: data[3].location.stringValue,
+      username: data[3].first_name.stringValue,
+      profilePic: data[3].profile_image_url.stringValue,
       perchList: perchAlert,
     })
 
@@ -35,7 +34,6 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
-      <Nav />
       <View style={styles.userInfocontainer}>
       <Image source={{uri: user.profilePic}} style={styles.profilePic} />
       <View style={styles.userInfo}>
@@ -46,8 +44,6 @@ useEffect(() => {
       </View>
       </View>
       <UserBirdSightings birds = {user.perchList} user={user}/>
-
-      
     </View>
   );
 };

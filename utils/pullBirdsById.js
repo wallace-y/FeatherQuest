@@ -3,7 +3,8 @@ import { db} from "../firebaseConfig";
 
 const pullBirdsById = async (id) => {
     try {
-      const q = query(collection(db, "birds"), where("id", "in", id.map(bird => Number(bird))));
+      const ids = id.map(bird => Number(bird));
+      const q = query(collection(db, "birds"), where("id", "in", ids));
       const querySnapshot = await getDocs(q);
       return querySnapshot.docs.map((doc) => doc.data());
     } catch (error) {
