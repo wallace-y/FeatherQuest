@@ -18,7 +18,6 @@ export default HomePage = ({ navigation }) => {
 
   return (
     <View styles={styles.container}>
-      <Text>This is the home page....</Text>
 
       {user ? null : (
         <Button

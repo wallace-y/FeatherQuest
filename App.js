@@ -9,6 +9,8 @@ import Species from "./components/Species.jsx";
 import Settings from "./components/Settings.jsx";
 import Sighting from "./components/Sighting.jsx";
 import SightingList from "./components/SightingList.jsx";
+import NavigationBar from "./components/NavigationBar.jsx";
+import Bird from "./components/Bird.jsx";
 
 import LoginScreen from "./components/LoginScreen.jsx";
 
