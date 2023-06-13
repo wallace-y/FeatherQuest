@@ -4,61 +4,6 @@ import { auth } from "../firebaseConfig";
 export default HomePage = ({ navigation }) => {
   const user = auth.currentUser;
 
-  //   return (
-  //     <View styles={styles.container}>
-  //       <Text>This is the home page....</Text>
-  //       <Button
-  //         onPress={() => {
-  //           navigation.navigate("LoginScreen");
-  //         }}
-  //         title="Login"
-  //       />
-  //       <Button
-  //         onPress={() => {
-  //           navigation.navigate("Profile");
-  //         }}
-  //         title="Profile"
-  //       />
-  //       <Button
-  //         onPress={() => {
-  //           navigation.navigate("Maps");
-  //         }}
-  //         title="Maps"
-  //       />
-  //       <Button
-  //         onPress={() => {
-  //           navigation.navigate("Species");
-  //         }}
-  //         title="Species"
-  //       />
-  //       <Button
-  //         onPress={() => {
-  //           navigation.navigate("Settings");
-  //         }}
-  //         title="Settings"
-  //       />
-  //       <Button
-  //         onPress={() => {
-  //           navigation.navigate("Sighting");
-  //         }}
-  //         title="Post sighting"
-  //       />
-  //       <Button
-  //         onPress={() => {
-  //           navigation.navigate("SightingList");
-  //         }}
-  //         title="View sightings"
-  //       />
-
-  //       <TouchableOpacity style={styles.button}>
-  //         <Text style={styles.buttonText}>Sign Out</Text>
-  //         <Text>Email:{auth.currentUser?.email} </Text>
-  //       </TouchableOpacity>
-  //     </View>
-  //   );
-  // };
-
-  console.log(user);
   const handleSignOut = () => {
     auth
       .signOut()

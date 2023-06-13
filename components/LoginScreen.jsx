@@ -67,6 +67,7 @@ export default LoginScreen = ({ navigation }) => {
           <Image source={require("../assets/feather.png")} />
         </View>
         <TextInput
+          autoCapitalize="none"
           placeholder="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#5e7975",
   },
   title: {
     fontSize: 30,
