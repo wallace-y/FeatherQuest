@@ -89,6 +89,7 @@ export default LoginScreen = ({ navigation }) => {
           style={styles.input}
         />
         <TextInput
+          autoCapitalize="none"
           placeholder="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
