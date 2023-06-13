@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
-import Nav from "./Nav";
+// import Nav from "./Nav";
 import { getData } from "../utils/pullUserInfo";
 import { getUserData } from "../utils/pullUserInfo";
 import { useEffect, useState } from "react";
@@ -41,7 +41,7 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
-      <Nav />
+      {/* <Nav /> */}
       <View style={styles.userInfocontainer}>
 
 

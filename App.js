@@ -9,6 +9,7 @@ import Species from "./components/Species.jsx";
 import Settings from "./components/Settings.jsx";
 import Sighting from "./components/Sighting.jsx";
 import SightingList from "./components/SightingList.jsx";
+import NavigationBar from "./components/NavigationBar.jsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,13 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomePage} />
+        <Stack.Screen
+          name="Home"
+          component={HomePage}
+          options={({ navigation }) => ({
+            header: () => <NavigationBar navigation={navigation} />,
+          })}
+        />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Maps" component={Maps} />
         <Stack.Screen name="Species" component={Species} />
