@@ -31,9 +31,21 @@ function App() {
         />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Maps" component={Maps} />
-        <Stack.Screen name="Species" component={Species} />
+        <Stack.Screen
+          name="Species"
+          component={Species}
+          options={({ navigation }) => ({
+            header: () => <NavigationBar navigation={navigation} />,
+          })}
+        />
         <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="Sighting" component={Sighting} />
+        <Stack.Screen
+          name="Sighting"
+          component={Sighting}
+          options={({ navigation }) => ({
+            header: () => <NavigationBar navigation={navigation} />,
+          })}
+        />
         <Stack.Screen name="SightingList" component={SightingList} />
 
         <Stack.Screen name="Bird" component={Bird} />
