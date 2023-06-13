@@ -14,13 +14,14 @@ import Bird from "./components/Bird.jsx";
 
 import LoginScreen from "./components/LoginScreen.jsx";
 
-
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+
         <Stack.Screen
           name="Home"
           component={HomePage}
@@ -34,8 +35,6 @@ function App() {
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="Sighting" component={Sighting} />
         <Stack.Screen name="SightingList" component={SightingList} />
-
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
 
         <Stack.Screen name="Bird" component={Bird} />
       </Stack.Navigator>
