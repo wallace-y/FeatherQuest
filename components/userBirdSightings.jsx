@@ -6,24 +6,14 @@ let width = Dimensions.get("window").width;
 
  function UserBirdSightings({birds, user}) {
   const [userBird, setUserBird] = useState([]);
-  const birdsArr = [];
-
-  // console.log('log', birds[1]);
-console.log(birds);
-// console.log(birds.map(bird => Number(bird)));
 
 useEffect(() =>{
 pullBirdsById(birds)
 .then((data) => {
-  // birdsArr.push([...data])
-    // console.log('birdies', data);
     setUserBird([...data])
-    // console.log('birds Array', birdsArr[0][0].bird_image_url);
 })
-
-
 }, [user])
-// console.log(userBird);
+
 
   return (
     <View style={styles.perchAlerts}>

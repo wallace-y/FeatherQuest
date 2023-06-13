@@ -1,24 +1,17 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
 import Nav from "./Nav";
-import { getData } from "../utils/pullUserInfo";
 import { getUserData } from "../utils/pullUserInfo";
 import { useEffect, useState } from "react";
-import { pullBirdData } from "../utils/pullBirdsById";
 import UserBirdSightings from "./UserBirdSightings";
 
 
 let width = Dimensions.get("window").width;
 
-const imageURI = 'https://i.imgur.com/JrpCpfs.png';
-
-
 
 export default Profile = ({ navigation }) => {
   const [user, setUser] = useState({})
 
-
-  
 
 useEffect(() => {
   getUserData().then((data) => {
@@ -34,9 +27,9 @@ useEffect(() => {
       profilePic: data[2].profile_image_url.stringValue,
       perchList: perchAlert,
     })
-    // console.log(data[0]);
+
   }).catch((err) => {
-    console.log(err);
+
   })
 }, [])
 
@@ -44,8 +37,6 @@ useEffect(() => {
     <View style={styles.container}>
       <Nav />
       <View style={styles.userInfocontainer}>
-
-
       <Image source={{uri: user.profilePic}} style={styles.profilePic} />
       <View style={styles.userInfo}>
         <Text style={styles.textStyling}>Forename - {user.firstName}</Text>
@@ -54,7 +45,6 @@ useEffect(() => {
         <Text style={styles.textStyling}>Username - {user.firstName}e</Text>
       </View>
       </View>
-
       <UserBirdSightings birds = {user.perchList} user={user}/>
 
       
