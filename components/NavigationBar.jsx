@@ -55,25 +55,25 @@ export default NavigationBar = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Settings");
-          }}
-          title="Settings"
-          style={styles.imageContainer}
-        >
-          <Image
-            source={require("../assets/MapButton.png")}
-            style={styles.image}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
             navigation.navigate("Profile");
           }}
           title="Profile"
           style={styles.imageContainer}
         >
           <Image
-            source={require("../assets/MapButton.png")}
+            source={require("../assets/Profile.png")}
+            style={styles.image}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Settings");
+          }}
+          title="Settings"
+          style={styles.imageContainer}
+        >
+          <Image
+            source={require("../assets/Settings.png")}
             style={styles.image}
           />
         </TouchableOpacity>
@@ -90,6 +90,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#AAC0AA",
   },
   navBar: {
+    marginTop: 5,
+    marginBottom: 5,
     flexDirection: "row",
     justifyContent: "space-evenly",
   },
