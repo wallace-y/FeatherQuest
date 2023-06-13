@@ -3,7 +3,6 @@ import { Button, StyleSheet, Text, View } from "react-native";
 export default HomePage = ({ navigation }) => {
   return (
     <View styles={styles.container}>
-      <Text>This is the home page....</Text>
       <Button
         onPress={() => {
           navigation.navigate("Profile");
