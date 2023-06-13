@@ -8,28 +8,53 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
 
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../firebaseConfig";
+import { useNavigation } from "@react-navigation/native";
 
 export default LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigation1 = useNavigation();
+
   useEffect(() => {
-    console.log(email);
-    console.log(password);
-  }, [email, password]);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation1.navigate("Home");
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
   const handleSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password) // Use createUserWithEmailAndPassword function from auth
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log(user.email);
+        console.log("Registered with", user.email);
+        alert("Account Registered");
       })
       .catch((error) => {
-        console.log(err);
+        alert(error.message);
+      });
+  };
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Logged in with", user.email);
+        alert("Logged in");
+      })
+      .catch((error) => {
         alert(error.message);
       });
   };
@@ -39,25 +64,25 @@ export default LoginScreen = ({ navigation }) => {
       <View style={styles.inputContainer}>
         <Text style={styles.title}>WELCOME TO FEATHER QUEST!</Text>
         <View style={styles.iconContainer}>
-          <FontAwesome5 name="feather-alt" size={60} color="black" />
+          <Image source={require("../assets/feather.png")} />
         </View>
         <TextInput
           placeholder="Email"
           value={email}
-          onChange={(text) => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
         <TextInput
           placeholder="Password"
           value={password}
-          onChange={(text) => setPassword(text)}
+          onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
         />
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => {}} style={styles.button}>
+        <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
