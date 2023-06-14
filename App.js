@@ -11,6 +11,7 @@ import Sighting from "./components/Sighting.jsx";
 import SightingList from "./components/SightingList.jsx";
 import NavigationBar from "./components/NavigationBar.jsx";
 import Bird from "./components/Bird.jsx";
+import IdentifyBird from "./components/IdentifyBird.jsx";
 
 import LoginScreen from "./components/LoginScreen.jsx";
 
@@ -49,6 +50,7 @@ function App() {
         <Stack.Screen name="SightingList" component={SightingList} />
 
         <Stack.Screen name="Bird" component={Bird} />
+        <Stack.Screen name="IdentifyBird" component={IdentifyBird} />
       </Stack.Navigator>
     </NavigationContainer>
   );
