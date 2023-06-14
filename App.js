@@ -20,7 +20,7 @@ import { useState } from "react";
 const Stack = createNativeStackNavigator();
 
 function App() {
-  const [globalUser, setGlobalUser] = useState('')
+  const [globalUser, setGlobalUser] = useState()
   return (
     <UserContext.Provider value={{globalUser,setGlobalUser}}>
     <NavigationContainer>

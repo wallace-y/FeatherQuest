@@ -11,16 +11,14 @@ import { UserContext } from "../utils/UserContext";
 
 let width = Dimensions.get("window").width;
 
-
 export default Profile = () => {
-  const {globalUser} = useContext(UserContext)
+  const {globalUser, setGlobalUser} = useContext(UserContext)
   const [user, setUser] = useState({})
 
 
 useEffect(() => {
-  getUserData(globalUser.uid)
+  getUserData(globalUser.userId)
   .then((data) => {
-
     setUser({
       firstName: data.first_name,
       secondName: data.last_name,

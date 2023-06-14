@@ -2,14 +2,30 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth } from "../firebaseConfig";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../utils/UserContext";
+import { getUserData } from "../utils/pullUserInfo";
 
 export default HomePage = ({ navigation }) => {
   const user = auth.currentUser;
 
-  const {setGlobalUser} = useContext(UserContext)
+  const {globalUser, setGlobalUser} = useContext(UserContext)
 
-  useEffect(()=>{
-    setGlobalUser(auth.currentUser)
+  useEffect(() => {
+    getUserData(auth.currentUser.uid)
+    .then((data) => {
+      setGlobalUser({
+        userId: auth.currentUser.uid,
+        firstName: data.first_name,
+        secondName: data.last_name,
+        region: data.location,
+        username: data.username,
+        profilePic: data.profile_image_url,
+        perchList: [...data.perch_list],
+      })
+  
+    }).catch((err) => {
+      console.log(err);
+  
+    })
   }, [])
 
   const handleSignOut = () => {
