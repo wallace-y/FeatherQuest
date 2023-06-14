@@ -7,13 +7,16 @@ export default DateSelection = ( { sightingData, setSightingData} ) => {
 
     const [ showDate, setShowDate ] = useState(false) 
     const [ date, setDate ] = useState("Select date of sighting")
+
     console.log("DateSelection=======", showDate)
+
     //Display date
     const onChange = (event, selectedDate) => {
         console.log("event type",event.type)
+
         if(event.type === 'dismissed'){
         }else if(event.type === 'set'){
-            setDate(String(selectedDate))
+            setDate(selectedDate.toISOString())
             let tempSightingData = {...sightingData}
             tempSightingData.date = selectedDate
             setSightingData(tempSightingData)

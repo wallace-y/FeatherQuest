@@ -1,9 +1,9 @@
-import { View, Text, Button, StyleSheet, useWindowDimensions, Alert} from 'react-native';
-import { useState, useEffect } from 'react';
-import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+import { View, Text, Button, StyleSheet, useWindowDimensions} from 'react-native';
+import { useState, useEffect, useContext } from 'react';
+import { collection, getDocs, setDoc, doc, addDoc  } from "firebase/firestore";
 import { db } from '../firebaseConfig.js'
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext } from "../utils/UserContext";
 
 import BirdSelection from './BirdSelection.jsx';
 import SelectLocation from './SelectLocation.jsx';
@@ -11,44 +11,23 @@ import DateSelection from './DateSelection.jsx';
 
 export default PostSighting = () => {
 
-    const [ birdList , setBirdList ] = useState([]);
-    const [ sightingData, setSightingData ] = useState({ id: "", date: "" , location: ""})
+    const {globalUser} = useContext(UserContext)
+    const [ sightingData, setSightingData ] = useState({ bird: "", date: "" , location: "", user: globalUser.userId})
     const windowHeight = useWindowDimensions().height;
-
-    let dateNotSelected = false;
-    // Get birds images and names to display for selection
-    useEffect(() => {
-        getBirdList()
-        .then( birds => {
-            if(Array.isArray(birds)){
-                setBirdList(birds)
-            }else{
-                getDocs(collection(db, "birds"))
-                .then((data) => {
-                    const arr =  []
-                    data.forEach( bird => {
-                        arr.push({
-                            id: bird.data().id, 
-                            title: bird.data().common_name,
-                            image: bird.data().bird_image_url})
-                    })
-                    setBirdList(arr)
-                    return AsyncStorage.setItem('birdList', JSON.stringify({arr}))
-                })
-            }
-        })
-    }, [])
     
-    function getBirdList() {
-        return AsyncStorage.getItem('birdList')
-        .then( result => {
-            return JSON.parse(result).arr;
-        })
-    }
-
     //Post sightings data to db
     const Submit = () => {
         console.log("submited", sightingData, "submited",)
+
+        addDoc(collection(db, "sightings"), sightingData)
+        .then( docRef => {
+            console.log(docRef)
+        })
+        // setDoc(doc(db, "sightings/test"), sightingData)
+        // .then( result => {
+
+        //     console.log(result)
+        // })
         
     }
 
@@ -60,15 +39,14 @@ export default PostSighting = () => {
              >
             <View><Text>Post Your Sighting</Text></View>
             {/* Select Bird */}
-            <BirdSelection birdList={birdList} setSightingData={setSightingData} sightingData={sightingData}/>
-            {dateNotSelected && <Text>SELECTDATE</Text>}
+            <BirdSelection setSightingData={setSightingData} sightingData={sightingData}/>
             {/* Select date */}
             <DateSelection setSightingData={setSightingData} sightingData={sightingData}/>
             {/* Select location */}
             <SelectLocation sightingData={sightingData} setSightingData={setSightingData}/>
             <View style={styles.submitbt}>
                 <Button title="Submit" onPress={Submit} style={styles.submitbt} color="rgb(100, 150, 100)"
-                disabled={sightingData.id === "" || sightingData.date === "" || sightingData.location === ""}
+                disabled={sightingData.sighting_id === "" || sightingData.date === "" || sightingData.location === ""}
                 />
             </View>
         </View>

@@ -7,7 +7,6 @@ import {
   getDocs,
   setDoc,
   doc,
-  Firestore,
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -32,17 +31,3 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 export { db, auth };
-
-// async function getData(){
-//     const arr = [];
-//     await getDocs(collection(db, "birds"))
-//     .then((data) => {
-//     data.forEach(bird=>{
-//     console.log(bird._document.data.value.mapValue.fields);
-//     arr.push(bird._document.data.value.mapValue.fields);
-//     })
-// });
-// return arr;
-// }
-
-// console.log(getData())
