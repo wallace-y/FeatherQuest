@@ -6,7 +6,9 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  TouchableOpacity
 } from "react-native";
+import ManagePerch from "./ManagePerch";
 
 let width = Dimensions.get("window").width;
 
@@ -25,7 +27,9 @@ export default Bird = ({ route, navigation }) => {
     subfamilies,
     facts,
     rarity,
+    id,
   } = route.params;
+  
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -46,6 +50,7 @@ export default Bird = ({ route, navigation }) => {
           <Text style={styles.detailsText}>Height: {height}</Text>
           <Text style={styles.detailsText}>Latin Name: {latin_name}</Text>
         </View>
+        <ManagePerch id={id}/>
         <View>
           <Text style={styles.mainText}>{description}</Text>
         </View>
