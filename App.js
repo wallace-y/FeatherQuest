@@ -11,13 +11,16 @@ import Sighting from "./components/Sighting.jsx";
 import SightingList from "./components/SightingList.jsx";
 import NavigationBar from "./components/NavigationBar.jsx";
 import Bird from "./components/Bird.jsx";
-
+import { UserContext } from "./utils/UserContext.js";
 import LoginScreen from "./components/LoginScreen.jsx";
+import { useState } from "react";
 
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const [globalUser, setGlobalUser] = useState('')
   return (
+    <UserContext.Provider value={{globalUser,setGlobalUser}}>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
@@ -51,6 +54,7 @@ function App() {
         <Stack.Screen name="Bird" component={Bird} />
       </Stack.Navigator>
     </NavigationContainer>
+    </UserContext.Provider>
   );
 }
 
