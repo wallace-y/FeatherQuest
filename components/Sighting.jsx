@@ -1,14 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import dayjs from "dayjs";
-import {
-  StyleSheet,
-  Text,
-  Image,
-  Dimensions,
-  ScrollView,
-  Box,
-  View,
-} from "react-native";
+import { StyleSheet, Text, Image, Dimensions, View } from "react-native";
 
 let width = Dimensions.get("window").width;
 
@@ -42,23 +34,6 @@ export default Sighting = ({ route, navigation }) => {
       <Text style={styles.birdInfo}>Rarity: {rarity} </Text>
       <Text style={styles.birdInfo}>Spotted by: {screen_name}</Text>
     </View>
-    //   <ScrollView>
-    //     <Box style={styles.container}>
-    //       <Text style={styles.header}>All Sightings</Text>
-    //       <Box style={styles.birdCard}>
-    //         <Text style={styles.birdName}>{common_name}</Text>
-    //         <Text style={styles.birdName}>{coordinates}</Text>
-    //         <Text style={styles.birdName}>{date_spotted}</Text>
-
-    //         <Image
-    //           source={{
-    //             uri: bird_image_url,
-    //           }}
-    //           style={styles.image}
-    //         />
-    //       </Box>
-    //     </Box>
-    //   </ScrollView>
   );
 };
 
