@@ -1,8 +1,8 @@
 import { View, Text, Image, StyleSheet} from 'react-native';
+import { collection, getDocs } from "firebase/firestore";
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { collection, getDocs, setDoc, doc } from "firebase/firestore";
-import { db } from '../firebaseConfig.js'
+import { db } from '../../firebaseConfig.js'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -65,7 +65,7 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
                                     {selectedItem ? (
                                         <Image source={{uri: selectedItem.image}} style={styles.image}/>
                                         ) : ( 
-                                        <Image source={require('../assets/bird-select.jpg')} style={styles.image}/>
+                                        <Image source={require('../../assets/bird-select.jpg')} style={styles.image}/>
                                         )} 
                                     <Text style={styles.dropDownText} >{selectedItem ? selectedItem.title : 'Select Bird'}</Text>
                             </View>
@@ -79,7 +79,6 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
                             </View>
                         );
                     }}
-                    
                 />
                 )}
             />
@@ -92,7 +91,6 @@ const styles = StyleSheet.create({
     containerSelectBirds: {
     },
     image: {
-        // aspectRatio: 1,
         ...StyleSheet.absoluteFillObject,
     },
     dropdownRow: {
@@ -118,6 +116,6 @@ const styles = StyleSheet.create({
     //TODO: when keyboard of opened the the dropdown is pushed up off screen, figure out how to fix it
     dropDown: {
         flex:1,
-        minHeight: 500
+        minHeight: 500,
     }
 })

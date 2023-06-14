@@ -38,18 +38,15 @@ export default SelectLocation = ( { sightingData, setSightingData }) => {
 const styles = StyleSheet.create({
     map: {
         ...StyleSheet.absoluteFillObject,
-        // width: '100%',
-        // height: '100%',
     },
     mapContainer: {
         borderWidth: 2,
-        height: '100%',
-        width: '100%',
+        ...StyleSheet.absoluteFillObject,
     },container:{
         flex: 1,
         borderWidth: 2,
+        borderColor: "#7A918D",
         height: '100%',
         width: '100%',
     }
-
 })

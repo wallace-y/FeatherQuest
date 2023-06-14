@@ -7,7 +7,7 @@ import Profile from "./components/Profile.jsx";
 import Maps from "./components/Maps.jsx";
 import Species from "./components/Species.jsx";
 import Settings from "./components/Settings.jsx";
-import PostSighting from "./components/PostSighting.jsx";
+import PostSighting from "./components/postSightings/PostSighting.jsx";
 import Sighting from "./components/Sighting.jsx"
 import SightingList from "./components/SightingList.jsx";
 import NavigationBar from "./components/NavigationBar.jsx";
