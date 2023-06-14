@@ -32,8 +32,20 @@ function App() {
             header: () => <NavigationBar navigation={navigation} />,
           })}
         />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="Maps" component={Maps} />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={({ navigation }) => ({
+            header: () => <NavigationBar navigation={navigation} />,
+          })}
+        />
+        <Stack.Screen
+          name="Maps"
+          component={Maps}
+          options={({ navigation }) => ({
+            header: () => <NavigationBar navigation={navigation} />,
+          })}
+        />
         <Stack.Screen
           name="Species"
           component={Species}
@@ -41,7 +53,13 @@ function App() {
             header: () => <NavigationBar navigation={navigation} />,
           })}
         />
-        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
+          options={({ navigation }) => ({
+            header: () => <NavigationBar navigation={navigation} />,
+          })}
+        />
         <Stack.Screen
           name="Sighting"
           component={Sighting}
@@ -49,9 +67,21 @@ function App() {
             header: () => <NavigationBar navigation={navigation} />,
           })}
         />
-        <Stack.Screen name="SightingList" component={SightingList} />
+        <Stack.Screen
+          name="SightingList"
+          component={SightingList}
+          options={({ navigation }) => ({
+            header: () => <NavigationBar navigation={navigation} />,
+          })}
+        />
 
-        <Stack.Screen name="Bird" component={Bird} />
+        <Stack.Screen
+          name="Bird"
+          component={Bird}
+          options={({ navigation }) => ({
+            header: () => <NavigationBar navigation={navigation} />,
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
     </UserContext.Provider>
