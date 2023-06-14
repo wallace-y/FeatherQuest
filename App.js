@@ -14,7 +14,6 @@ import Bird from "./components/Bird.jsx";
 
 import LoginScreen from "./components/LoginScreen.jsx";
 
-
 const Stack = createNativeStackNavigator();
 
 function App() {
