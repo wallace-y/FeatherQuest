@@ -129,8 +129,8 @@ export default class App extends React.Component {
         }
       );
       let responseJson = await response.json();
-      console.log(responseJson);
-      console.log(responseJson.responses[0]);
+      // console.log(responseJson);
+      // console.log(responseJson.responses[0]);
       this.setState({
         googleResponse: responseJson,
         uploading: false,
@@ -217,7 +217,7 @@ export default class App extends React.Component {
       aspect: [4, 3],
     });
 
-    this._handleImagePicked(pickerResult);
+    this._handleImagePicked(pickerResult.assets);
   };
 
   _pickImage = async () => {
@@ -226,17 +226,17 @@ export default class App extends React.Component {
       aspect: [4, 3],
     });
 
-    console.log({ pickerResult });
+    // console.log({ pickerResult });
 
-    this._handleImagePicked(pickerResult);
+    this._handleImagePicked(pickerResult.assets);
   };
 
-  _handleImagePicked = async (pickerResult) => {
+  _handleImagePicked = async (assets) => {
     try {
       this.setState({ uploading: true });
 
-      if (!pickerResult.cancelled) {
-        const uploadUrl = await uploadImageAsync(pickerResult.uri);
+      if (assets && assets.length > 0) {
+        const uploadUrl = await uploadImageAsync(assets[0].uri);
         this.setState({ image: uploadUrl });
       }
     } catch (e) {
