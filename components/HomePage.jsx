@@ -30,7 +30,7 @@ export default HomePage = ({ navigation }) => {
       />
       <Button
         onPress={() => {
-          navigation.navigate("Sighting");
+          navigation.navigate("PostSighting");
         }}
         title="Post sighting"
       />
