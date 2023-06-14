@@ -1,37 +1,41 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
 import { getUserData } from "../utils/pullUserInfo";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import UserPerchAlerts from "./UserPerchAlerts";
+import { auth } from "../firebaseConfig";
+import { UserContext } from "../utils/UserContext";
+
+
 
 
 let width = Dimensions.get("window").width;
 
 
 export default Profile = () => {
+  const {globalUser} = useContext(UserContext)
   const [user, setUser] = useState({})
 
 
 useEffect(() => {
-  getUserData().then((data) => {
-    const perchAlert = [];
-    data[3].perch_list.arrayValue.values.forEach(birdId => {
-      perchAlert.push(birdId.integerValue)
-    })
+  getUserData(globalUser.uid)
+  .then((data) => {
+
     setUser({
-      firstName: data[3].first_name.stringValue,
-      secondName: data[3].last_name.stringValue,
-      region: data[3].location.stringValue,
-      username: data[3].first_name.stringValue,
-      profilePic: data[3].profile_image_url.stringValue,
-      perchList: perchAlert,
+      firstName: data.first_name,
+      secondName: data.last_name,
+      region: data.location,
+      username: data.username,
+      profilePic: data.profile_image_url,
+      perchList: [...data.perch_list],
     })
 
   }).catch((err) => {
+    console.log(err);
 
   })
 }, [])
-
+// console.log(user);
   return (
     <View style={styles.container}>
       <View style={styles.userInfocontainer}>
