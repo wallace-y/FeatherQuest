@@ -7,6 +7,7 @@ import {
   ScrollView,
   Dimensions,
   Button,
+  TouchableOpacity,
 } from "react-native";
 import { db } from "../firebaseConfig";
 import { useEffect, useState } from "react";
@@ -14,30 +15,39 @@ import { collection, getDocs } from "firebase/firestore";
 
 let width = Dimensions.get("window").width;
 
-export default Species = ({ navigation }) => {
+export default SightingList = ({ navigation }) => {
   const [allSightings, setAllSightings] = useState([]);
   const [allBirds, setAllBirds] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
+  const [allComments, setAllComments] = useState([]);
 
   useEffect(() => {
     const fetchAllBirds = async () => {
       try {
-        const [birdsQuerySnapshot, sightingsQuerySnapshot, usersQuerySnapshot] =
-          await Promise.all([
-            getDocs(collection(db, "birds")),
-            getDocs(collection(db, "sightings")),
-            getDocs(collection(db, "users")),
-          ]);
+        const [
+          birdsQuerySnapshot,
+          sightingsQuerySnapshot,
+          usersQuerySnapshot,
+          commentsQuerySnapshot,
+        ] = await Promise.all([
+          getDocs(collection(db, "birds")),
+          getDocs(collection(db, "sightings")),
+          getDocs(collection(db, "users")),
+          getDocs(collection(db, "comments")),
+        ]);
         const birdData = birdsQuerySnapshot.docs.map((doc) => doc.data());
         const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
           doc.data()
         );
         const usersData = usersQuerySnapshot.docs.map((doc) => doc.data());
+        const commentsData = commentsQuerySnapshot.docs.map((doc) =>
+          doc.data()
+        );
 
         setAllSightings(sightingsData);
         setAllBirds(birdData);
         setAllUsers(usersData);
-        
+        setAllComments(commentsData);
       } catch (error) {
         console.log(error);
       }
@@ -50,7 +60,8 @@ export default Species = ({ navigation }) => {
   if (allSightings.length > 0 && allBirds.length > 0) {
     matchedSightings = allSightings.map((sighting) => {
       const result = allBirds.find((bird) => bird.id === sighting.bird);
-      return result;
+      const findUser = allUsers.find((user) => user.id === sighting.user);
+      return { ...result, ...sighting, ...findUser };
     });
   }
   return (
@@ -63,12 +74,19 @@ export default Species = ({ navigation }) => {
           matchedSightings.map((bird, index) => (
             <View key={index} style={styles.birdCard}>
               <Text style={styles.birdName}>{bird.common_name}</Text>
-              <Image
-                source={{
-                  uri: bird.bird_image_url,
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Sighting", bird);
+                  // console.log(bird);
                 }}
-                style={styles.image}
-              />
+              >
+                <Image
+                  source={{
+                    uri: bird.bird_image_url,
+                  }}
+                  style={styles.image}
+                />
+              </TouchableOpacity>
             </View>
           ))}
       </View>
