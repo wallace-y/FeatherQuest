@@ -1,66 +1,53 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
-// import Nav from "./Nav";
-import { getData } from "../utils/pullUserInfo";
 import { getUserData } from "../utils/pullUserInfo";
-import { useEffect, useState } from "react";
-import { pullBirdData } from "../utils/pullBirds";
+import { useEffect, useState, useContext } from "react";
+import UserPerchAlerts from "./UserPerchAlerts";
+import { auth } from "../firebaseConfig";
+import { UserContext } from "../utils/UserContext";
+
+
 
 
 let width = Dimensions.get("window").width;
 
-const imageURI = 'https://i.imgur.com/JrpCpfs.png';
 
-
-
-export default Profile = ({ navigation }) => {
+export default Profile = () => {
+  const {globalUser} = useContext(UserContext)
   const [user, setUser] = useState({})
 
 
-  
-
 useEffect(() => {
-  getUserData().then((data) => {
-    const perchAlert = [];
-    data[0].perch_list.arrayValue.values.forEach(birdId => {
-      perchAlert.push(birdId.integerValue)
-    })
+  getUserData(globalUser.uid)
+  .then((data) => {
+
     setUser({
-      firstName: data[0].first_name.stringValue,
-      secondName: data[0].last_name.stringValue,
-      region: data[0].location.stringValue,
-      username: data[0].first_name.stringValue,
-      profilePic: data[0].profile_image_url.stringValue,
-      perchList: perchAlert,
+      firstName: data.first_name,
+      secondName: data.last_name,
+      region: data.location,
+      username: data.username,
+      profilePic: data.profile_image_url,
+      perchList: [...data.perch_list],
     })
-    // console.log(data[0]);
+
   }).catch((err) => {
     console.log(err);
+
   })
 }, [])
-
+// console.log(user);
   return (
     <View style={styles.container}>
-      {/* <Nav /> */}
       <View style={styles.userInfocontainer}>
-
-
       <Image source={{uri: user.profilePic}} style={styles.profilePic} />
       <View style={styles.userInfo}>
-        <Text>Forename - {user.firstName}</Text>
-        <Text>Surname - {user.secondName}</Text>
-        <Text>Region - {user.region}</Text>
-        <Text>Username - {user.firstName}e</Text>
+        <Text style={styles.textStyling}>Forename - {user.firstName}</Text>
+        <Text style={styles.textStyling}>Surname - {user.secondName}</Text>
+        <Text style={styles.textStyling}>Region - {user.region}</Text>
+        <Text style={styles.textStyling}>Username - {user.firstName}e</Text>
       </View>
       </View>
-
-      <View style={styles.perchAlerts}>
-        <Text>Perch Alerts</Text>
-        <Image source={require('../assets/bird-png.png')} style={styles.userSights} />
-        <Image source={require('../assets/bird-png.png')} style={styles.userSights} />
-        <Image source={require('../assets/bird-png.png')} style={styles.userSights} />
-        <Image source={require('../assets/bird-png.png')} style={styles.userSights} />
-      </View>
+      <UserPerchAlerts birds = {user.perchList} user={user}/>
     </View>
   );
 };
@@ -68,12 +55,17 @@ useEffect(() => {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    backgroundColor: "#A9C0AA",
+    backgroundColor: "#AAC0AA",
     alignItems: "center",
     justifyContent: "center",
     height: '100%'
 
   },
+  textStyling:{
+    fontSize: 16,
+    color: '#344055'
+   },
+ 
   userInfocontainer: {
     // backgroundColor: "skyblue",
     alignItems: "center",
@@ -85,10 +77,11 @@ const styles = StyleSheet.create({
   profilePic: {
     position:'absolute',
     left: 20,
-    width: 80, 
-    height: 80,
+    width: 130, 
+    height: 130,
     aspectRatio: 1,
     padding: 10,
+    borderRadius: 10,
     // resizeMode: "contain",
   },
   userInfo: {

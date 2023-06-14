@@ -1,19 +1,10 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, getDocs, setDoc, doc, Firestore, getUser } from "firebase/firestore";
-import { db} from "../firebaseConfig";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
-async function getUserData(){
-
-    const arr = [];
-    await getDocs(collection(db, "users"))
-    .then((data) => {
-    data.forEach(user=>{
-    // console.log(user._document.data.value.mapValue.fields);
-    arr.push(user._document.data.value.mapValue.fields);
-    })
-});
-return arr;
+async function getUserData (id) {
+    const userRef = doc(db, "users", id);
+    const userSnap = await getDoc(userRef);
+    return userSnap.data();
 }
 
 export { getUserData }

@@ -1,8 +1,16 @@
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth } from "../firebaseConfig";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../utils/UserContext";
 
 export default HomePage = ({ navigation }) => {
   const user = auth.currentUser;
+
+  const {setGlobalUser} = useContext(UserContext)
+
+  useEffect(()=>{
+    setGlobalUser(auth.currentUser)
+  }, [])
 
   const handleSignOut = () => {
     auth
