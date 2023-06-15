@@ -14,8 +14,6 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import CustomButton from "./CustomButton";
 
-let width = Dimensions.get("window").width;
-
 export default Species = ({ navigation }) => {
   const [birds, setBirds] = useState([]);
   const [error, setError] = useState(null);
@@ -48,24 +46,25 @@ export default Species = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <CustomButton title="Go Back" onPress={() => navigation.goBack()} />
         </View>
-
-        {birds.map((bird, index) => (
-          <View key={index} style={styles.birdCard}>
-            <Text style={styles.birdName}>{bird.common_name}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Bird", bird);
-              }}
-            >
-              <Image
-                source={{
-                  uri: bird.bird_image_url,
+        <View style={styles.row}>
+          {birds.map((bird, index) => (
+            <View key={index} style={styles.birdCard}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Bird", bird);
                 }}
-                style={styles.image}
-              />
-            </TouchableOpacity>
-          </View>
-        ))}
+              >
+                <Image
+                  source={{
+                    uri: bird.bird_image_url,
+                  }}
+                  style={styles.image}
+                />
+              </TouchableOpacity>
+              <Text style={styles.birdName}>{bird.common_name}</Text>
+            </View>
+          ))}
+        </View>
       </View>
       {error && <Text>{error}</Text>}
     </ScrollView>
@@ -80,11 +79,15 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 40,
   },
+  row: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+  },
   image: {
-    width: width * 0.8,
+    width: "100%",
     aspectRatio: 1,
-    resizeMode: "contain",
-    alignSelf: "center",
+    resizeMode: "cover",
     marginBottom: 10,
   },
   header: {
@@ -96,21 +99,22 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   birdCard: {
+    width: "33%",
+    height: 180,
     marginBottom: 20,
     borderWidth: 1,
     borderColor: "#A18276",
     borderRadius: 5,
     padding: 10,
-    width: width * 0.9,
     backgroundColor: "#AAC0AA",
   },
   birdName: {
+    color: "white",
     textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 14,
     marginBottom: 5,
   },
   buttonContainer: {
     marginBottom: 15,
-  }
+  },
 });
