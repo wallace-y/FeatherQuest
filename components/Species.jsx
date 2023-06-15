@@ -20,7 +20,6 @@ export default Species = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   
-  
   useEffect(() => {
     const fetchBirds = async () => {
       try {

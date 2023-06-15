@@ -6,7 +6,6 @@ let width = Dimensions.get("window").width;
 
  function UserPerchAlerts({birds, user, navigation}) {
   const [userBird, setUserBird] = useState([]);
-  // console.log(navigation);
 
 useEffect(() =>{
 
