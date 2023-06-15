@@ -12,6 +12,7 @@ import {
 import { db } from "../firebaseConfig";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
+import CustomButton from "./CustomButton";
 
 let width = Dimensions.get("window").width;
 
@@ -44,7 +45,9 @@ export default Species = ({ navigation }) => {
         <Text style={styles.header}>All Birds</Text>
         {loading && <Text>Loading...Please Wait</Text>}
 
-        <Button title="Go Back" onPress={() => navigation.goBack()} />
+        <View style={styles.buttonContainer}>
+          <CustomButton title="Go Back" onPress={() => navigation.goBack()} />
+        </View>
 
         {birds.map((bird, index) => (
           <View key={index} style={styles.birdCard}>
@@ -74,29 +77,40 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#7A918D",
     alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 20,
+    paddingBottom: 40,
   },
   image: {
     width: width * 0.8,
     aspectRatio: 1,
     resizeMode: "contain",
     alignSelf: "center",
-    justifyContent: "center",
+    marginBottom: 10,
   },
   header: {
+    color: "white",
     textAlign: "center",
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 0,
     fontWeight: "bold",
-    fontSize: 40,
+    fontSize: 30,
   },
   birdCard: {
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#A18276",
+    borderRadius: 5,
+    padding: 10,
+    width: width * 0.9,
+    backgroundColor: "#AAC0AA",
   },
   birdName: {
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: 25,
+    fontSize: 20,
     marginBottom: 5,
   },
+  buttonContainer: {
+    marginBottom: 15,
+  }
 });
