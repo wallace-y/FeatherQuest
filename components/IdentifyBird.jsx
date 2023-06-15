@@ -71,11 +71,13 @@ export default class App extends React.Component {
         <Button onPress={this._takePhoto} title="Take a photo" />
 
         {this._maybeRenderImage()}
-        {/* {this._maybeRenderUploadingOverlay()} */}
+        {this._maybeRenderUploadingOverlay()}
 
         <StatusBar barStyle="default" />
 
-        <Button onPress={() => this.submitToGoogle()} title="Analyze!" />
+        {image && (
+          <Button onPress={() => this.submitToGoogle()} title="Analyze!" />
+        )}
 
         {/* {this.state.googleResponse && (
             <Text onPress={this._copyToClipboard} onLongPress={this._share}>
