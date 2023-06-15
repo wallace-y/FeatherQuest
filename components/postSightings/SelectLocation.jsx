@@ -25,9 +25,8 @@ export default SelectLocation = ( { sightingData, setSightingData }) => {
                 <MapView style={styles.map}
                     initialRegion={region}
                     onRegionChangeComplete={handleRegionChange}>
-                    <Marker coordinate={region}>
-                        {/* Temp image, should be replaced with home brewed icon */}
-                        <Image source={{uri: "https://static.vecteezy.com/system/resources/previews/007/634/380/original/binoculars-icon-design-template-free-vector.jpg"}} style={{height:35, width:35}}/>
+                    <Marker coordinate={region} style={{height: 35, width:35}}>
+                        <Image source={require('../../assets/Binos2.png')} style={{height:25, width:35}}/>
                     </Marker>
                 </MapView>
             </View>

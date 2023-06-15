@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet} from 'react-native';
+import { View, Text, Image, StyleSheet, Keyboard} from 'react-native';
 import { collection, getDocs } from "firebase/firestore";
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -7,11 +7,23 @@ import { db } from '../../firebaseConfig.js'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SelectDropdown from 'react-native-select-dropdown';
 
+
+
 export default BirdSelection = ( { setSightingData, sightingData }) => {
     const [ birdList , setBirdList ] = useState([]);
     const {control, handleSubmit, formState: { errors }} = useForm();
 
-    // Get birds images and names to display for selection
+    const [ dropDownMargin, setDropDownMargin ] = useState(-90);
+
+    //
+    Keyboard.addListener('keyboardDidShow', () => {
+        setDropDownMargin(245)
+    })
+    Keyboard.addListener('keyboardDidHide', () => {
+        setDropDownMargin(-90)
+    })
+    
+    // Get bird images and names to display for selection
     useEffect(() => {
         getLocalBirdList()
         .then( birds => {
@@ -28,12 +40,14 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
                             image: bird.data().bird_image_url})
                     })
                     setBirdList(arr)
+                    //Store the bird data to local storage
                     return AsyncStorage.setItem('birdList', JSON.stringify({arr}))
                 })
             }
         })
     }, [])
 
+    // Retrieve stored list from local storage
     function getLocalBirdList() {
         return AsyncStorage.getItem('birdList')
         .then( result => {
@@ -52,13 +66,17 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
             <Controller name="Bird" control={control} rules={{required: true}} render={({field: {onChange, onBlur, value}}) => (
                 <SelectDropdown
                     data={birdList}
-                    onblur={onBlur}
+                    // onblur={onBlur}
                     onSelect={handleBirdSelect}
-                    value={value}
-                    dropdownStyle={styles.dropDown}
+                    // value={value}
+                    
+                    dropdownStyle={ { marginTop: dropDownMargin, minHeight: 500 }}
                     buttonStyle={styles.dropDownButton}
                     rowStyle={styles.dropdownRow}
                     search
+                    onSearch={() => {console.log("Search")}}
+                    searchPlaceHolder={"Search..."}
+                    searchInputStyle={styles.searchInput}
                     renderCustomizedButtonChild={(selectedItem, index) => {
                         return (
                             <View style={styles.row}>
@@ -89,6 +107,7 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
 
 const styles = StyleSheet.create({
     containerSelectBirds: {
+        backgroundColor: "#7A918D"
     },
     image: {
         ...StyleSheet.absoluteFillObject,
@@ -101,6 +120,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         height: 200,
         width: '100%',
+        backgroundColor: "#7A918D"
     },
     row: {
         flex:1,
@@ -113,9 +133,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold'
     },
-    //TODO: when keyboard of opened the the dropdown is pushed up off screen, figure out how to fix it
     dropDown: {
         flex:1,
-        minHeight: 500,
+        minHeight: 1000,
+    },
+    searchInput: {
+        backgroundColor: "rgb(100, 150, 100)",
     }
 })

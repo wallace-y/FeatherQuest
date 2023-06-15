@@ -8,7 +8,7 @@ export default DateSelector = ( { onChange } ) => {
 
     return (
         <View>
-            <Button title={time} onPress={ () => {setShowTime(true);}} color={'#7A918D'}></Button>
+            <Button title={time} onPress={ () => {setShowTime(true);}} color={'rgb(100, 150, 100)'}></Button>
             {showTime && <DateTimePicker 
                     mode={'time'} 
                     value={new Date()}
