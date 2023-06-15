@@ -88,6 +88,12 @@ export default HomePage = ({ navigation }) => {
         }}
         title="View sightings"
       />
+            <Button
+        onPress={() => {
+          navigation.navigate("IdentifyBird");
+        }}
+        title="Identify"
+      />
 
       {user && (
         <TouchableOpacity style={styles.button} onPress={handleSignOut}>

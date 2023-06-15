@@ -12,9 +12,11 @@ import Sighting from "./components/Sighting.jsx"
 import SightingList from "./components/SightingList.jsx";
 import NavigationBar from "./components/NavigationBar.jsx";
 import Bird from "./components/Bird.jsx";
+import IdentifyBird from "./components/IdentifyBird.jsx";
 import { UserContext } from "./utils/UserContext.js";
 import LoginScreen from "./components/LoginScreen.jsx";
 import { useState } from "react";
+import UserPerchAlerts from "./components/UserPerchAlerts.jsx";
 
 
 const Stack = createNativeStackNavigator();
@@ -84,6 +86,7 @@ function App() {
           })}
         />
 
+        <Stack.Screen name="IdentifyBird" component={IdentifyBird} />
         <Stack.Screen
           name="Bird"
           component={Bird}
