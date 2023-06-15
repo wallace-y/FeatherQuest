@@ -12,8 +12,7 @@ import {
 import { db } from "../firebaseConfig";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-
-let width = Dimensions.get("window").width;
+import CustomButton from "./CustomButton";
 
 export default Species = ({ navigation }) => {
   const [birds, setBirds] = useState([]);
@@ -44,25 +43,28 @@ export default Species = ({ navigation }) => {
         <Text style={styles.header}>All Birds</Text>
         {loading && <Text>Loading...Please Wait</Text>}
 
-        <Button title="Go Back" onPress={() => navigation.goBack()} />
-
-        {birds.map((bird, index) => (
-          <View key={index} style={styles.birdCard}>
-            <Text style={styles.birdName}>{bird.common_name}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Bird", bird);
-              }}
-            >
-              <Image
-                source={{
-                  uri: bird.bird_image_url,
+        <View style={styles.buttonContainer}>
+          <CustomButton title="Go Back" onPress={() => navigation.goBack()} />
+        </View>
+        <View style={styles.row}>
+          {birds.map((bird, index) => (
+            <View key={index} style={styles.birdCard}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Bird", bird);
                 }}
-                style={styles.image}
-              />
-            </TouchableOpacity>
-          </View>
-        ))}
+              >
+                <Image
+                  source={{
+                    uri: bird.bird_image_url,
+                  }}
+                  style={styles.image}
+                />
+              </TouchableOpacity>
+              <Text style={styles.birdName}>{bird.common_name}</Text>
+            </View>
+          ))}
+        </View>
       </View>
       {error && <Text>{error}</Text>}
     </ScrollView>
@@ -74,29 +76,45 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#7A918D",
     alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 20,
+    paddingBottom: 40,
+  },
+  row: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
   },
   image: {
-    width: width * 0.8,
+    width: "100%",
     aspectRatio: 1,
-    resizeMode: "contain",
-    alignSelf: "center",
-    justifyContent: "center",
+    resizeMode: "cover",
+    marginBottom: 10,
   },
   header: {
+    color: "white",
     textAlign: "center",
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 0,
     fontWeight: "bold",
-    fontSize: 40,
+    fontSize: 30,
   },
   birdCard: {
+    width: "33%",
+    height: 180,
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#A18276",
+    borderRadius: 5,
+    padding: 10,
+    backgroundColor: "#AAC0AA",
   },
   birdName: {
+    color: "white",
     textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 25,
+    fontSize: 14,
     marginBottom: 5,
+  },
+  buttonContainer: {
+    marginBottom: 15,
   },
 });
