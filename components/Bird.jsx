@@ -75,12 +75,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   header: {
+    fontFamily: "Virgil",
     textAlign: "center",
     marginTop: 10,
     marginBottom: 10,
-    fontWeight: "bold",
     fontSize: 40,
-    color: "white",
+    color: "black",
   },
   image: {
     width: width * 0.8,
@@ -90,19 +90,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   mainText: {
+    fontFamily: "Virgil",
     textAlign: "center",
     margin: 10,
     textAlign: "justify",
-    color: "white",
+    color: "black",
   },
   birdDetails: {
+    fontFamily: "Virgil",
     textAlign: "center",
     margin: 10,
     textAlign: "justify",
   },
   detailsText: {
-    color: "white",
-    fontStyle: "italic",
+    fontFamily: "Virgil",
+    color: "black",
   },
   hr: {
     width: "100%",
