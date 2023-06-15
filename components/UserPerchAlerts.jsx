@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Image, Dimensions, ScrollView } from "react-native";
+import { StyleSheet, Text, View, Image, Dimensions, ScrollView, TouchableOpacity, Button } from "react-native";
 import { pullBirdsById } from '../utils/pullBirdsById';
 let width = Dimensions.get("window").width;
 
 
- function UserPerchAlerts({birds, user}) {
+ function UserPerchAlerts({birds, user, navigation}) {
   const [userBird, setUserBird] = useState([]);
+  // console.log(navigation);
 
 useEffect(() =>{
 
@@ -16,7 +17,6 @@ if(user.firstName){
   })
 }
 }, [user])
-
   return (
     <View style={styles.perchAlerts}>
      
@@ -27,10 +27,18 @@ if(user.firstName){
       userBird.map(bird=>{
 
         return (
-        <View key={bird['id'] + bird["common_name"]}>  
-        <Text style={styles.userSightingText}>{bird["common_name"]}</Text>
-        <Image source={{uri: bird["bird_image_url"]}} style={styles.userSights} />
-        </View>
+          <TouchableOpacity
+          key={bird['id'] + bird["common_name"]}
+          onPress={() => {
+            navigation.navigate("Bird", bird);
+          }}
+        >
+              <View>  
+              <Text style={styles.userSightingText}>{bird["common_name"]}</Text>
+              <Image source={{uri: bird["bird_image_url"]}} style={styles.userSights} />
+              </View>
+
+        </TouchableOpacity>
         )
       })
       

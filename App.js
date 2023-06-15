@@ -14,6 +14,7 @@ import Bird from "./components/Bird.jsx";
 import { UserContext } from "./utils/UserContext.js";
 import LoginScreen from "./components/LoginScreen.jsx";
 import { useState } from "react";
+import UserPerchAlerts from "./components/UserPerchAlerts.jsx";
 
 
 const Stack = createNativeStackNavigator();
