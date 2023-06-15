@@ -14,12 +14,12 @@ export default HomePage = ({ navigation }) => {
     .then((data) => {
       setGlobalUser({
         userId: auth.currentUser.uid,
-        firstName: data.first_name,
-        secondName: data.last_name,
-        region: data.location,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        location: data.location,
         username: data.username,
-        profilePic: data.profile_image_url,
-        perchList: [...data.perch_list],
+        profile_image_urlprofilePic: data.profile_image_url,
+        perch_list: [...data.perch_list],
       })
   
     }).catch((err) => {
