@@ -11,7 +11,7 @@ import { UserContext } from "../utils/UserContext";
 
 let width = Dimensions.get("window").width;
 
-export default Profile = () => {
+export default Profile = ({ navigation }) => {
   const {globalUser, setGlobalUser} = useContext(UserContext)
   const [user, setUser] = useState({})
 
@@ -45,7 +45,7 @@ useEffect(() => {
         <Text style={styles.textStyling}>Username - {user.firstName}e</Text>
       </View>
       </View>
-      <UserPerchAlerts birds = {user.perchList} user={user}/>
+      <UserPerchAlerts birds = {user.perchList} user={user} navigation={navigation}/>
     </View>
   );
 };
