@@ -31,7 +31,7 @@ export default NavigationBar = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Sighting");
+            navigation.navigate("PostSighting");
           }}
           title="Sighting"
           style={styles.imageContainer}

@@ -7,7 +7,8 @@ import Profile from "./components/Profile.jsx";
 import Maps from "./components/Maps.jsx";
 import Species from "./components/Species.jsx";
 import Settings from "./components/Settings.jsx";
-import Sighting from "./components/Sighting.jsx";
+import PostSighting from "./components/postSightings/PostSighting.jsx";
+import Sighting from "./components/Sighting.jsx"
 import SightingList from "./components/SightingList.jsx";
 import NavigationBar from "./components/NavigationBar.jsx";
 import Bird from "./components/Bird.jsx";
@@ -66,6 +67,13 @@ function App() {
         <Stack.Screen
           name="Sighting"
           component={Sighting}
+          options={({ navigation }) => ({
+            header: () => <NavigationBar navigation={navigation} />,
+          })}
+        />
+        <Stack.Screen
+          name="PostSighting"
+          component={PostSighting}
           options={({ navigation }) => ({
             header: () => <NavigationBar navigation={navigation} />,
           })}
