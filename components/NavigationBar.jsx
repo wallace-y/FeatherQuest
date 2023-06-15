@@ -65,18 +65,6 @@ export default NavigationBar = ({ navigation }) => {
             style={styles.image}
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Settings");
-          }}
-          title="Settings"
-          style={styles.imageContainer}
-        >
-          <Image
-            source={require("../assets/Settings.png")}
-            style={styles.image}
-          />
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -86,12 +74,11 @@ const styles = StyleSheet.create({
   navContainer: {
     marginTop: 28,
     width: "100%",
-    alignItems: "center",
     backgroundColor: "#AAC0AA",
   },
   navBar: {
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 8,
+    marginBottom: 8,
     flexDirection: "row",
     justifyContent: "space-evenly",
   },
