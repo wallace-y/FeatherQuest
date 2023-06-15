@@ -1,6 +1,5 @@
 import { View, Text, Image, StyleSheet, Keyboard} from 'react-native';
 import { collection, getDocs } from "firebase/firestore";
-import { Controller, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { db } from '../../firebaseConfig.js'
 
@@ -11,11 +10,11 @@ import SelectDropdown from 'react-native-select-dropdown';
 
 export default BirdSelection = ( { setSightingData, sightingData }) => {
     const [ birdList , setBirdList ] = useState([]);
-    const {control, handleSubmit, formState: { errors }} = useForm();
-
     const [ dropDownMargin, setDropDownMargin ] = useState(-90);
 
-    //
+    // AsyncStorage.removeItem('birdList').then( (result) => {
+    // })
+
     Keyboard.addListener('keyboardDidShow', () => {
         setDropDownMargin(245)
     })
@@ -23,13 +22,16 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
         setDropDownMargin(-90)
     })
     
+    
     // Get bird images and names to display for selection
     useEffect(() => {
         getLocalBirdList()
         .then( birds => {
             if(Array.isArray(birds)){
+                console.log("local")
                 setBirdList(birds)
             }else{
+                console.log('fetch')
                 getDocs(collection(db, "birds"))
                 .then((data) => {
                     const arr =  []
@@ -45,6 +47,9 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
                 })
             }
         })
+        .catch( err => {
+            console.log("Failed to load birds list", err)
+        })
     }, [])
 
     // Retrieve stored list from local storage
@@ -52,6 +57,8 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
         return AsyncStorage.getItem('birdList')
         .then( result => {
             return JSON.parse(result).arr;
+        }).catch( err => {
+            console.log( "Failed to load birds from local storage", err)
         })
     }
 
@@ -63,13 +70,9 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
 
     return (
         <View style={styles.containerSelectBirds}>
-            <Controller name="Bird" control={control} rules={{required: true}} render={({field: {onChange, onBlur, value}}) => (
                 <SelectDropdown
                     data={birdList}
-                    // onblur={onBlur}
                     onSelect={handleBirdSelect}
-                    // value={value}
-                    
                     dropdownStyle={ { marginTop: dropDownMargin, minHeight: 500 }}
                     buttonStyle={styles.dropDownButton}
                     rowStyle={styles.dropdownRow}
@@ -98,9 +101,6 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
                         );
                     }}
                 />
-                )}
-            />
-            {errors.Bird && <Text>This is required.</Text>}
         </View>
     )
 }
