@@ -15,37 +15,29 @@ export default Profile = ({ navigation }) => {
   const {globalUser, setGlobalUser} = useContext(UserContext)
   const [user, setUser] = useState({})
 
-
 useEffect(() => {
-  getUserData(globalUser.userId)
-  .then((data) => {
     setUser({
-      firstName: data.first_name,
-      secondName: data.last_name,
-      region: data.location,
-      username: data.username,
-      profilePic: data.profile_image_url,
-      perchList: [...data.perch_list],
+      userId: globalUser.userId,
+      first_name: globalUser.first_name,
+      last_name: globalUser.last_name,
+      location: globalUser.location,
+      username: globalUser.username,
+      profile_image_url: globalUser.profile_image_url,
+      perch_list: [...globalUser.perch_list],
     })
-
-  }).catch((err) => {
-    console.log(err);
-
-  })
-}, [])
-// console.log(user);
+}, [globalUser])
   return (
     <View style={styles.container}>
       <View style={styles.userInfocontainer}>
-      <Image source={{uri: user.profilePic}} style={styles.profilePic} />
+      <Image source={{uri: user.profile_image_url}} style={styles.profilePic} />
       <View style={styles.userInfo}>
-        <Text style={styles.textStyling}>Forename - {user.firstName}</Text>
-        <Text style={styles.textStyling}>Surname - {user.secondName}</Text>
-        <Text style={styles.textStyling}>Region - {user.region}</Text>
-        <Text style={styles.textStyling}>Username - {user.firstName}e</Text>
+        <Text style={styles.textStyling}>Forename - {user.first_name}</Text>
+        <Text style={styles.textStyling}>Surname - {user.last_name}</Text>
+        <Text style={styles.textStyling}>Region - {user.location}</Text>
+        <Text style={styles.textStyling}>Username - {user.first_name}e</Text>
       </View>
       </View>
-      <UserPerchAlerts birds = {user.perchList} user={user} navigation={navigation}/>
+      <UserPerchAlerts birds = {user.perch_list} user={user} navigation={navigation}/>
     </View>
   );
 };

@@ -26,12 +26,12 @@ function handleAddBird(){
        return( 
         {
         userId: currUser.userId,
-        firstName: data.first_name,
-        secondName: data.last_name,
-        region: data.location,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        location: data.location,
         username: data.username,
-        profilePic: data.profile_image_url,
-        perchList: [...data.perch_list],
+        profile_image_url: data.profile_image_url,
+        perch_list: [...data.perch_list],
         })
         })
     })
@@ -49,12 +49,12 @@ function handleRemoveBird(){
      return( 
       {
       userId: currUser.userId,
-      firstName: data.first_name,
-      secondName: data.last_name,
-      region: data.location,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      location: data.location,
       username: data.username,
-      profilePic: data.profile_image_url,
-      perchList: [...data.perch_list],
+      profile_image_url: data.profile_image_url,
+      perch_list: [...data.perch_list],
       })
       })
   })
@@ -64,7 +64,7 @@ function handleRemoveBird(){
 }
 
 useEffect(()=>{
-    if(globalUser.perchList.includes(id)){
+    if(globalUser.perch_list.includes(id)){
         setBirdAdded(true);
     } else {
         setBirdAdded(false);
@@ -78,6 +78,7 @@ useEffect(()=>{
         <TouchableOpacity
           onPress={() => {
             handleRemoveBird();
+           
           }}
           style={styles.addContainer}
         >
@@ -111,8 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    alignSelf: "center",
-  }
+    alignSelf: "center",}
 })
 
 
