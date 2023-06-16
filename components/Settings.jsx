@@ -25,9 +25,6 @@ import { confirmPasswordReset, updatePassword } from "firebase/auth";
 
 export default Settings = ({ navigation }) => {
 
-// console.log(auth.currentUser);
-  // const { globalUser, setGlobalUser } = useContext(UserContext);
-
   const [user, setUser] = useState({});
   const [screenNameUpdated, setScreenNameUpdated] = useState(false);
   const [firstNameUpdated, setFirstNameUpdated] = useState(false);
@@ -35,12 +32,12 @@ export default Settings = ({ navigation }) => {
   const [locationUpdated, setLocationUpdated] = useState(false);
   const [passwordUpdated, setPasswordUpdated] = useState(false);
 
-
   const [newScreenName, setNewScreenName] = useState("");
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
   const [newLocation, setNewLocation] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  
   const [newScreenNameValid, setNewScreenNameValid] = useState(true);
   const [newFirstNameValid, setNewFirstNameValid] = useState(true);
   const [newLastNameValid, setNewLastNameValid] = useState(true);
