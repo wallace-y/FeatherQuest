@@ -30,7 +30,6 @@ export default SightingCard = ( { sightedBird, navigation, sighting, modalVisibl
 
     //Navigate to Sighting
     function handlePress () {
-        console.log("close")
         setModalVisible(false)
         marker.hideCallout()
         navigation.navigate("Sighting", {...sightedBird, ...sighting})
