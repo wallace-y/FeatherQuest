@@ -18,6 +18,7 @@ import LoginScreen from "./components/LoginScreen.jsx";
 import { useState } from "react";
 import UserPerchAlerts from "./components/UserPerchAlerts.jsx";
 import SignUp from "./components/SignUp.jsx";
+import ForgotPassword from "./components/ForgotPassword.jsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -95,6 +96,7 @@ function App() {
             })}
           />
           <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>

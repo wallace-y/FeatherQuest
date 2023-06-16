@@ -110,6 +110,9 @@ export default LoginScreen = ({ navigation }) => {
         >
           <Text style={styles.buttonOutlineText}>Sign Up!</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+          <Text style={styles.buttonText}>Forgot Password</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
