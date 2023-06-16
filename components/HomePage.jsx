@@ -3,6 +3,7 @@ import { auth } from "../firebaseConfig";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
+import SightingList from "./SightingList";
 
 export default HomePage = ({ navigation }) => {
   const user = auth.currentUser;
@@ -41,6 +42,8 @@ export default HomePage = ({ navigation }) => {
   };
 
   return (
+    <>
+    <SightingList/>
     <View styles={styles.container}>
 
       {user ? null : (
@@ -52,48 +55,6 @@ export default HomePage = ({ navigation }) => {
         />
       )}
 
-      <Button
-        onPress={() => {
-          navigation.navigate("Profile");
-        }}
-        title="Profile"
-      />
-      <Button
-        onPress={() => {
-          navigation.navigate("Maps");
-        }}
-        title="Maps"
-      />
-      <Button
-        onPress={() => {
-          navigation.navigate("Species");
-        }}
-        title="Species"
-      />
-      <Button
-        onPress={() => {
-          navigation.navigate("Settings");
-        }}
-        title="Settings"
-      />
-      <Button
-        onPress={() => {
-          navigation.navigate("PostSighting");
-        }}
-        title="Post sighting"
-      />
-      <Button
-        onPress={() => {
-          navigation.navigate("SightingList");
-        }}
-        title="View sightings"
-      />
-            <Button
-        onPress={() => {
-          navigation.navigate("IdentifyBird");
-        }}
-        title="Identify"
-      />
 
       {user && (
         <TouchableOpacity style={styles.button} onPress={handleSignOut}>
@@ -102,6 +63,7 @@ export default HomePage = ({ navigation }) => {
         </TouchableOpacity>
       )}
     </View>
+    </>
   );
 };
 
@@ -118,7 +80,6 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 100,
   },
   buttonOutline: {
     backgroundColor: "white",

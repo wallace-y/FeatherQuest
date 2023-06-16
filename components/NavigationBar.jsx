@@ -7,7 +7,7 @@ export default NavigationBar = ({ navigation }) => {
       <View style={styles.navBar}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("SightingList");
+            navigation.navigate("Home");
           }}
           title="SightingList"
           style={styles.imageContainer}
