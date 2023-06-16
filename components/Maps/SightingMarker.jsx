@@ -5,7 +5,7 @@ import { Marker} from 'react-native-maps';
 
 import SightingCard from './SightingCard.jsx'
 
-export default SightinGMarker = ( { navigation, sighting, mapCentered, setMapCentered }) => {
+export default SightingMarker = ( { navigation, sighting, mapCentered, setMapCentered }) => {
 
     const [ sightedBird, setSightedBird ] = useState([])
     const [ loadingBirds, setLoadingBirds ] = useState(true)

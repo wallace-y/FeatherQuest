@@ -28,15 +28,12 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
         getLocalBirdList()
         .then( birds => {
             if(Array.isArray(birds)){
-                console.log("local")
                 setBirdList(birds)
             }else{
-                console.log('fetch')
                 getDocs(collection(db, "birds"))
                 .then((data) => {
                     const arr =  []
                     data.forEach( bird => {
-                        console.log(bird.key())
                         arr.push({
                             id: bird.data().id,
                             title: bird.data().common_name,
@@ -79,7 +76,6 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
                     buttonStyle={styles.dropDownButton}
                     rowStyle={styles.dropdownRow}
                     search
-                    onSearch={() => {console.log("Search")}}
                     searchPlaceHolder={"Search..."}
                     searchInputStyle={styles.searchInput}
                     renderCustomizedButtonChild={(selectedItem, index) => {

@@ -8,7 +8,10 @@ import {
   View,
 } from "react-native";
 import { db } from "../firebaseConfig";
-import { useEffect, useState } from "react";
+import { auth } from "../firebaseConfig";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../utils/UserContext";
+import { getUserData } from "../utils/pullUserInfo";
 import {
   collection,
   query,
@@ -16,42 +19,51 @@ import {
   getDocs,
   doc,
   updateDoc,
+  onSnapshot,
 } from "firebase/firestore";
+import { confirmPasswordReset, updatePassword } from "firebase/auth";
 
 export default Settings = ({ navigation }) => {
+
   const [user, setUser] = useState({});
   const [screenNameUpdated, setScreenNameUpdated] = useState(false);
   const [firstNameUpdated, setFirstNameUpdated] = useState(false);
   const [lastNameUpdated, setLastNameUpdated] = useState(false);
   const [locationUpdated, setLocationUpdated] = useState(false);
+  const [passwordUpdated, setPasswordUpdated] = useState(false);
 
   const [newScreenName, setNewScreenName] = useState("");
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
   const [newLocation, setNewLocation] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  
   const [newScreenNameValid, setNewScreenNameValid] = useState(true);
   const [newFirstNameValid, setNewFirstNameValid] = useState(true);
   const [newLastNameValid, setNewLastNameValid] = useState(true);
   const [newLocationValid, setNewLocationValid] = useState(true);
+  const [newPasswordValid, setNewPasswordValid] = useState(true);
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const q = query(collection(db, "users"), where("id", "==", 4));
-        const querySnapshot = await getDocs(q);
-        const userData = querySnapshot.docs.map((doc) => doc.data());
-        setUser(userData[0]);
+        const current_user = auth.currentUser;
+        onSnapshot(doc(db, "users", current_user.uid), (doc) => {
+          setUser(doc.data());
+        });
       } catch (error) {
         console.log(error);
       }
     };
 
     getUser();
-  }, [user, handleSubmit]);
+  }, [handleSubmit]);
 
   const updateScreenName = async () => {
     try {
-      const userRef = doc(db, "users", "5pfZtCfrTQJa0sF6nNAT");
+      const current_user = auth.currentUser;
+
+      const userRef = doc(db, "users", current_user.uid);
       await updateDoc(userRef, {
         screen_name: newScreenName,
       });
@@ -65,7 +77,9 @@ export default Settings = ({ navigation }) => {
 
   const updatedFirstName = async () => {
     try {
-      const userRef = doc(db, "users", "5pfZtCfrTQJa0sF6nNAT");
+      const current_user = auth.currentUser;
+
+      const userRef = doc(db, "users", current_user.uid);
       await updateDoc(userRef, {
         first_name: newFirstName,
       });
@@ -78,7 +92,9 @@ export default Settings = ({ navigation }) => {
 
   const updatedLastName = async () => {
     try {
-      const userRef = doc(db, "users", "5pfZtCfrTQJa0sF6nNAT");
+      const current_user = auth.currentUser;
+
+      const userRef = doc(db, "users", current_user.uid);
       await updateDoc(userRef, {
         last_name: newLastName,
       });
@@ -91,7 +107,9 @@ export default Settings = ({ navigation }) => {
 
   const updatedLocation = async () => {
     try {
-      const userRef = doc(db, "users", "5pfZtCfrTQJa0sF6nNAT");
+      const current_user = auth.currentUser;
+
+      const userRef = doc(db, "users", current_user.uid);
       await updateDoc(userRef, {
         location: newLocation,
       });
@@ -101,27 +119,68 @@ export default Settings = ({ navigation }) => {
       setNewLocation("");
     }
   };
+  const updateUserPassword = async () => {
+    try {
+      const current_user = auth.currentUser;
+      updatePassword(current_user, newPassword).then(() => {
+        setNewPassword("");
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log('Password Updated');
+    }
+  };
 
-  function handleSubmit() {
-    if (newScreenNameValid && screenNameUpdated) {
-      updateScreenName();
-      setScreenNameUpdated(false);
+  const handleSubmit = async () => {
+    try {
+      if (screenNameUpdated) {
+        if (newScreenNameValid) {
+          await updateScreenName();
+          setScreenNameUpdated(false);
+        } else {
+          throw new Error("Invalid screen name");
+        }
+      }
+      if (firstNameUpdated) {
+        if (newFirstNameValid) {
+          await updatedFirstName();
+          setFirstNameUpdated(false);
+        } else {
+          throw new Error("Invalid First name");
+        }
+      }
+      if (lastNameUpdated) {
+        if (newLastNameValid) {
+          await updatedLastName();
+          setLastNameUpdated(false);
+        } else {
+          throw new Error("Invalid Last name");
+        }
+      }
+      if (locationUpdated) {
+        if (newLocationValid) {
+          await updatedLocation();
+          setLocationUpdated(false);
+        } else {
+          throw new Error("Invalid Last name");
+        }
+      }
+      if (passwordUpdated) {
+        if (newPasswordValid) {
+          await updateUserPassword();
+          setPasswordUpdated(false);
+
+        } else {
+          throw new Error("Invalid Password");
+        }
+      }
+      alert("Details successfully updated");
+    } catch (err) {
+      console.log(err);
+      alert("Invalid entries. Please update the above fields.");
     }
-    if (newFirstNameValid && firstNameUpdated) {
-      updatedFirstName();
-      setFirstNameUpdated(false);
-    }
-    if (newLastNameValid && lastNameUpdated) {
-      updatedLastName();
-      setLastNameUpdated(false);
-    }
-    if (newLocationValid && locationUpdated) {
-      updatedLocation();
-      setLocationUpdated(false);
-    } else {
-      alert("Invalid entries please update the above fields.");
-    }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -234,7 +293,23 @@ export default Settings = ({ navigation }) => {
 
       <View style={styles.inputGroup}>
         <Text>Change Password:</Text>
-        <TextInput style={styles.inputText} placeholder="****TBC****" />
+        <TextInput 
+         inputMode="text"
+         textAlign="center"
+         autoCapitalize="none"
+        style={styles.inputText} 
+        value={newPassword}
+        onChangeText={(text) => {
+          setNewPassword(text);
+          setPasswordUpdated(true);
+
+          if (newPassword.length < 1) {
+            setNewPasswordValid(false);
+          } else {
+            setNewPasswordValid(true);
+          }
+        }}
+        placeholder="****TBC****" />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -254,6 +329,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   inputGroup: {
+    fontFamily: "Virgil",
     padding: 10,
     marginBottom: 20,
     width: "100%",
@@ -263,10 +339,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   inputText: {
+    fontFamily: "Virgil",
     marginLeft: 10,
     color: "white",
   },
   header: {
+    fontFamily: "Virgil",
     color: "white",
     marginTop: 20,
     marginBottom: 20,
