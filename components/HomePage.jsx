@@ -19,7 +19,7 @@ export default HomePage = ({ navigation }) => {
           last_name: data.last_name,
           location: data.location,
           username: data.username,
-          profile_image_urlprofilePic: data.profile_image_url,
+          profile_image_url: data.profile_image_url,
           perch_list: [...data.perch_list],
         });
       })
@@ -28,17 +28,17 @@ export default HomePage = ({ navigation }) => {
       });
   }, []);
 
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        console.log("User signed out");
-        navigation.navigate("LoginScreen");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+  // const handleSignOut = () => {
+  //   auth
+  //     .signOut()
+  //     .then(() => {
+  //       console.log("User signed out");
+  //       navigation.navigate("LoginScreen");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.message);
+  //     });
+  // };
 
   return (
     <>
@@ -94,13 +94,6 @@ export default HomePage = ({ navigation }) => {
           }}
           title="Identify"
         />
-
-        {user && (
-          <TouchableOpacity style={styles.button} onPress={handleSignOut}>
-            <Text style={styles.buttonText}>Sign Out</Text>
-            <Text>Email: {user?.email}</Text>
-          </TouchableOpacity>
-        )}
       </View>
     </>
   );
