@@ -20,6 +20,7 @@ import { auth } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import { db } from "../firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
+import SignUp from "./SignUp";
 
 export default LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -104,10 +105,13 @@ export default LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={handleSignUp}
+          onPress={() => navigation.navigate("SignUp")}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Sign Up!</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+          <Text style={styles.buttonText}>Forgot Password</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -122,10 +126,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#5e7975",
   },
   title: {
+    fontFamily: "Virgil",
     fontSize: 30,
-    fontWeight: "bold",
     marginBottom: 20,
-    textAlignVertical: "center",
+    textAlign: "center",
   },
   iconContainer: {
     justifyContent: "center",
@@ -136,6 +140,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   input: {
+    fontFamily: "Virgil",
     backgroundColor: "white",
     paddingHorizontal: 15,
     paddingVertical: 10,
@@ -162,13 +167,13 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   buttonText: {
+    fontFamily: "Virgil",
     color: "white",
-    fontWeight: "700",
     fontSize: 16,
   },
   buttonOutlineText: {
+    fontFamily: "Virgil",
     color: "#0782F9",
-    fontWeight: "700",
     fontSize: 16,
   },
 });

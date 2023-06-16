@@ -21,24 +21,28 @@ import {
   updateDoc,
   onSnapshot,
 } from "firebase/firestore";
+import { confirmPasswordReset, updatePassword } from "firebase/auth";
 
 export default Settings = ({ navigation }) => {
-  // const { globalUser, setGlobalUser } = useContext(UserContext);
 
   const [user, setUser] = useState({});
   const [screenNameUpdated, setScreenNameUpdated] = useState(false);
   const [firstNameUpdated, setFirstNameUpdated] = useState(false);
   const [lastNameUpdated, setLastNameUpdated] = useState(false);
   const [locationUpdated, setLocationUpdated] = useState(false);
+  const [passwordUpdated, setPasswordUpdated] = useState(false);
 
   const [newScreenName, setNewScreenName] = useState("");
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
   const [newLocation, setNewLocation] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  
   const [newScreenNameValid, setNewScreenNameValid] = useState(true);
   const [newFirstNameValid, setNewFirstNameValid] = useState(true);
   const [newLastNameValid, setNewLastNameValid] = useState(true);
   const [newLocationValid, setNewLocationValid] = useState(true);
+  const [newPasswordValid, setNewPasswordValid] = useState(true);
 
   useEffect(() => {
     const getUser = async () => {
@@ -115,6 +119,18 @@ export default Settings = ({ navigation }) => {
       setNewLocation("");
     }
   };
+  const updateUserPassword = async () => {
+    try {
+      const current_user = auth.currentUser;
+      updatePassword(current_user, newPassword).then(() => {
+        setNewPassword("");
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log('Password Updated');
+    }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -148,6 +164,15 @@ export default Settings = ({ navigation }) => {
           setLocationUpdated(false);
         } else {
           throw new Error("Invalid Last name");
+        }
+      }
+      if (passwordUpdated) {
+        if (newPasswordValid) {
+          await updateUserPassword();
+          setPasswordUpdated(false);
+
+        } else {
+          throw new Error("Invalid Password");
         }
       }
       alert("Details successfully updated");
@@ -268,7 +293,23 @@ export default Settings = ({ navigation }) => {
 
       <View style={styles.inputGroup}>
         <Text>Change Password:</Text>
-        <TextInput style={styles.inputText} placeholder="****TBC****" />
+        <TextInput 
+         inputMode="text"
+         textAlign="center"
+         autoCapitalize="none"
+        style={styles.inputText} 
+        value={newPassword}
+        onChangeText={(text) => {
+          setNewPassword(text);
+          setPasswordUpdated(true);
+
+          if (newPassword.length < 1) {
+            setNewPasswordValid(false);
+          } else {
+            setNewPasswordValid(true);
+          }
+        }}
+        placeholder="****TBC****" />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -288,6 +329,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   inputGroup: {
+    fontFamily: "Virgil",
     padding: 10,
     marginBottom: 20,
     width: "100%",
@@ -297,10 +339,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   inputText: {
+    fontFamily: "Virgil",
     marginLeft: 10,
     color: "white",
   },
   header: {
+    fontFamily: "Virgil",
     color: "white",
     marginTop: 20,
     marginBottom: 20,

@@ -83,9 +83,11 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   textStyling: {
+    fontFamily: "Virgil",
     fontSize: 16,
     color: "#344055",
   },
+
   userInfocontainer: {
     flexDirection: "row",
     alignItems: "center",

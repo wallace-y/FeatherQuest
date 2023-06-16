@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
+
 export default NavigationBar = ({ navigation }) => {
   const route = useRoute();
 
@@ -10,7 +11,7 @@ export default NavigationBar = ({ navigation }) => {
       <View style={styles.navBar}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("SightingList");
+            navigation.navigate("Home");
           }}
           title="SightingList"
           style={[
@@ -87,7 +88,6 @@ export default NavigationBar = ({ navigation }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   navContainer: {
     marginTop: 28,
