@@ -10,36 +10,23 @@ export default HomePage = ({ navigation }) => {
   const {globalUser, setGlobalUser} = useContext(UserContext)
   useEffect(() => {
     getUserData(auth.currentUser.uid)
-    .then((data) => {
-      setGlobalUser({
-        userId: auth.currentUser.uid,
-        first_name: data.first_name,
-        last_name: data.last_name,
-        location: data.location,
-        username: data.username,
-        profile_image_urlprofilePic: data.profile_image_url,
-        perch_list: [...data.perch_list],
+      .then((data) => {
+        setGlobalUser({
+          userId: auth.currentUser.uid,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          location: data.location,
+          username: data.username,
+          profile_image_url: data.profile_image_url,
+          perch_list: [...data.perch_list],
+        });
       })
-  
-    }).catch((err) => {
-      console.log(err);
-  
-    })
-  }, [])
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        console.log("User signed out");
-        navigation.navigate("LoginScreen");
-      })
-      .catch((error) => {
-        console.log(error.message);
+      .catch((err) => {
+        console.log(err);
       });
-  };
+  }, []);
 
   return (
-    <>
     <View styles={styles.container}>
 
       {user ? null : (
@@ -49,17 +36,8 @@ export default HomePage = ({ navigation }) => {
           }}
           title="Login"
         />
-      )}
-
-
-      {user && (
-        <TouchableOpacity style={styles.button} onPress={handleSignOut}>
-          <Text style={styles.buttonText}>Sign Out</Text>
-          <Text>Email: {user?.email}</Text>
-        </TouchableOpacity>
-      )}
+      )}  
     </View>
-    </>
   );
 };
 
