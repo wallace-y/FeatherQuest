@@ -11,17 +11,25 @@ import SelectLocation from './SelectLocation.jsx';
 export default PostSighting = () => {
 
     const { globalUser } = useContext(UserContext)
-    const [ sightingData, setSightingData ] = useState({ bird: "", date: "" , location: "", user: globalUser.userId})
+    const [ sightingData, setSightingData ] = useState({ bird: "", created_at: "", coordinates: "", user: globalUser.userId})
     const windowHeight = useWindowDimensions().height;
     
     //Post sightings data to db
     const Submit = () => {
-        console.log("submited", sightingData, "submited",)
+        
+        let tempSightingData = {...sightingData}
+        tempSightingData.created_at = new Date().toISOString()
+        setSightingData({ bird: "", created_at: "", coordinates: "", user: globalUser.userId})
+        console.log("submited", tempSightingData)
+
         // COOMENTED for dev purpososes
-        // addDoc(collection(db, "sightings"), sightingData)
-        // .then( docRef => {
-        //     console.log(docRef)
-        // })
+        addDoc(collection(db, "sightings"), tempSightingData)
+        .then( docRef => {
+            // console.log(docRef)
+        })
+        .catch(err => {
+            console.log("Failed to submit a sighting")
+        })
     }
 
     return (

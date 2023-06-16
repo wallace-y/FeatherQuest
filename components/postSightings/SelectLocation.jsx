@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, Image} from 'react-native';
+import { View, Text, StyleSheet, Image} from 'react-native';
 import MapView, { Marker } from 'react-native-maps'; //https://github.com/react-native-maps/react-native-maps/blob/master/docs/mapview.md
 import { useState } from 'react';
 
@@ -14,7 +14,7 @@ export default SelectLocation = ( { sightingData, setSightingData }) => {
     const handleRegionChange = (region) => {
         setRegion(region)
         let tempSightingData = {...sightingData}
-        tempSightingData.location = [region.longitude, region.latitude]
+        tempSightingData.coordinates = { coordinates: [region.longitude, region.latitude], type: "Point"}
         setSightingData(tempSightingData)
     }
 

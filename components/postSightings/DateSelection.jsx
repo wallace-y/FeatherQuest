@@ -5,10 +5,9 @@ import TimeSelector from './TimeSelector.jsx'
 export default DateSelection = ( { sightingData, setSightingData} ) => {
 
     const onChange = (event, selectedDate) => {
-        console.log(event)
         if(event.type === 'set'){
             let tempSightingData = {...sightingData}
-            tempSightingData.date = selectedDate
+            tempSightingData.date_spotted = selectedDate.toISOString()
             setSightingData(tempSightingData)
         }
     };
