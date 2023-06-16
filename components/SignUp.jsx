@@ -221,6 +221,7 @@
 // });
 
 // export default SignUp;
+import * as Device from "expo-device";
 
 import { useState, useEffect } from "react";
 import {
@@ -274,7 +275,7 @@ const SignUp = () => {
           quality: 1,
         });
 
-        if (!result.cancelled) {
+        if (!result.canceled) {
           setImage(result.uri);
           setUploading(true);
           await uploadImage(result.uri);
