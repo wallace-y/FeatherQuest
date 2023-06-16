@@ -52,6 +52,5 @@ export default SightingMarker = ( { navigation, sighting, mapCentered, setMapCen
             ref={ref=> {setMarker(ref)}}
             >
                 <SightingCard sightedBird={sightedBird[0]} navigation={navigation} sighting={sighting} modalVisible={modalVisible} setModalVisible={setModalVisible} marker={marker} mapCentered={mapCentered} setMapCentered={setMapCentered}/>
-                
             </Marker> 
 }
