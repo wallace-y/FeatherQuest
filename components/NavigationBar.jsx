@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-
 export default NavigationBar = ({ navigation }) => {
   return (
     <View style={styles.navContainer}>
@@ -69,7 +68,6 @@ export default NavigationBar = ({ navigation }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   navContainer: {
     marginTop: 28,
