@@ -1,7 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { useRoute } from "@react-navigation/native";
 
 export default NavigationBar = ({ navigation }) => {
+  const route = useRoute();
+
   return (
     <View style={styles.navContainer}>
       <View style={styles.navBar}>
@@ -10,7 +13,10 @@ export default NavigationBar = ({ navigation }) => {
             navigation.navigate("SightingList");
           }}
           title="SightingList"
-          style={styles.imageContainer}
+          style={[
+            styles.imageContainer,
+            route.name === "SightingList" && styles.activeButton,
+          ]}
         >
           <Image
             source={require("../assets/HomeButton.png")}
@@ -22,7 +28,10 @@ export default NavigationBar = ({ navigation }) => {
             navigation.navigate("Species");
           }}
           title="Species"
-          style={styles.imageContainer}
+          style={[
+            styles.imageContainer,
+            route.name === "Species" && styles.activeButton,
+          ]}
         >
           <Image
             source={require("../assets/SpeciesButton.png")}
@@ -34,7 +43,10 @@ export default NavigationBar = ({ navigation }) => {
             navigation.navigate("PostSighting");
           }}
           title="Sighting"
-          style={styles.imageContainer}
+          style={[
+            styles.imageContainer,
+            route.name === "PostSighting" && styles.activeButton,
+          ]}
         >
           <Image
             source={require("../assets/PostSightingButton.png")}
@@ -46,7 +58,10 @@ export default NavigationBar = ({ navigation }) => {
             navigation.navigate("Maps");
           }}
           title="Maps"
-          style={styles.imageContainer}
+          style={[
+            styles.imageContainer,
+            route.name === "Maps" && styles.activeButton,
+          ]}
         >
           <Image
             source={require("../assets/MapButton.png")}
@@ -58,7 +73,10 @@ export default NavigationBar = ({ navigation }) => {
             navigation.navigate("Profile");
           }}
           title="Profile"
-          style={styles.imageContainer}
+          style={[
+            styles.imageContainer,
+            route.name === "Profile" && styles.activeButton,
+          ]}
         >
           <Image
             source={require("../assets/Profile.png")}
@@ -87,5 +105,12 @@ const styles = StyleSheet.create({
     height: 60,
     alignSelf: "center",
     justifyContent: "center",
+  },
+  activeButton: {
+    borderWidth: 3,
+    borderColor: "#736372",
+    backgroundColor: "rgba(161,130,118,0.5)",
+    borderRadius: 10,
+    padding: 8,
   },
 });
