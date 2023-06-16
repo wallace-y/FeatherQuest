@@ -36,8 +36,9 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
                 .then((data) => {
                     const arr =  []
                     data.forEach( bird => {
+                        console.log(bird.key())
                         arr.push({
-                            id: bird.data().id, 
+                            id: bird.data().id,
                             title: bird.data().common_name,
                             image: bird.data().bird_image_url})
                     })
@@ -45,6 +46,7 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
                     //Store the bird data to local storage
                     return AsyncStorage.setItem('birdList', JSON.stringify({arr}))
                 })
+                .catch( err => console.log(err))
             }
         })
         .catch( err => {

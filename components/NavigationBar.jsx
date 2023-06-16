@@ -32,7 +32,7 @@ export default NavigationBar = ({ navigation }) => {
           onPress={() => {
             navigation.navigate("PostSighting");
           }}
-          title="Sighting"
+          title="PostSighting"
           style={styles.imageContainer}
         >
           <Image
