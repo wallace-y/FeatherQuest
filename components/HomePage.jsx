@@ -40,7 +40,6 @@ export default HomePage = ({ navigation }) => {
 
   return (
     <>
-    <SightingList/>
     <View styles={styles.container}>
 
       {user ? null : (
