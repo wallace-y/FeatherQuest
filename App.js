@@ -18,6 +18,7 @@ import LoginScreen from "./components/LoginScreen.jsx";
 import { useState } from "react";
 import UserPerchAlerts from "./components/UserPerchAlerts.jsx";
 import SignUp from "./components/SignUp.jsx";
+import ForgotPassword from "./components/ForgotPassword.jsx";
 
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -115,6 +116,7 @@ function App() {
             })}
           />
           <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
