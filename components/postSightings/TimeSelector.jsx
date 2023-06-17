@@ -12,7 +12,6 @@ export default DateSelector = ( { onChange, setTimeIsSet,  time, setTime } ) => 
                 mode={'time'} 
                 value={new Date()}
                 onChange={(event, date) => {
-
                     setTime(date.toLocaleTimeString())
                     setTimeIsSet(true)
                     setShowTime(false)

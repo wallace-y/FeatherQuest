@@ -12,8 +12,6 @@ export default DateSelector = ( { onChange, setDateIsSet, date, setDate } ) => {
                 mode={'date'} 
                 value={new Date()}
                 onChange={(event, date) => {
-                    console.log("DATE:", date.toLocaleDateString())
-                    
                     setDate(date.toLocaleDateString())
                     setDateIsSet(true)
                     setShowDate(false)

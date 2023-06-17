@@ -48,6 +48,7 @@ export default NavigationBar = ({ navigation }) => {
             styles.imageContainer,
             route.name === "PostSighting" && styles.activeButton,
           ]}
+        >
           <Image
             source={require("../assets/PostSightingButton.png")}
             style={styles.image}
