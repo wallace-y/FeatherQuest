@@ -34,6 +34,7 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
                 .then((data) => {
                     const arr =  []
                     data.forEach( bird => {
+                        console.log(bird)
                         arr.push({
                             id: bird.data().id,
                             title: bird.data().common_name,
@@ -62,8 +63,10 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
     }
 
     const handleBirdSelect = (data) => {
+        
         let tempSightingData = {...sightingData}
         tempSightingData.bird = data.id
+        
         setSightingData(tempSightingData)
     }
 

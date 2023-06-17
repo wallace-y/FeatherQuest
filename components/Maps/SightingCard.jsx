@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 // ISUE: The image in the card does note render at first time the callout opens. Image appears on the third press of the marker
 export default SightingCard = ( { sightedBird, navigation, sighting, modalVisible, setModalVisible, marker,  mapCentered}) => {
     
+   
     function cacheImages(images) {
         return images.map(image => {
           if (typeof image === 'string') {
@@ -15,8 +16,6 @@ export default SightingCard = ( { sightedBird, navigation, sighting, modalVisibl
           }
         });
       }
-
-
     useEffect( () => {
         try {
             const imageAssets = cacheImages([
@@ -24,7 +23,7 @@ export default SightingCard = ( { sightedBird, navigation, sighting, modalVisibl
             ]);
             Promise.all([...imageAssets, ])
         } catch (err) {
-            console.warn(err)
+            console.log(err)
         }
     }, [])
 
@@ -34,7 +33,6 @@ export default SightingCard = ( { sightedBird, navigation, sighting, modalVisibl
         marker.hideCallout()
         navigation.navigate("Sighting", {...sightedBird, ...sighting})
     }
-   
     return (
         <Callout  onPress={handlePress} tooltip style={styles.callout}>
             <View  style={styles.container}>
@@ -77,7 +75,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "rgba(50,50,50,0.5)"
+        backgroundColor: "rgba(10,10,10,0.3)"
     },
     cardOpacity: {
         flex: 1,
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
         width:200,
         maxHeight: 200,
         borderRadius: 20,
-        marginTop: -180
+        marginTop: -165
     },
     calloutText: {
         textAlign: 'center',

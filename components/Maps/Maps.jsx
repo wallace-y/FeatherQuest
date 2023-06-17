@@ -9,17 +9,18 @@ import mapStyle from '../../styles/mapStyle.js'
 import * as React from 'react'
 
 export default Maps = ({ navigation }) => {
+  
+  const [ sightingsList, setSightingList ] = useState([]);
+  const [ loadingMarkers, setLoadingMarkers ] = useState(true);
+  const [ mapCentered, setMapCentered] = useState(false);
 
   const region = {
     latitude: 53.475906,
     longitude: -2.248188,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01
-  }
+  };
   
-  const [ sightingsList, setSightingList ] = useState([]);
-  const [ loadingMarkers, setLoadingMarkers ] = useState(true);
-  const [ mapCentered, setMapCentered] = useState(false)
   
   //Fetch sightings data
   useEffect( () => {

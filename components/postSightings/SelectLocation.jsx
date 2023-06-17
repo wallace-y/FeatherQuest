@@ -16,6 +16,7 @@ export default SelectLocation = ( { sightingData, setSightingData }) => {
         let tempSightingData = {...sightingData}
         tempSightingData.coordinates = { coordinates: [region.longitude, region.latitude], type: "Point"}
         setSightingData(tempSightingData)
+        
     }
 
     return (
