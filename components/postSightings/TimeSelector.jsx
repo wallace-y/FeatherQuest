@@ -2,21 +2,22 @@ import DateTimePicker from '@react-native-community/datetimepicker'; //https://g
 import { View, Button} from 'react-native';
 import { useState } from 'react';
 
-export default DateSelector = ( { onChange } ) => {
+export default DateSelector = ( { onChange, setTimeIsSet,  time, setTime } ) => {
     const [ showTime, setShowTime ] = useState(false) 
-    const [ time, setTime ] = useState("Select time of sighting")
 
     return (
         <View>
-            <Button title={time} onPress={ () => {setShowTime(true);}} color={'rgb(100, 150, 100)'}></Button>
+            <Button title={time} onPress={ () => {setShowTime(true); setTimeIsSet(false)}} color={'rgb(100, 150, 100)'}></Button>
             {showTime && <DateTimePicker 
-                    mode={'time'} 
-                    value={new Date()}
-                    onChange={(event, date) => {
-                        setTime(date.toLocaleTimeString())
-                        setShowTime(false)
-                        onChange(event, date)
-                    }}
+                mode={'time'} 
+                value={new Date()}
+                onChange={(event, date) => {
+
+                    setTime(date.toLocaleTimeString())
+                    setTimeIsSet(true)
+                    setShowTime(false)
+                    onChange(event, date)
+                }}
             />} 
         </View>
     )

@@ -20,8 +20,10 @@ export default PostSighting = ({ navigation }) => {
   const { globalUser } = useContext(UserContext);
   const [sightingData, setSightingData] = useState({
     bird: "",
-    date: "",
-    location: "",
+    coordinates: "",
+    date_spotted: "",
+    created_at: "",
+    sighting_img_url: "",
     user: globalUser.userId,
   });
   const windowHeight = useWindowDimensions().height;
@@ -29,21 +31,25 @@ export default PostSighting = ({ navigation }) => {
   //Post sightings data to db
   const Submit = () => {
       
+      console.log(globalUser)
       let tempSightingData = {...sightingData}
       tempSightingData.created_at = new Date().toISOString()
-      setSightingData({ bird: "", created_at: "", coordinates: "", user: globalUser.userId})
+      setSightingData({ bird: "", date_spotted: "", coordinates: "", user: globalUser.userId, sighting_img_url: ""})
       console.log("submited", tempSightingData)
 
       // COOMENTED for dev purpososes
-      addDoc(collection(db, "sightings"), tempSightingData)
-      .then( docRef => {
-          // console.log(docRef)
-      })
-      .catch(err => {
-          console.log("Failed to submit a sighting")
-      })
+      // addDoc(collection(db, "sightings"), tempSightingData)
+      // .then( docRef => {
+      //     // console.log(docRef)
+      // })
+      // .catch(err => {
+      //     console.log("Failed to submit a sighting")
+      // })
   }
 
+    console.log(sightingData.bird === "" ||
+    sightingData.date_spotted === "" ||
+    sightingData.coordinates === "", sightingData)
   return (
       <View
         style={[
