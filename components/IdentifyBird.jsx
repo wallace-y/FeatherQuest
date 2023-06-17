@@ -16,16 +16,16 @@ import {
   LogBox,
   FlatList,
   ScrollView,
+  TouchableOpacity
 } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import uuid from "uuid";
+import CustomButton from "./CustomButton";
 
-// Editing this file with fast refresh will reinitialize the app on every refresh, let's not do that
 if (!getApps().length) {
   console.log("App not initalised");
 }
 
-// Firebase sets some timers for a long period, which will trigger some warnings. Let's turn that off for this example
 LogBox.ignoreLogs([`Setting a timer for a long period`]);
 
 export default class App extends React.Component {
@@ -50,25 +50,39 @@ export default class App extends React.Component {
 
     return (
       <View style={styles.container}>
-        {!!image && (
-          <Text
-            style={{
-              fontSize: 20,
-              marginBottom: 20,
-              textAlign: "center",
-              marginHorizontal: 15,
-            }}
-          >
-            Example: Upload ImagePicker result
-          </Text>
+        {this.state.googleResponse && (
+          <View>
+            <Text style={styles.bestGuess}>
+              Our best guess is:{" "}
+              {
+                this.state.googleResponse.responses[0].webDetection
+                  .webEntities[0].description
+              }
+            </Text>
+            <TouchableOpacity>
+              <Text>To use this guess in a posting please click</Text>
+              <CustomButton
+                title="here"
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              ></CustomButton>
+            </TouchableOpacity>
+          </View>
         )}
 
-        <Button
-          onPress={this._pickImage}
-          title="Pick an image from camera roll"
-        />
-
-        <Button onPress={this._takePhoto} title="Take a photo" />
+        {!image && (
+          <View>
+            <CustomButton
+              title="Pick an image from camera roll"
+              onPress={this._pickImage}
+            ></CustomButton>
+            <CustomButton
+              title="Take a photo"
+              onPress={this._takePhoto}
+            ></CustomButton>
+          </View>
+        )}
 
         {this._maybeRenderImage()}
         {this._maybeRenderUploadingOverlay()}
@@ -76,7 +90,12 @@ export default class App extends React.Component {
         <StatusBar barStyle="default" />
 
         {image && (
-          <Button onPress={() => this.submitToGoogle()} title="Analyze!" />
+          <View>
+            <CustomButton
+              onPress={() => this.submitToGoogle()}
+              title="Analyze!"
+            ></CustomButton>
+          </View>
         )}
 
         {/* {this.state.googleResponse && (
@@ -84,7 +103,7 @@ export default class App extends React.Component {
               {JSON.stringify(this.state.googleResponse.responses)}
             </Text>
           )} */}
-        {this.state.googleResponse && (
+        {/* {this.state.googleResponse && (
           <FlatList
             data={
               this.state.googleResponse.responses[0].webDetection.webEntities
@@ -93,7 +112,7 @@ export default class App extends React.Component {
             keyExtractor={this._keyExtractor}
             renderItem={({ item }) => <Text>Item: {item.description}</Text>}
           />
-        )}
+        )} */}
       </View>
     );
   }
@@ -132,7 +151,7 @@ export default class App extends React.Component {
       );
       let responseJson = await response.json();
       // console.log(responseJson);
-      // console.log(responseJson.responses[0]);
+      console.log(responseJson.responses[0]);
       this.setState({
         googleResponse: responseJson,
         uploading: false,
@@ -281,5 +300,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  bestGuess: {
+    fontFamily: "Virgil",
+    fontWeight: 700,
   },
 });

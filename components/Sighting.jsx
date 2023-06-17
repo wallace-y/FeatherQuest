@@ -7,12 +7,13 @@ let width = Dimensions.get("window").width;
 export default Sighting = ({ route, navigation }) => {
   const {
     common_name,
-    bird_image_url,
+    sighting_img_url,
     date_spotted,
-    screen_name,
+    user,
     rarity,
     coordinates,
   } = route.params;
+  console.log(route.params, "PARAMS")
   const dateDay = dayjs(date_spotted).format("DD-MM-YYYY");
   const dateTime = dayjs(date_spotted).format("HH:mm:ss");
   return (
@@ -20,7 +21,7 @@ export default Sighting = ({ route, navigation }) => {
       <Text style={styles.birdName}>{common_name}</Text>
       <Image
         source={{
-          uri: bird_image_url,
+          uri: sighting_img_url,
         }}
         style={styles.image}
       />
@@ -32,7 +33,7 @@ export default Sighting = ({ route, navigation }) => {
         {coordinates.coordinates.map((point) => `${point}, `)}
       </Text>
       <Text style={styles.birdInfo}>Rarity: {rarity} </Text>
-      <Text style={styles.birdInfo}>Spotted by: {screen_name}</Text>
+      <Text style={styles.birdInfo}>Spotted by: {user}</Text>
     </View>
   );
 };

@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomePage from "./components/HomePage.jsx";
 import Profile from "./components/Profile.jsx";
-import Maps from "./components/Maps.jsx";
+import Maps from "./components/Maps/Maps.jsx";
 import Species from "./components/Species.jsx";
 import Settings from "./components/Settings.jsx";
 import PostSighting from "./components/postSightings/PostSighting.jsx";
@@ -48,8 +48,13 @@ function App() {
     <UserContext.Provider value={{ globalUser, setGlobalUser }}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-
+          <Stack.Screen 
+            name="LoginScreen" 
+            component={LoginScreen}
+            options={() => ({
+              header: () => {}
+            })}
+         />
           <Stack.Screen
             name="Home"
             component={HomePage}
