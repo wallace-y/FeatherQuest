@@ -31,7 +31,7 @@ export default LoginScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation1.navigate("Home");
+        navigation1.navigate("SightingList");
       }
     });
 
