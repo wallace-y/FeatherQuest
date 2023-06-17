@@ -14,10 +14,9 @@ export default SightingMarker = ( { navigation, sighting, mapCentered, setMapCen
     
     
     const [marker, setMarker ] = useState()
-
     //Fetch data of sightings bird
     useEffect( () => { 
-        getDocs(query(collection(db, "birds"), where("id", "==", sighting.bird)))
+        getDocs(query(collection(db, "birds"), where("common_name", "==", sighting.bird)))
         .then( (bird) => {
             const birdArr = []
             bird.forEach( bird => {
@@ -25,6 +24,7 @@ export default SightingMarker = ( { navigation, sighting, mapCentered, setMapCen
             })
             setSightedBird(birdArr)
             setLoadingBirds(false)
+            
         })
         .catch( err => {
             console.log("Failed to load bird data", err)
