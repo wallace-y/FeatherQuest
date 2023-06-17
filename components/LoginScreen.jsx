@@ -66,8 +66,6 @@ export default LoginScreen = ({ navigation }) => {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Logged in with", user.email);
         alert("Logged in");
       })
       .catch((error) => {
@@ -130,6 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginBottom: 20,
     textAlign: "center",
+    color: 'white'
   },
   iconContainer: {
     justifyContent: "center",

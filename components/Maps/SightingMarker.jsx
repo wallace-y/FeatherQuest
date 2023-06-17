@@ -5,7 +5,7 @@ import { Marker} from 'react-native-maps';
 
 import SightingCard from './SightingCard.jsx'
 
-export default SightinGMarker = ( { navigation, sighting, mapCentered, setMapCentered }) => {
+export default SightingMarker = ( { navigation, sighting, mapCentered, setMapCentered }) => {
 
     const [ sightedBird, setSightedBird ] = useState([])
     const [ loadingBirds, setLoadingBirds ] = useState(true)
@@ -14,10 +14,9 @@ export default SightinGMarker = ( { navigation, sighting, mapCentered, setMapCen
     
     
     const [marker, setMarker ] = useState()
-
     //Fetch data of sightings bird
     useEffect( () => { 
-        getDocs(query(collection(db, "birds"), where("id", "==", sighting.bird)))
+        getDocs(query(collection(db, "birds"), where("common_name", "==", sighting.bird)))
         .then( (bird) => {
             const birdArr = []
             bird.forEach( bird => {
@@ -25,6 +24,7 @@ export default SightinGMarker = ( { navigation, sighting, mapCentered, setMapCen
             })
             setSightedBird(birdArr)
             setLoadingBirds(false)
+            
         })
         .catch( err => {
             console.log("Failed to load bird data", err)
@@ -52,6 +52,5 @@ export default SightinGMarker = ( { navigation, sighting, mapCentered, setMapCen
             ref={ref=> {setMarker(ref)}}
             >
                 <SightingCard sightedBird={sightedBird[0]} navigation={navigation} sighting={sighting} modalVisible={modalVisible} setModalVisible={setModalVisible} marker={marker} mapCentered={mapCentered} setMapCentered={setMapCentered}/>
-                
             </Marker> 
 }

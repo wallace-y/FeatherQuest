@@ -48,8 +48,13 @@ function App() {
     <UserContext.Provider value={{ globalUser, setGlobalUser }}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-
+          <Stack.Screen 
+            name="LoginScreen" 
+            component={LoginScreen}
+            options={() => ({
+              header: () => {}
+            })}
+         />
           <Stack.Screen
             name="Home"
             component={HomePage}

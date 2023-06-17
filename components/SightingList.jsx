@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
@@ -9,9 +8,11 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
-import { db } from "../firebaseConfig";
-import { useEffect, useState } from "react";
+import { db, auth } from "../firebaseConfig";
+import { useEffect, useState, useContext } from "react";
 import { collection, getDocs } from "firebase/firestore";
+import { UserContext } from "../utils/UserContext";
+import { getUserData } from "../utils/pullUserInfo";
 
 let width = Dimensions.get("window").width;
 
@@ -64,8 +65,10 @@ export default SightingList = ({ navigation }) => {
       return { ...result, ...sighting, ...findUser };
     });
   }
+
   return (
-    <ScrollView>
+    
+    <ScrollView >
       <View style={styles.container}>
         <Text style={styles.header}>All Sightings</Text>
         <Button title="Go Back" onPress={() => navigation.goBack()} />
@@ -73,16 +76,15 @@ export default SightingList = ({ navigation }) => {
         {matchedSightings.length > 0 &&
           matchedSightings.map((bird, index) => (
             <View key={index} style={styles.birdCard}>
-              <Text style={styles.birdName}>{bird.common_name}</Text>
+              <Text style={styles.birdName}>{bird.bird}</Text>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("Sighting", bird);
-                  // console.log(bird);
                 }}
               >
                 <Image
                   source={{
-                    uri: bird.bird_image_url,
+                    uri: bird.sighting_img_url,
                   }}
                   style={styles.image}
                 />
