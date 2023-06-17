@@ -43,9 +43,11 @@ export default NavigationBar = ({ navigation }) => {
           onPress={() => {
             navigation.navigate("PostSighting");
           }}
-          title="PostSighting"
-          style={styles.imageContainer}
-        >
+          title="Sighting"
+          style={[
+            styles.imageContainer,
+            route.name === "PostSighting" && styles.activeButton,
+          ]}
           <Image
             source={require("../assets/PostSightingButton.png")}
             style={styles.image}
