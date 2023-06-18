@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Image,
   Alert,
+  Keyboard,
 } from "react-native";
 import { auth } from "../firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -16,8 +17,9 @@ import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../firebaseConfig"; // Import the storage module
 import * as ImagePicker from "expo-image-picker";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import NavToLoginBar from './NavToLoginBar.jsx'
 
-const SignUp = () => {
+const SignUp = ( { navigation }) => {
   const [screenName, setScreenName] = useState("");
   const [screenNameValid, setScreenNameValid] = useState(false)
   const [email, setEmail] = useState("");
@@ -58,10 +60,10 @@ const SignUp = () => {
         });
 
         if (!result.canceled) {
-          setImage(result.uri);
+          setImage(result.assets[0].uri);//"result.uri" depricated
           setUploading(true);
-          await uploadImage(result.uri);
-          setImage(null);
+          await uploadImage(result.assets[0].uri);
+          // setImage(null);
           setUploading(false);
         }
       } catch (error) {
@@ -86,6 +88,19 @@ const SignUp = () => {
       Alert.alert("Error uploading photo.", "Please try again later.");
     }
   };
+
+  Keyboard.addListener('keyboardDidShow', () => {
+    navigation.setOptions({
+      title: "UP",
+      header: () => {}
+    })
+  })
+  Keyboard.addListener('keyboardDidHide', () => {
+    console.log("dowb")
+    navigation.setOptions({
+      header: () =>  <NavToLoginBar navigation={navigation} /> 
+    })
+  })
 
   const handleUsername = ( text ) => {
     if(text.length >= 6){
@@ -120,7 +135,6 @@ const SignUp = () => {
     }
     setSignnUpValid(screenNameValid && emailValid && passwordValid)
   }
-
   const handleSignUp = async () => {
     try {
       const userCredentials = await createUserWithEmailAndPassword(
@@ -205,7 +219,9 @@ const SignUp = () => {
       </TouchableOpacity>
 
       {image && (
-        <Image source={{ uri: image }} style={{ width: 300, height: 300 }} />
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: image }} style={styles.imagePreview} />
+        </View>
       )}
 
       <TouchableOpacity onPress={handleSignUp} 
@@ -236,7 +252,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "white",
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: 5,
     borderRadius: 10,
     marginTop: 5,
     width: "80%",
@@ -244,7 +260,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#0782F9",
     width: "60%",
-    padding: 15,
+    padding: 10,
     borderRadius: 10,
     alignItems: "center",
     marginTop: 20,
@@ -257,6 +273,19 @@ const styles = StyleSheet.create({
   disabledButton: {
     opacity: 0.5,
   },
+  imageContainer: {
+    margin: 10,
+    height: "30%",
+    width: "80%",
+    borderRadius: 20,
+    borderWidth: 4,
+    borderColor: "#7A918D",
+    overflow: 'hidden',
+  },
+  imagePreview: {
+    ...StyleSheet.absoluteFillObject,
+    
+  }
 });
 
 export default SignUp;
