@@ -1,77 +1,44 @@
-import { StatusBar } from "expo-status-bar";
+import { auth } from "../firebaseConfig";
+import {signInWithEmailAndPassword} from "firebase/auth";
 import { useEffect, useState } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import {
-  KeyboardAvoidingView,
-  StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
   Image,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../firebaseConfig";
-import { useNavigation } from "@react-navigation/native";
-import { db } from "../firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
 
 export default LoginScreen = ({ navigation }) => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const navigation1 = useNavigation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation1.navigate("Home");
+        navigation1.navigate("Home", { prevPage: "LoginScreen" });
       }
     });
 
     return unsubscribe;
   }, []);
 
-  const handleSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        setDoc(doc(db, "users/" + user.uid), {
-          created_at: user.metadata.creationTime,
-          first_name: "",
-          follower_list: [],
-          friend_list: [],
-          last_name: "",
-          location: "",
-          perch_list: [],
-          profile_image_url: "",
-          screen_name: "",
-          spotted_list: [],
-        });
-      })
-      .then(() => {
-        alert("Account Registered");
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
-
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        alert("Logged in");
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    .then((userCredentials) => {
+      alert("Logged in");
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
   };
-
+  
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
@@ -102,7 +69,7 @@ export default LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("SignUp")} // TODO: Something wrong here with non-serializable vlues found in the navigation state  
+          onPress={() => navigation.navigate("SignUp")}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Sign Up!</Text>

@@ -1,23 +1,21 @@
-import * as Device from "expo-device";
-
 import { useState, useEffect } from "react";
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
   Image,
   Alert,
   Keyboard,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import { auth } from "../firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../firebaseConfig"; // Import the storage module
-import * as ImagePicker from "expo-image-picker";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import NavToLoginBar from './NavToLoginBar.jsx'
+import * as ImagePicker from "expo-image-picker";
 
 const SignUp = ( { navigation }) => {
   const [screenName, setScreenName] = useState("");
@@ -29,8 +27,6 @@ const SignUp = ( { navigation }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [location, setLocation] = useState("");
-
-  const [signUpValid, setSignnUpValid] = useState(false)  
 
   const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState(null);
@@ -91,16 +87,15 @@ const SignUp = ( { navigation }) => {
 
   Keyboard.addListener('keyboardDidShow', () => {
     navigation.setOptions({
-      title: "UP",
       header: () => {}
     })
   })
   Keyboard.addListener('keyboardDidHide', () => {
-    console.log("dowb")
     navigation.setOptions({
       header: () =>  <NavToLoginBar navigation={navigation} /> 
     })
   })
+  
 
   const handleUsername = ( text ) => {
     if(text.length >= 6){
@@ -119,8 +114,7 @@ const SignUp = ( { navigation }) => {
     }else{
       setEmail(text)
       setEmailValid(false)
-    }  console.log(signUpValid , "signUpValid")
-
+    }  
     setSignnUpValid(screenNameValid && emailValid && passwordValid)
   }
   const handlerPassword = (text) => {
