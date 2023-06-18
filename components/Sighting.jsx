@@ -13,6 +13,7 @@ export default Sighting = ({ route, navigation }) => {
     rarity,
     user
   } = route.params;
+  console.log(route.params, "PARAMS")
   const dateDay = dayjs(date_spotted).format("DD-MM-YYYY");
   const dateTime = dayjs(date_spotted).format("HH:mm:ss");
   

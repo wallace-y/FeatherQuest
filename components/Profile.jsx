@@ -20,6 +20,7 @@ export default Profile = ({ navigation }) => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
+    console.log(globalUser)
     setUser({
       userId: globalUser.userId,
       first_name: globalUser.first_name,
@@ -30,6 +31,7 @@ export default Profile = ({ navigation }) => {
       perch_list: [...globalUser.perch_list],
     });
   }, [globalUser]);
+
   return (
     <View style={styles.container}>
       <View style={styles.userInfocontainer}>

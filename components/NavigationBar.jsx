@@ -11,7 +11,7 @@ export default NavigationBar = ({ navigation }) => {
       <View style={styles.navBar}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Home");
+            navigation.navigate("SightingList");
           }}
           title="SightingList"
           style={[
@@ -111,6 +111,5 @@ const styles = StyleSheet.create({
     borderColor: "#736372",
     backgroundColor: "rgba(161,130,118,0.5)",
     borderRadius: 10,
-    padding: 8,
   },
 });

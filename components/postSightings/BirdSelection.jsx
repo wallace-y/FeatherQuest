@@ -28,30 +28,28 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
         getLocalBirdList()
         .then( birds => {
             if(Array.isArray(birds)){
-                console.log("local")
                 setBirdList(birds)
             }else{
-                console.log('fetch')
                 getDocs(collection(db, "birds"))
                 .then((data) => {
                     const arr =  []
                     data.forEach( bird => {
                         arr.push({
-                            id: bird.data().id, 
-                            title: bird.data().common_name,
-                            image: bird.data().bird_image_url})
+                            id: bird.data().id,
+                            common_name: bird.data().common_name,
+                            sighting_img_url: bird.data().bird_image_url})
                     })
                     setBirdList(arr)
                     //Store the bird data to local storage
                     return AsyncStorage.setItem('birdList', JSON.stringify({arr}))
                 })
+                .catch( err => console.log(err))
             }
         })
         .catch( err => {
             console.log("Failed to load birds list", err)
         })
     }, [])
-
     // Retrieve stored list from local storage
     function getLocalBirdList() {
         return AsyncStorage.getItem('birdList')
@@ -64,7 +62,9 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
 
     const handleBirdSelect = (data) => {
         let tempSightingData = {...sightingData}
-        tempSightingData.bird = data.id
+        tempSightingData.bird = data.common_name
+        tempSightingData.sighting_img_url = data.sighting_img_url
+        
         setSightingData(tempSightingData)
     }
 
@@ -77,26 +77,25 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
                     buttonStyle={styles.dropDownButton}
                     rowStyle={styles.dropdownRow}
                     search
-                    onSearch={() => {console.log("Search")}}
                     searchPlaceHolder={"Search..."}
                     searchInputStyle={styles.searchInput}
                     renderCustomizedButtonChild={(selectedItem, index) => {
                         return (
                             <View style={styles.row}>
                                     {selectedItem ? (
-                                        <Image source={{uri: selectedItem.image}} style={styles.image}/>
+                                        <Image source={{uri: selectedItem.sighting_img_url}} style={styles.image}/>
                                         ) : ( 
                                         <Image source={require('../../assets/bird-select.jpg')} style={styles.image}/>
                                         )} 
-                                    <Text style={styles.dropDownText} >{selectedItem ? selectedItem.title : 'Select Bird'}</Text>
+                                    <Text style={styles.dropDownText} >{selectedItem ? selectedItem.common_name : 'Select Bird'}</Text>
                             </View>
                         );
                     }}
                     renderCustomizedRowChild={(item, index) => {
                         return (
                             <View style={styles.row}>
-                                <Image source={{uri: item.image}} style={styles.image}/>
-                                <Text style={styles.dropDownText} >{item.title}</Text>
+                                <Image source={{uri: item.sighting_img_url}} style={styles.image}/>
+                                <Text style={styles.dropDownText} >{item.common_name}</Text>
                             </View>
                         );
                     }}

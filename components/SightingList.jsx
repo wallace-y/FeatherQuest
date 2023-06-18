@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
@@ -9,10 +8,12 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
-import { db } from "../firebaseConfig";
-import { useEffect, useState } from "react";
+import { db, auth } from "../firebaseConfig";
+import { useEffect, useState, useContext } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import CustomButton from "./CustomButton";
+import { UserContext } from "../utils/UserContext";
+import { getUserData } from "../utils/pullUserInfo";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -54,8 +55,7 @@ export default SightingList = ({ navigation }) => {
     fetchAllBirds();
   }, []);
 
-
-  return (
+return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.header}>All Sightings</Text>
@@ -158,3 +158,4 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
 });
+

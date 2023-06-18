@@ -132,6 +132,18 @@ export default Settings = ({ navigation }) => {
     }
   };
 
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        console.log("User signed out");
+        navigation.navigate("LoginScreen");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   const handleSubmit = async () => {
     try {
       if (screenNameUpdated) {
@@ -316,6 +328,9 @@ export default Settings = ({ navigation }) => {
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
+          <Text style={styles.signOutButtonText}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -365,6 +380,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+
+  signOutButton: {
+    backgroundColor: "#B24C63",
+    width: "100%",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  signOutButtonText: {
     color: "white",
     fontWeight: "700",
     fontSize: 16,
