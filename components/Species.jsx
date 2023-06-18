@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   birdName: {
     fontFamily: "Virgil",
     textAlign: "center",
-    fontSize: 25,
+    fontSize: 15,
     marginBottom: 5,
   },
   buttonContainer: {
