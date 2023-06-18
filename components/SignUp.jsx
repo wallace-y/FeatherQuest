@@ -105,7 +105,6 @@ const SignUp = ( { navigation }) => {
       setScreenName(text)
       setScreenNameValid(false)
     }
-    setSignnUpValid(screenNameValid && emailValid && passwordValid)
   }
   const handleEmail = (text) => {
     if((/^[a-zA-z0-9]+@[a-zA-z0-9]+[\.][a-zA-z0-9]+$/).test(text)){
@@ -115,7 +114,6 @@ const SignUp = ( { navigation }) => {
       setEmail(text)
       setEmailValid(false)
     }  
-    setSignnUpValid(screenNameValid && emailValid && passwordValid)
   }
   const handlerPassword = (text) => {
     console.log(text)
@@ -127,7 +125,6 @@ const SignUp = ( { navigation }) => {
       setPassword(text)
       setPasswordValid(false)
     }
-    setSignnUpValid(screenNameValid && emailValid && passwordValid)
   }
   const handleSignUp = async () => {
     try {
