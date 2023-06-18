@@ -20,9 +20,6 @@ let height = Dimensions.get("window").height;
 
 export default SightingList = ({ navigation }) => {
   const [allSightings, setAllSightings] = useState([]);
-  // const [allBirds, setAllBirds] = useState([]);
-  // const [allUsers, setAllUsers] = useState([]);
-  // const [allComments, setAllComments] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -73,7 +70,6 @@ return (
         <View style={styles.row}>
           {allSightings.map((bird, index) => (
             <View key={index} style={styles.birdCard}>
-              <Text style={styles.birdName}>{bird.bird}</Text>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("Sighting", bird);
@@ -86,6 +82,8 @@ return (
                   style={styles.image}
                 />
               </TouchableOpacity>
+              <Text style={styles.birdName}>{bird.bird}</Text>
+
             </View>
           ))}
         </View>
