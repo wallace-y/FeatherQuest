@@ -11,70 +11,67 @@ import {
 import { db, auth } from "../firebaseConfig";
 import { useEffect, useState, useContext } from "react";
 import { collection, getDocs } from "firebase/firestore";
+import CustomButton from "./CustomButton";
 import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
 
 let width = Dimensions.get("window").width;
+let height = Dimensions.get("window").height;
 
 export default SightingList = ({ navigation }) => {
   const [allSightings, setAllSightings] = useState([]);
-  const [allBirds, setAllBirds] = useState([]);
-  const [allUsers, setAllUsers] = useState([]);
-  const [allComments, setAllComments] = useState([]);
+  // const [allBirds, setAllBirds] = useState([]);
+  // const [allUsers, setAllUsers] = useState([]);
+  // const [allComments, setAllComments] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchAllBirds = async () => {
       try {
+        setLoading(true);
+
         const [
-          birdsQuerySnapshot,
           sightingsQuerySnapshot,
-          usersQuerySnapshot,
-          commentsQuerySnapshot,
+
         ] = await Promise.all([
-          getDocs(collection(db, "birds")),
           getDocs(collection(db, "sightings")),
-          getDocs(collection(db, "users")),
-          getDocs(collection(db, "comments")),
+ 
         ]);
-        const birdData = birdsQuerySnapshot.docs.map((doc) => doc.data());
         const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
-          doc.data()
-        );
-        const usersData = usersQuerySnapshot.docs.map((doc) => doc.data());
-        const commentsData = commentsQuerySnapshot.docs.map((doc) =>
           doc.data()
         );
 
         setAllSightings(sightingsData);
-        setAllBirds(birdData);
-        setAllUsers(usersData);
-        setAllComments(commentsData);
+ 
       } catch (error) {
-        console.log(error);
+        console.log(error.message);
+        setError("Failed to fetch sightings data. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchAllBirds();
   }, []);
 
-  let matchedSightings = [];
-  if (allSightings.length > 0 && allBirds.length > 0) {
-    matchedSightings = allSightings.map((sighting) => {
-      const result = allBirds.find((bird) => bird.id === sighting.bird);
-      const findUser = allUsers.find((user) => user.id === sighting.user);
-      return { ...result, ...sighting, ...findUser };
-    });
-  }
-
-  return (
-    
-    <ScrollView >
+return (
+    <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.header}>All Sightings</Text>
-        <Button title="Go Back" onPress={() => navigation.goBack()} />
+        {loading && (
+          <Text style={styles.loadingText}>Loading...Please Wait</Text>
+        )}
 
-        {matchedSightings.length > 0 &&
-          matchedSightings.map((bird, index) => (
+        <View style={styles.buttonContainer}>
+          <CustomButton
+            title="Go Back"
+            onPress={() => navigation.goBack()}
+          ></CustomButton>
+        </View>
+
+        <View style={styles.row}>
+          {allSightings.map((bird, index) => (
             <View key={index} style={styles.birdCard}>
               <Text style={styles.birdName}>{bird.bird}</Text>
               <TouchableOpacity
@@ -91,24 +88,33 @@ export default SightingList = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           ))}
+        </View>
+        {error && (
+          <View>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollView: {
+    minHeight: height,
+    backgroundColor: "#7A918D",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#7A918D",
     alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 20,
+    marginBottom: 100,
   },
   image: {
-    width: width * 0.8,
+    width: "100%",
     aspectRatio: 1,
-    resizeMode: "contain",
-    alignSelf: "center",
-    justifyContent: "center",
+    resizeMode: "cover",
+    marginBottom: 10,
   },
   header: {
     fontFamily: "Virgil",
@@ -118,12 +124,38 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
   birdCard: {
+    width: "33%",
+    height: 180,
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#A18276",
+    borderRadius: 5,
+    padding: 10,
+    backgroundColor: "#AAC0AA",
   },
   birdName: {
     fontFamily: "Virgil",
     textAlign: "center",
-    fontSize: 25,
+    fontSize: 15,
     marginBottom: 5,
   },
+  buttonContainer: {
+    marginBottom: 15,
+  },
+  loadingText: {
+    fontFamily: "Virgil",
+    textAlign: "center",
+    fontSize: 25,
+  },
+  errorText: {
+    fontFamily: "Virgil",
+    textAlign: "center",
+    fontSize: 25,
+  },
+  row: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+  },
 });
+
