@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { db, auth } from "../firebaseConfig";
 import { useEffect, useState, useContext } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import CustomButton from "./CustomButton";
 import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
@@ -23,14 +23,15 @@ export default SightingList = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchAllBirds = async () => {
       try {
         setLoading(true);
-
-        const [sightingsQuerySnapshot] = await Promise.all([
-          getDocs(collection(db, "sightings")),
-        ]);
+        const q = query(
+          collection(db, "sightings"),
+          orderBy("date_spotted", "desc")
+        );
+        const [sightingsQuerySnapshot] = await Promise.all([getDocs(q)]);
         const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
           doc.data()
         );
@@ -46,6 +47,7 @@ export default SightingList = ({ navigation }) => {
 
     fetchAllBirds();
   }, []);
+
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -84,8 +86,13 @@ export default SightingList = ({ navigation }) => {
                   />
                 )}
               </TouchableOpacity>
-              <Text style={styles.birdName} numberOfLines={2} ellipsizeMode="tail" >{bird.bird}</Text>
-
+              <Text
+                style={styles.birdName}
+                numberOfLines={2}
+                ellipsizeMode="tail"
+              >
+                {bird.bird}
+              </Text>
             </View>
           ))}
         </View>
