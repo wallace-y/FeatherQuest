@@ -21,7 +21,7 @@ const textBlack = "black"
 const inputColor = "white"
 const font = "Virgil"
 
-export default styles = StyleSheet.create({
+export const styles = StyleSheet.create({
 /* Containers */
 scrollView: {
     minHeight: SCREEN_HEIGHT,
@@ -110,3 +110,26 @@ imagePreview: {
 }
 
 });
+
+export const navStyles = StyleSheet.create({
+    navContainer: {
+        flexDirection: "row",
+        marginTop: "10%",
+        height: 60,
+        width: "100%",
+        justifyContent: "space-evenly",
+        backgroundColor: "#AAC0AA",
+    
+      },
+      image: {
+        width: 60,
+        height: 60,
+        alignSelf: "center",
+        justifyContent: "center",
+      },
+      text: {
+        alignSelf: 'center',
+        fontFamily:'Virgil',
+        fontSize: 20,
+      },
+})
