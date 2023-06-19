@@ -10,10 +10,7 @@ import {
 import { getUserData } from "../utils/pullUserInfo";
 import { useEffect, useState, useContext } from "react";
 import UserPerchAlerts from "./UserPerchAlerts";
-import { auth } from "../firebaseConfig";
 import { UserContext } from "../utils/UserContext";
-// import GetUserLocation from "./postSightings/oldfile";
-import { getUserLocation } from "../utils/getUserLocation";
 
 let width = Dimensions.get("window").width;
 
@@ -37,7 +34,6 @@ export default Profile = ({ navigation }) => {
   
   return (
     <View style={styles.container}>
-      {/* <GetUserLocation/> */}
       <View style={styles.userInfocontainer}>
         <View>
           <Image

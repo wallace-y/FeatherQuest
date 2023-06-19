@@ -50,7 +50,6 @@ export default HomePage = ({ navigation, route }) => {
   }
   return (
     <View style={styles.container}>
-      {/* <GetUserLocation userLocation={userLocation} setUserLocation={setUserLocation}/> */}
       <TouchableOpacity>
         <Text style={styles.welcomeText}>Welcome, { globalUser.username || globalUser.first_name || "User"} </Text>
       </TouchableOpacity>
