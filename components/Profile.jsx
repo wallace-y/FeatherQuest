@@ -47,10 +47,10 @@ export default Profile = ({ navigation }) => {
         </View>
 
         <View style={styles.userInfo}>
+          <Text style={styles.textStyling}>Username - {user.username}</Text>
           <Text style={styles.textStyling}>Forename - {user.first_name}</Text>
           <Text style={styles.textStyling}>Surname - {user.last_name}</Text>
           <Text style={styles.textStyling}>Region - {user.location}</Text>
-          <Text style={styles.textStyling}>Username - {user.first_name}e</Text>
         </View>
       </View>
       <View style={styles.userSettings}>

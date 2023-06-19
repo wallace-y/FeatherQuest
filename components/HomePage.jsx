@@ -1,19 +1,25 @@
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth } from "../firebaseConfig";
-import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
-import SightingList from "./SightingList";
+import { useContext, useEffect, useState } from "react";
+import { Button, StyleSheet, Text, TouchableOpacity, View, BackHandler } from "react-native";
 
-export default HomePage = ({ navigation }) => {
 
-  const user = auth.currentUser;
-  const {globalUser, setGlobalUser} = useContext(UserContext)
-  const [ loadingUser, setLoadingUse ] = useState(true)
+export default HomePage = ({ navigation, route }) => {
+
+  const { globalUser, setGlobalUser } = useContext(UserContext)
+  const [ loadingUser, setLoadingUser ] = useState(true)
+
+  
 
   useEffect(() => {
-    getUserData(auth.currentUser.uid)
-      .then((data) => {
+    /* This prevents navigation by phone buttons on all pages, 
+      but fixes the problem of signout button not nagiating back to LoginScreen */
+    BackHandler.addEventListener('hardwareBackPress', () =>  true )
+
+    if(auth.currentUser){
+      getUserData(auth.currentUser.uid)
+      .then((data) => { 
         setGlobalUser({
           userId: auth.currentUser.uid,
           first_name: data.first_name,
@@ -23,24 +29,18 @@ export default HomePage = ({ navigation }) => {
           profile_image_url: data.profile_image_url,
           perch_list: [...data.perch_list],
         });
-        setLoadingUse(false)
+        setLoadingUser(false)
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-
-  //Prevent going back to login screen
-  useEffect(() => {
-    navigation.addListener('beforeRemove', (e) => {
-      e.preventDefault()
-    })
-  },)
+    }
+  }, [auth.currentUser]);
 
   if(loadingUser){
     return (
       <View styles={styles.container}>
-
+          <Text> Loading...</Text>
       </View>
     )
   }
