@@ -14,6 +14,7 @@ import { db } from "../firebaseConfig";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import CustomButton from "./CustomButton";
+import { styles } from "../styles/style.js";
 
 let height = Dimensions.get("window").height;
 
@@ -51,117 +52,122 @@ export default Species = ({ navigation }) => {
       })
     );
   }, [searchQuery]);
-  console.log(searchQuery)
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
-        <Text style={styles.header}>All Birds</Text>
-        {loading && <Text>Loading...Please Wait</Text>}
+      <View style={styles.pageContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>All Birds</Text>
+        </View>
+        {loading && <Text style={styles.loadingText}>Loading...Please Wait</Text>}
 
         <View style={styles.buttonContainer}>
-          <CustomButton title="Go Back" onPress={() => navigation.goBack()} />
+          <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+            <Text style={styles.buttonText}>Go Back</Text>
+          </TouchableOpacity>
         </View>
+
         <View style={styles.inputContainer}>
           <TextInput
             autoCapitalize="none"
             placeholder="Search for a bird"
+            maxLength={50}
             style={styles.input}
             value={searchQuery}
             onChangeText={(text) => setSearchQuery(text)}
           />
         </View>
-        <View style={styles.row}>
+
+        <View style={styles.listContainer}>
           {filteredList.map((bird, index) => (
-            <View key={index} style={styles.birdCard}>
-              <TouchableOpacity
+            <TouchableOpacity key={index}
+                style={styles.birdCardContainer}
                 onPress={() => {
                   navigation.navigate("Bird", bird);
                 }}
-              >
+            >
+              <View style={styles.birdCardImageContainer}>
                 <Image
                   source={{
                     uri: bird.bird_image_url,
                   }}
-                  style={styles.image}
-                />
-              </TouchableOpacity>
+                  style={[styles.birdCardImage]}
+                  />
+              </View>
               <Text
-                style={styles.birdName}
+                style={styles.text}
                 numberOfLines={2}
                 ellipsizeMode="tail"
-              >
+                >
                 {bird.common_name}
               </Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
+
       </View>
-      {error && <Text>{error}</Text>}
+      {error && <Text style={styles.warningText}>{error}</Text>}
     </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
-  scrollView: {
-    minHeight: height,
-    backgroundColor: "#7A918D",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#7A918D",
-    alignItems: "center",
-    paddingTop: 20,
-    paddingBottom: 40,
-  },
-  row: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start",
-  },
-  image: {
-    width: "100%",
-    aspectRatio: 1,
-    resizeMode: "cover",
-    marginBottom: 10,
-  },
-  header: {
-    fontFamily: "Virgil",
-    textAlign: "center",
-    marginTop: 10,
-    marginBottom: 10,
-    fontSize: 40,
-  },
-  birdCard: {
-    width: "33%",
-    height: 180,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "#A18276",
-    borderRadius: 5,
-    padding: 10,
-    backgroundColor: "#AAC0AA",
-  },
-  birdName: {
-    fontFamily: "Virgil",
-    textAlign: "center",
-    fontSize: 15,
-    marginBottom: 5,
-  },
-  buttonContainer: {
-    marginBottom: 15,
-  },
-  inputContainer: {
-    width: "80%",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  input: {
-    flex: 1,
-    fontFamily: "Virgil",
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-});
+// const styles = StyleSheet.create({
+// 
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#7A918D",
+//     alignItems: "center",
+//     paddingTop: 20,
+//     paddingBottom: 40,
+//   },
+//   row: {
+//     flexDirection: "row",
+//     flexWrap: "wrap",
+//     alignItems: "flex-start",
+//   },
+//   image: {
+//     width: "100%",
+//     aspectRatio: 1,
+//     resizeMode: "cover",
+//     marginBottom: 10,
+//   },
+//   header: {
+//     fontFamily: "Virgil",
+//     textAlign: "center",
+//     marginTop: 10,
+//     marginBottom: 10,
+//     fontSize: 40,
+//   },
+//   birdCard: {
+//     width: "33%",
+//     height: 180,
+//     marginBottom: 20,
+//     borderWidth: 1,
+//     borderColor: "#A18276",
+//     borderRadius: 5,
+//     padding: 10,
+//     backgroundColor: "#AAC0AA",
+//   },
+//   birdName: {
+//     fontFamily: "Virgil",
+//     textAlign: "center",
+//     fontSize: 15,
+//     marginBottom: 5,
+//   },
+//   buttonContainer: {
+//     marginBottom: 15,
+//   },
+//   inputContainer: {
+//     width: "80%",
+//     flexDirection: "row",
+//     alignItems: "center",
+//   },
+//   input: {
+//     flex: 1,
+//     fontFamily: "Virgil",
+//     backgroundColor: "white",
+//     paddingHorizontal: 15,
+//     paddingVertical: 10,
+//     borderRadius: 10,
+//     marginBottom: 10,
+//   },
+// });

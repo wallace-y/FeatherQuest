@@ -38,6 +38,10 @@ pageContainer: {
     paddingBottom: 70,
 
   },
+titleContainer: {
+    borderWidth: devBoder,
+    maxHeight: 60,
+},
 iconContainer: {
     borderWidth: devBoder,
     justifyContent: "center",
@@ -54,6 +58,7 @@ buttonContainer: {
 inputContainer: {
     borderWidth: devBoder,
     width: "80%",
+    margin: 5,
 },
 listContainer: {
     flex: 1,
@@ -97,7 +102,8 @@ button: {
     backgroundColor: lightGreen,
     borderColor: purple,
     width: "100%",
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
     borderRadius: 10,
     alignItems: "center",
     marginTop: 5,
@@ -109,8 +115,7 @@ disabledButton:{
 /* text */
 titleText: {
     fontFamily: font,
-    fontSize:30,
-    marginBottom: 20,
+    fontSize: 30,
     textAlign: "center",
     color: textWhite
 },

@@ -53,8 +53,9 @@ export default SightingList = ({ navigation }) => {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.pageContainer}>
-
-        <Text style={styles.titleText}>All Sightings</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>All Sightings</Text>
+        </View>
         {loading && ( <Text style={styles.loadingText}>Loading...Please Wait</Text> )}
 
         <View style={styles.buttonContainer}>
