@@ -33,7 +33,8 @@ export default SightingList = ({ navigation }) => {
         );
         const [sightingsQuerySnapshot] = await Promise.all([getDocs(q)]);
         const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
-          doc.data()
+          ({  id: doc.id,
+            ...doc.data(),})
         );
 
         setAllSightings(sightingsData);
