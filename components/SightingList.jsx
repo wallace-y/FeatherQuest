@@ -31,19 +31,14 @@ export default SightingList = ({ navigation }) => {
       try {
         setLoading(true);
 
-        const [
-          sightingsQuerySnapshot,
-
-        ] = await Promise.all([
+        const [sightingsQuerySnapshot] = await Promise.all([
           getDocs(collection(db, "sightings")),
- 
         ]);
         const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
           doc.data()
         );
 
         setAllSightings(sightingsData);
- 
       } catch (error) {
         console.log(error.message);
         setError("Failed to fetch sightings data. Please try again later.");
@@ -55,7 +50,7 @@ export default SightingList = ({ navigation }) => {
     fetchAllBirds();
   }, []);
 
-return (
+  return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.header}>All Sightings</Text>
@@ -79,12 +74,19 @@ return (
                   navigation.navigate("Sighting", bird);
                 }}
               >
-                <Image
-                  source={{
-                    uri: bird.sighting_img_url,
-                  }}
-                  style={styles.image}
-                />
+                {bird.sighting_img_url === "" ? (
+                  <Image
+                    source={require("../assets/slawek-k-mZF-_SXc_6c-unsplash.jpg")}
+                    style={styles.image}
+                  />
+                ) : (
+                  <Image
+                    source={{
+                      uri: bird.sighting_img_url,
+                    }}
+                    style={styles.image}
+                  />
+                )}
               </TouchableOpacity>
             </View>
           ))}
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    aspectRatio: 1,
+    height: 100,
     resizeMode: "cover",
     marginBottom: 10,
   },
@@ -158,4 +160,3 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
 });
-
