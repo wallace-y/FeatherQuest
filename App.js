@@ -125,7 +125,13 @@ function App () {
               header: () =>  <NavToLoginBar navigation={navigation} />
             })}
           />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen 
+            name="ForgotPassword"
+            component={ForgotPassword}
+            options={( {navigation }) => ({
+              header: () =>  <NavToLoginBar navigation={navigation} />
+            })}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
