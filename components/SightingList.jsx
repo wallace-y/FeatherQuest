@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { db, auth } from "../firebaseConfig";
 import { useEffect, useState, useContext } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import CustomButton from "./CustomButton";
 import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
@@ -24,24 +24,20 @@ export default SightingList = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchAllBirds = async () => {
       try {
         setLoading(true);
-
-        const [
-          sightingsQuerySnapshot,
-
-        ] = await Promise.all([
-          getDocs(collection(db, "sightings")),
- 
-        ]);
+        const q = query(
+          collection(db, "sightings"),
+          orderBy("date_spotted", "desc")
+        );
+        const [sightingsQuerySnapshot] = await Promise.all([getDocs(q)]);
         const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
           doc.data()
         );
 
         setAllSightings(sightingsData);
- 
       } catch (error) {
         console.log(error.message);
         setError("Failed to fetch sightings data. Please try again later.");
@@ -53,7 +49,8 @@ export default SightingList = ({ navigation }) => {
     fetchAllBirds();
   }, []);
 
-return (
+
+  return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.pageContainer}>
 
@@ -73,13 +70,28 @@ return (
                 onPress={() => {navigation.navigate("Sighting", bird);}}
               >
                 <View style={styles.birdCardImageContainer}>
-                  <Image source={{ uri: bird.sighting_img_url}}
-                          style={styles.birdCardImage}
-                  />
+                  {bird.sighting_img_url === "" ? (
+                    <Image
+                      source={require("../assets/default-sighting-img.jpg")}
+                      style={[styles.birdCardImage]}
+                    />
+                  ) : (
+                    <Image
+                      source={{ uri: bird.sighting_img_url}}
+                      style={styles.birdCardImage}
+                    />
+                  )}
+                  
                 </View>
 
-                <Text style={styles.text}>{bird.bird}</Text>
-              </TouchableOpacity>
+                <Text
+                style={styles.text}
+                numberOfLines={2}
+                ellipsizeMode="tail"
+                >
+                  {bird.bird}
+                </Text>
+                </TouchableOpacity>
           ))}
         </View>
         {error && (

@@ -56,6 +56,7 @@ inputContainer: {
     width: "80%",
 },
 listContainer: {
+    flex: 1,
     borderWidth: devBoder,
     flexDirection: "row",
     flexWrap: "wrap",
@@ -64,13 +65,14 @@ listContainer: {
 birdCardContainer: {
     flex: 1,
     minWidth: "33%",
+    maxWidth: "33%",
     height: 180,
     marginBottom: 10,
     borderWidth: 1,
     borderColor: salmon,
     backgroundColor: lightGreen,
     borderRadius: 5,
-    padding: 10,
+    padding: 1,
 },
 imagePreviewContainer: {
     margin: 10,
@@ -129,7 +131,7 @@ textClickable: {
     fontSize: 18
 },
 loadingText: {
-    fontFamily: "Virgil",
+    fontFamily: font,
     textAlign: "center",
     fontSize: 25,
 },
@@ -143,17 +145,17 @@ birdCardImageContainer: {
     width: "100%",
     height: "80%",
     borderRadius: 10,
-    // borderWidth: 2,
     borderColor: darkGreen,
     overflow: 'hidden',
+    
 },
 birdCardImage: {
-    ...StyleSheet.absoluteFillObject,
+    aspectRatio:1,
+    height: "100%",
 },
 imagePreview: {
     ...StyleSheet.absoluteFillObject,
 }
-
 });
 
 export const navStyles = StyleSheet.create({
