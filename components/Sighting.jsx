@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Box,
   KeyboardAvoidingView,
 } from "react-native";
 import { useEffect, useState, useContext } from "react";
@@ -23,12 +24,19 @@ export default Sighting = ({ route, navigation }) => {
 
   const dateDay = dayjs(date_spotted).format("DD-MM-YYYY");
   const dateTime = dayjs(date_spotted).format("HH:mm:ss");
-  const [newComment, setNewComment] = useState("");
-  const { globalUser, setGlobalUser } = useContext(UserContext);
-  const { id, bird, sighting_img_url, coordinates, date_spotted, rarity, user } =
-    route.params;
+  const commentDay = dayjs(created_at).format("DD-MM-YYYY");
+  const commentTime = dayjs(created_at).format("HH:mm:ss");
 
+  const [newComment, setNewComment] = useState("");
   const [birdDetails, setBirdDetails] = useState(null);
+  
+  const { globalUser, setGlobalUser } = useContext(UserContext);
+  const { id, bird, sighting_img_url, coordinates, date_spotted, rarity, user, created_at } = route.params;
+
+  const [allSightings, setAllSightings] = useState([]);
+  const [allComments, setAllComments] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const postComment = async () => {
     try {
@@ -66,6 +74,28 @@ export default Sighting = ({ route, navigation }) => {
     fetchBirdDetails();
   }, [bird]);
 
+  useEffect(() => {
+    const fetchAllComments = async () => {
+      try {
+        const commentsQuerySnapshot = await getDocs(
+          query(collection(db, "comments"), where("sighting_id", "==", id))
+        );
+        const commentsData = commentsQuerySnapshot.docs.map((doc) =>
+          doc.data()
+        );
+
+        setAllComments(commentsData);
+      } catch (error) {
+        console.log(error.message);
+        setError("Failed to fetch comments data. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllComments();
+  }, []);
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
@@ -102,6 +132,17 @@ export default Sighting = ({ route, navigation }) => {
           <TouchableOpacity onPress={postComment}>
             <Text style={styles.buttonText}>Post</Text>
           </TouchableOpacity>
+          {allComments.map((comment) => (
+            <View style={styles.commentCard}>
+              <View style={styles.commentTitle}>
+                <Text style={styles.userName}>{comment.user} </Text>
+                <Text style={styles.commentDate}>
+                  Posted: {commentDay} at {commentTime}
+                </Text>
+              </View>
+              <Text>{comment.body}</Text>
+            </View>
+          ))}
         </View>
       </View>
     </ScrollView>
@@ -172,5 +213,34 @@ const styles = StyleSheet.create({
     paddingVertical: 35,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
+  },
+  commentTitle: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    marginBottom: 10,
+  },
+  commentDate: {
+    fontFamily: "Virgil",
+    textAlign: "right",
+    fontSize: 10,
+    paddingTop: 10,
+  },
+  userName: {
+    fontFamily: "Virgil",
+    textAlign: "left",
+    fontSize: 20,
+  },
+  commentCard: {
+    borderColor: "black",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderRadius: 8,
+    padding: 10,
+    width: "90%",
+    marginBottom: 10,
+    backgroundColor: "#324d32",
   },
 });
