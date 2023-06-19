@@ -132,6 +132,7 @@ export default Sighting = ({ route, navigation }) => {
           <TouchableOpacity onPress={postComment}>
             <Text style={styles.buttonText}>Post</Text>
           </TouchableOpacity>
+        </View>
           {allComments.map((comment) => (
             <View style={styles.commentCard}>
               <View style={styles.commentTitle}>
@@ -143,7 +144,6 @@ export default Sighting = ({ route, navigation }) => {
               <Text>{comment.body}</Text>
             </View>
           ))}
-        </View>
       </View>
     </ScrollView>
   )
