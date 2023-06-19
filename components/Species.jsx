@@ -22,7 +22,7 @@ export default Species = ({ navigation }) => {
   const [birds, setBirds] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [filteredList, setFilteredList] = useState([]);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default Species = ({ navigation }) => {
       })
     );
   }, [searchQuery]);
-
+  console.log(searchQuery)
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
