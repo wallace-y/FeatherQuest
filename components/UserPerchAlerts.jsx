@@ -17,7 +17,7 @@ function UserPerchAlerts({ birds, user, navigation }) {
   const { globalUser, setGlobalUser } = useContext(UserContext);
 
   useEffect(() => {
-    if (user.first_name) {
+    if (user.userId) {
       if (birds.length !== 0) {
         pullBirdsById(birds)
           .then((data) => {
