@@ -1,21 +1,41 @@
 import { StatusBar } from "expo-status-bar";
 import dayjs from "dayjs";
 import { StyleSheet, Text, Image, Dimensions, View } from "react-native";
+import { useEffect, useState } from "react";
+import { db } from "../firebaseConfig";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 let width = Dimensions.get("window").width;
 
 export default Sighting = ({ route, navigation }) => {
-  const {
-    bird,
-    sighting_img_url,
-    coordinates,
-    date_spotted,
-    rarity,
-    user
-  } = route.params;
+  const { bird, sighting_img_url, coordinates, date_spotted, rarity, user } =
+    route.params;
   const dateDay = dayjs(date_spotted).format("DD-MM-YYYY");
   const dateTime = dayjs(date_spotted).format("HH:mm:ss");
-  
+
+  const [birdDetails, setBirdDetails] = useState(null);
+
+  useEffect(() => {
+    const fetchBirdDetails = async () => {
+      try {
+        const birdQuery = query(
+          collection(db, "birds"),
+          where("common_name", "==", bird)
+        );
+        const birdQuerySnapshot = await getDocs(birdQuery);
+        if (!birdQuerySnapshot.empty) {
+          const birdDoc = birdQuerySnapshot.docs[0];
+          const birdData = birdDoc.data();
+          setBirdDetails(birdData);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    fetchBirdDetails();
+  }, [bird]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.birdName}>{bird}</Text>
@@ -34,6 +54,9 @@ export default Sighting = ({ route, navigation }) => {
       </Text>
       <Text style={styles.birdInfo}>Rarity: {rarity} </Text>
       <Text style={styles.birdInfo}>Spotted by: {user}</Text>
+      {birdDetails && (
+        <Text style={styles.birdInfo}>Details: {birdDetails.description}</Text>
+      )}
     </View>
   );
 };
