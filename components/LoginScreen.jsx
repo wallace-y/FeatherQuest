@@ -20,7 +20,6 @@ import { auth } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import { db } from "../firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
-import SignUp from "./SignUp";
 
 export default LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -103,7 +102,7 @@ export default LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("SignUp")}
+          onPress={() => navigation.navigate("SignUp")} // TODO: Something wrong here with non-serializable vlues found in the navigation state  
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Sign Up!</Text>

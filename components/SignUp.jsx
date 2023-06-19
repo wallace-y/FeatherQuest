@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Image,
   Alert,
+  Keyboard,
 } from "react-native";
 import { auth } from "../firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -16,16 +17,22 @@ import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../firebaseConfig"; // Import the storage module
 import * as ImagePicker from "expo-image-picker";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import NavToLoginBar from './NavToLoginBar.jsx'
 
-const SignUp = () => {
+const SignUp = ( { navigation }) => {
+  const [screenName, setScreenName] = useState("");
+  const [screenNameValid, setScreenNameValid] = useState(false)
   const [email, setEmail] = useState("");
+  const [emailValid, setEmailValid] = useState(false)
   const [password, setPassword] = useState("");
+  const [passwordValid, setPasswordValid] = useState(false)
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [location, setLocation] = useState("");
-  const [screenName, setScreenName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
 
+  const [signUpValid, setSignnUpValid] = useState(false)  
+
+  const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
 
@@ -53,10 +60,10 @@ const SignUp = () => {
         });
 
         if (!result.canceled) {
-          setImage(result.uri);
+          setImage(result.assets[0].uri);//"result.uri" depricated
           setUploading(true);
-          await uploadImage(result.uri);
-          setImage(null);
+          await uploadImage(result.assets[0].uri);
+          // setImage(null);
           setUploading(false);
         }
       } catch (error) {
@@ -82,6 +89,52 @@ const SignUp = () => {
     }
   };
 
+  Keyboard.addListener('keyboardDidShow', () => {
+    navigation.setOptions({
+      title: "UP",
+      header: () => {}
+    })
+  })
+  Keyboard.addListener('keyboardDidHide', () => {
+    console.log("dowb")
+    navigation.setOptions({
+      header: () =>  <NavToLoginBar navigation={navigation} /> 
+    })
+  })
+
+  const handleUsername = ( text ) => {
+    if(text.length >= 6){
+      setScreenName(text)
+      setScreenNameValid(true)
+    }else{
+      setScreenName(text)
+      setScreenNameValid(false)
+    }
+    setSignnUpValid(screenNameValid && emailValid && passwordValid)
+  }
+  const handleEmail = (text) => {
+    if((/^[a-zA-z0-9]+@[a-zA-z0-9]+[\.][a-zA-z0-9]+$/).test(text)){
+      setEmail(text)
+      setEmailValid(true)
+    }else{
+      setEmail(text)
+      setEmailValid(false)
+    }  console.log(signUpValid , "signUpValid")
+
+    setSignnUpValid(screenNameValid && emailValid && passwordValid)
+  }
+  const handlerPassword = (text) => {
+    console.log(text)
+    if(text.length >= 6){
+      setPassword(text)
+      setPasswordValid(true)
+      
+    }else{
+      setPassword(text)
+      setPasswordValid(false)
+    }
+    setSignnUpValid(screenNameValid && emailValid && passwordValid)
+  }
   const handleSignUp = async () => {
     try {
       const userCredentials = await createUserWithEmailAndPassword(
@@ -116,27 +169,26 @@ const SignUp = () => {
       <Text style={styles.title}>Sign Up</Text>
       <TextInput
         autoCapitalize="none"
-        placeholder="Username"
-        value={screenName}
-        onChangeText={(text) => setScreenName(text)}
+        placeholder="Username *"
+        onChangeText={handleUsername}
         style={styles.input}
       />
-
+      {!screenNameValid && screenName !== "" && <Text>Username too short</Text>}
       <TextInput
         autoCapitalize="none"
-        placeholder="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
+        placeholder="Email *"
+        onChangeText={handleEmail}
         style={styles.input}
       />
+      {!emailValid && email !== "" && <Text>Email invalid</Text>}
       <TextInput
         autoCapitalize="none"
-        placeholder="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
+        placeholder="Password *"
+        onChangeText={handlerPassword}
         style={styles.input}
         secureTextEntry
       />
+       {!passwordValid && password !== "" && <Text>Password to short. Should be at least 6 characters long</Text>}
       <TextInput
         placeholder="First Name"
         value={firstName}
@@ -167,12 +219,19 @@ const SignUp = () => {
       </TouchableOpacity>
 
       {image && (
-        <Image source={{ uri: image }} style={{ width: 300, height: 300 }} />
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: image }} style={styles.imagePreview} />
+        </View>
       )}
 
-      <TouchableOpacity onPress={handleSignUp} style={styles.button}>
+      <TouchableOpacity onPress={handleSignUp} 
+        disabled={
+          !(screenNameValid && emailValid && passwordValid)
+        }
+          style={[styles.button, !(screenNameValid && emailValid && passwordValid) && styles.disabledButton]}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
+      {!(screenNameValid && emailValid && passwordValid) && <Text>Missing some fields</Text>}
     </View>
   );
 };
@@ -193,7 +252,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "white",
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: 5,
     borderRadius: 10,
     marginTop: 5,
     width: "80%",
@@ -201,7 +260,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#0782F9",
     width: "60%",
-    padding: 15,
+    padding: 10,
     borderRadius: 10,
     alignItems: "center",
     marginTop: 20,
@@ -214,6 +273,19 @@ const styles = StyleSheet.create({
   disabledButton: {
     opacity: 0.5,
   },
+  imageContainer: {
+    margin: 10,
+    height: "30%",
+    width: "80%",
+    borderRadius: 20,
+    borderWidth: 4,
+    borderColor: "#7A918D",
+    overflow: 'hidden',
+  },
+  imagePreview: {
+    ...StyleSheet.absoluteFillObject,
+    
+  }
 });
 
 export default SignUp;

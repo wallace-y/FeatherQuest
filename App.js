@@ -19,6 +19,7 @@ import { useState } from "react";
 import UserPerchAlerts from "./components/UserPerchAlerts.jsx";
 import SignUp from "./components/SignUp.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
+import NavToLoginBar from "./components/NavToLoginBar.jsx"
 
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -120,7 +121,13 @@ function App() {
               header: () => <NavigationBar navigation={navigation} />,
             })}
           />
-          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen 
+            name="SignUp" 
+            component={SignUp}
+            options={( {navigation }) => ({
+              header: () =>  <NavToLoginBar navigation={navigation} />
+            })}
+          />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         </Stack.Navigator>
       </NavigationContainer>
