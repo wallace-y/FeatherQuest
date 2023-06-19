@@ -23,7 +23,7 @@ export default SightingList = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchAllBirds = async () => {
       try {
         setLoading(true);
@@ -48,6 +48,7 @@ export default SightingList = ({ navigation }) => {
     fetchAllBirds();
   }, []);
 
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
@@ -71,12 +72,19 @@ export default SightingList = ({ navigation }) => {
                   navigation.navigate("Sighting", bird);
                 }}
               >
-                <Image
-                  source={{
-                    uri: bird.sighting_img_url,
-                  }}
-                  style={styles.image}
-                />
+                {bird.sighting_img_url === "" ? (
+                  <Image
+                    source={require("../assets/slawek-k-mZF-_SXc_6c-unsplash.jpg")}
+                    style={styles.image}
+                  />
+                ) : (
+                  <Image
+                    source={{
+                      uri: bird.sighting_img_url,
+                    }}
+                    style={styles.image}
+                  />
+                )}
               </TouchableOpacity>
               <Text
                 style={styles.birdName}
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    aspectRatio: 1,
+    height: 100,
     resizeMode: "cover",
     marginBottom: 10,
   },
