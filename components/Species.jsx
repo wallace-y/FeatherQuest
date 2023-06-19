@@ -61,7 +61,7 @@ export default Species = ({ navigation }) => {
                   style={styles.image}
                 />
               </TouchableOpacity>
-              <Text style={styles.birdName}>{bird.common_name}</Text>
+              <Text style={styles.birdName} numberOfLines={2} ellipsizeMode="tail" >{bird.common_name}</Text>
             </View>
           ))}
         </View>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   birdName: {
     fontFamily: "Virgil",
     textAlign: "center",
-    fontSize: 25,
+    fontSize: 15,
     marginBottom: 5,
   },
   buttonContainer: {
