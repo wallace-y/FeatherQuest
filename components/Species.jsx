@@ -8,16 +8,22 @@ import {
   Dimensions,
   Button,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import { db } from "../firebaseConfig";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import CustomButton from "./CustomButton";
 
+let height = Dimensions.get("window").height;
+
+
 export default Species = ({ navigation }) => {
   const [birds, setBirds] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredList, setFilteredList] = useState([]);
 
   useEffect(() => {
     const fetchBirds = async () => {
@@ -26,6 +32,7 @@ export default Species = ({ navigation }) => {
         const querySnapshot = await getDocs(collection(db, "birds"));
         const birdData = querySnapshot.docs.map((doc) => doc.data());
         setBirds(birdData);
+        setFilteredList(birdData);
       } catch (error) {
         console.log("Error fetching birds:", error.message);
         setError("Failed to fetch bird data. Please try again later.");
@@ -37,8 +44,16 @@ export default Species = ({ navigation }) => {
     fetchBirds();
   }, []);
 
+  useEffect(() => {
+    setFilteredList(
+      birds.filter((bird) => {
+        return bird.common_name.toLowerCase().includes(searchQuery.toLowerCase());
+      })
+    );
+  }, [searchQuery]);
+  console.log(searchQuery)
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.header}>All Birds</Text>
         {loading && <Text>Loading...Please Wait</Text>}
@@ -46,8 +61,17 @@ export default Species = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <CustomButton title="Go Back" onPress={() => navigation.goBack()} />
         </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Search for a bird"
+            style={styles.input}
+            value={searchQuery}
+            onChangeText={(text) => setSearchQuery(text)}
+          />
+        </View>
         <View style={styles.row}>
-          {birds.map((bird, index) => (
+          {filteredList.map((bird, index) => (
             <View key={index} style={styles.birdCard}>
               <TouchableOpacity
                 onPress={() => {
@@ -61,7 +85,13 @@ export default Species = ({ navigation }) => {
                   style={styles.image}
                 />
               </TouchableOpacity>
-              <Text style={styles.birdName} numberOfLines={2} ellipsizeMode="tail" >{bird.common_name}</Text>
+              <Text
+                style={styles.birdName}
+                numberOfLines={2}
+                ellipsizeMode="tail"
+              >
+                {bird.common_name}
+              </Text>
             </View>
           ))}
         </View>
@@ -72,6 +102,10 @@ export default Species = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  scrollView: {
+    minHeight: height,
+    backgroundColor: "#7A918D",
+  },
   container: {
     flex: 1,
     backgroundColor: "#7A918D",
@@ -115,5 +149,19 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginBottom: 15,
+  },
+  inputContainer: {
+    width: "80%",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  input: {
+    flex: 1,
+    fontFamily: "Virgil",
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginBottom: 10,
   },
 });

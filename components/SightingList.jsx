@@ -24,7 +24,7 @@ export default SightingList = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchAllBirds = async () => {
       try {
         setLoading(true);
@@ -33,9 +33,10 @@ export default SightingList = ({ navigation }) => {
           orderBy("date_spotted", "desc")
         );
         const [sightingsQuerySnapshot] = await Promise.all([getDocs(q)]);
-        const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
-          doc.data()
-        );
+        const sightingsData = sightingsQuerySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
         setAllSightings(sightingsData);
       } catch (error) {
@@ -48,7 +49,6 @@ export default SightingList = ({ navigation }) => {
 
     fetchAllBirds();
   }, []);
-
 
   return (
     <ScrollView style={styles.scrollView}>
