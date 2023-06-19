@@ -82,7 +82,7 @@ return (
                   style={styles.image}
                 />
               </TouchableOpacity>
-              <Text style={styles.birdName}>{bird.bird}</Text>
+              <Text style={styles.birdName} numberOfLines={2} ellipsizeMode="tail" >{bird.bird}</Text>
 
             </View>
           ))}
