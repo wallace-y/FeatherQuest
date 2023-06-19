@@ -21,33 +21,65 @@ const textBlack = "black"
 const inputColor = "white"
 const font = "Virgil"
 
+const devBoder = 0;
+
 export const styles = StyleSheet.create({
 /* Containers */
 scrollView: {
+    borderWidth: devBoder,
     minHeight: SCREEN_HEIGHT,
-    paddingTop: 100,
-    paddingBottom: 60,
     backgroundColor: darkGreen,
 },
 pageContainer: {
+    borderWidth: devBoder,
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     backgroundColor: darkGreen,
+    paddingBottom: 70,
+
   },
 iconContainer: {
+    borderWidth: devBoder,
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: 20,
 },
 buttonContainer: {
+    borderWidth: devBoder,
     width: "60%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
+    marginVertical: 10
 },
 inputContainer: {
+    borderWidth: devBoder,
     width: "80%",
+},
+listContainer: {
+    borderWidth: devBoder,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+},
+birdCardContainer: {
+    flex: 1,
+    minWidth: "33%",
+    height: 180,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: salmon,
+    backgroundColor: lightGreen,
+    borderRadius: 5,
+    padding: 10,
+},
+imagePreviewContainer: {
+    margin: 10,
+    minHeight: 150,
+    width: "60%",
+    borderRadius: 20,
+    borderWidth: 4,
+    borderColor: "#7A918D",
+    overflow: 'hidden',
 },
 /* Input */
 input: {
@@ -61,12 +93,12 @@ input: {
 /*  Button */
 button: {
     backgroundColor: lightGreen,
+    borderColor: purple,
     width: "100%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
     marginTop: 5,
-    borderColor: purple,
     borderWidth: 2,
 },
 disabledButton:{
@@ -75,10 +107,15 @@ disabledButton:{
 /* text */
 titleText: {
     fontFamily: font,
-    fontSize: 30,
+    fontSize:30,
     marginBottom: 20,
     textAlign: "center",
     color: textWhite
+},
+text:{
+    fontFamily: "Virgil",
+    textAlign: "center",
+    fontSize: 12,
 },
 buttonText: {
     fontFamily: font,
@@ -91,19 +128,27 @@ textClickable: {
     color: textWhite,
     fontSize: 18
 },
+loadingText: {
+    fontFamily: "Virgil",
+    textAlign: "center",
+    fontSize: 25,
+},
 warningText: {
     fontFamily: font,
     color: textBlack,
     fontSize: 18
 },
-imageContainer: {
-    margin: 10,
-    height: "30%",
-    width: "80%",
-    borderRadius: 20,
-    borderWidth: 4,
-    borderColor: "#7A918D",
+/* Images */
+birdCardImageContainer: {
+    width: "100%",
+    height: "80%",
+    borderRadius: 10,
+    // borderWidth: 2,
+    borderColor: darkGreen,
     overflow: 'hidden',
+},
+birdCardImage: {
+    ...StyleSheet.absoluteFillObject,
 },
 imagePreview: {
     ...StyleSheet.absoluteFillObject,

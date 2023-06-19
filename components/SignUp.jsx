@@ -204,6 +204,11 @@ const SignUp = ( { navigation }) => {
             style={[styles.input, ]}
             />
         </View>
+          {image && (
+            <View style={styles.imagePreviewContainer}>
+              <Image source={{ uri: image }} style={styles.imagePreview} />
+            </View>
+          )}
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={handleImageUpload}
@@ -215,11 +220,6 @@ const SignUp = ( { navigation }) => {
             </Text>
           </TouchableOpacity>
 
-          {image && (
-            <View style={styles.imageContainer}>
-              <Image source={{ uri: image }} style={styles.imagePreview} />
-            </View>
-          )}
 
           <TouchableOpacity onPress={handleSignUp} 
             disabled={!(screenNameValid && emailValid && passwordValid)}

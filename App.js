@@ -21,6 +21,7 @@ import NavigationBar from "./components/NavigationBar.jsx";
 import NavToLoginBar from "./components/NavToLoginBar.jsx"
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import * as SplashScreen from "expo-splash-screen";
+import FillerHeader from "./components/FillerHeader.jsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,8 +50,8 @@ function App () {
           <Stack.Screen 
             name="LoginScreen" 
             component={LoginScreen}
-            options={() => ({
-              header: () => {}
+            options={({ navigation }) => ({
+              header: () => <FillerHeader navigation={navigation}/>
             })}
          />
           <Stack.Screen
