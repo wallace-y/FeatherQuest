@@ -1,26 +1,14 @@
-import { StatusBar } from "expo-status-bar";
 import {
-  Button,
-  StyleSheet,
+  View,
   Text,
   TextInput,
+  StyleSheet,
   TouchableOpacity,
-  View,
 } from "react-native";
 import { db } from "../firebaseConfig";
 import { auth } from "../firebaseConfig";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../utils/UserContext";
-import { getUserData } from "../utils/pullUserInfo";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  updateDoc,
-  onSnapshot,
-} from "firebase/firestore";
+import { useState, useEffect } from 'react';
+import { doc, updateDoc, onSnapshot } from "firebase/firestore";
 import { confirmPasswordReset, updatePassword } from "firebase/auth";
 
 export default Settings = ({ navigation }) => {
@@ -59,6 +47,7 @@ export default Settings = ({ navigation }) => {
     getUser();
   }, [handleSubmit]);
 
+
   const updateScreenName = async () => {
     try {
       const current_user = auth.currentUser;
@@ -77,9 +66,8 @@ export default Settings = ({ navigation }) => {
 
   const updatedFirstName = async () => {
     try {
-      const current_user = auth.currentUser;
 
-      const userRef = doc(db, "users", current_user.uid);
+      const userRef = doc(db, "users", auth.currentUser.uid);
       await updateDoc(userRef, {
         first_name: newFirstName,
       });
@@ -133,15 +121,14 @@ export default Settings = ({ navigation }) => {
   };
 
   const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        console.log("User signed out");
-        navigation.navigate("LoginScreen");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    auth.signOut()
+    .then(() => {
+      console.log("User signed out");
+      navigation.navigate("LoginScreen")
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
   };
 
   const handleSubmit = async () => {

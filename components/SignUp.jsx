@@ -1,31 +1,37 @@
-import * as Device from "expo-device";
-
 import { useState, useEffect } from "react";
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
   Image,
   Alert,
+  Keyboard,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { auth } from "../firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../firebaseConfig"; // Import the storage module
-import * as ImagePicker from "expo-image-picker";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import NavToLoginBar from './NavToLoginBar.jsx'
+import * as ImagePicker from "expo-image-picker";
+import styles from '../styles/style.js'
 
-const SignUp = () => {
+
+// TODO: add scrolview or otherwise fix things going of the page
+const SignUp = ( { navigation }) => {
+  const [screenName, setScreenName] = useState("");
+  const [screenNameValid, setScreenNameValid] = useState(false)
   const [email, setEmail] = useState("");
+  const [emailValid, setEmailValid] = useState(false)
   const [password, setPassword] = useState("");
+  const [passwordValid, setPasswordValid] = useState(false)
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [location, setLocation] = useState("");
-  const [screenName, setScreenName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
 
+  const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
 
@@ -53,10 +59,10 @@ const SignUp = () => {
         });
 
         if (!result.canceled) {
-          setImage(result.uri);
+          setImage(result.assets[0].uri);//"result.uri" depricated
           setUploading(true);
-          await uploadImage(result.uri);
-          setImage(null);
+          await uploadImage(result.assets[0].uri);
+          // setImage(null);
           setUploading(false);
         }
       } catch (error) {
@@ -82,6 +88,46 @@ const SignUp = () => {
     }
   };
 
+  Keyboard.addListener('keyboardDidShow', () => {
+    navigation.setOptions({
+      header: () => {}
+    })
+  })
+  Keyboard.addListener('keyboardDidHide', () => {
+    navigation.setOptions({
+      header: () =>  <NavToLoginBar navigation={navigation} /> 
+    })
+  })
+  
+
+  const handleUsername = ( text ) => {
+    if(text.length >= 6){
+      setScreenName(text)
+      setScreenNameValid(true)
+    }else{
+      setScreenName(text)
+      setScreenNameValid(false)
+    }
+  }
+  const handleEmail = (text) => {
+    if((/^[a-zA-z0-9]+@[a-zA-z0-9]+[\.][a-zA-z0-9]+$/).test(text)){
+      setEmail(text)
+      setEmailValid(true)
+    }else{
+      setEmail(text)
+      setEmailValid(false)
+    }  
+  }
+  const handlerPassword = (text) => {
+    if(text.length >= 6){
+      setPassword(text)
+      setPasswordValid(true)
+      
+    }else{
+      setPassword(text)
+      setPasswordValid(false)
+    }
+  }
   const handleSignUp = async () => {
     try {
       const userCredentials = await createUserWithEmailAndPassword(
@@ -112,108 +158,80 @@ const SignUp = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
-      <TextInput
-        autoCapitalize="none"
-        placeholder="Username"
-        value={screenName}
-        onChangeText={(text) => setScreenName(text)}
-        style={styles.input}
-      />
+    <ScrollView contentContainerStyle={styles.scrollView}>
+      <View style={styles.pageContainer}>
+        <Text style={styles.titleText}>Sign Up</Text>
+        <View style={styles.inputContainer}>
 
-      <TextInput
-        autoCapitalize="none"
-        placeholder="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        style={styles.input}
-      />
-      <TextInput
-        autoCapitalize="none"
-        placeholder="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        style={styles.input}
-        secureTextEntry
-      />
-      <TextInput
-        placeholder="First Name"
-        value={firstName}
-        onChangeText={(text) => setFirstName(text)}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Last Name"
-        value={lastName}
-        onChangeText={(text) => setLastName(text)}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Location"
-        value={location}
-        onChangeText={(text) => setLocation(text)}
-        style={styles.input}
-      />
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Username *"
+            onChangeText={handleUsername}
+            style={styles.input}
+            />
+          {!screenNameValid && screenName !== "" && <Text style={styles.warningText}>Username too short</Text>}
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Email *"
+            onChangeText={handleEmail}
+            style={styles.input}
+            />
+          {!emailValid && email !== "" && <Text style={styles.warningText}>Email invalid</Text>}
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Password *"
+            onChangeText={handlerPassword}
+            style={styles.input}
+            secureTextEntry
+            />
+          {!passwordValid && password !== "" && <Text style={styles.warningText}>Password to short</Text>}
+          <TextInput
+            placeholder="First Name"
+            value={firstName}
+            onChangeText={(text) => setFirstName(text)}
+            style={styles.input}
+            />
+          <TextInput
+            placeholder="Last Name"
+            value={lastName}
+            onChangeText={(text) => setLastName(text)}
+            style={styles.input}
+            />
+          <TextInput
+            placeholder="Location"
+            value={location}
+            onChangeText={(text) => setLocation(text)}
+            style={[styles.input, ]}
+            />
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={handleImageUpload}
+            style={[styles.button, uploading && styles.disabledButton]}
+            disabled={uploading}
+            >
+            <Text style={styles.buttonText}>
+              {uploading ? "Uploading..." : "Upload Avatar"}
+            </Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={handleImageUpload}
-        style={[styles.button, uploading && styles.disabledButton]}
-        disabled={uploading}
-      >
-        <Text style={styles.buttonText}>
-          {uploading ? "Uploading..." : "Select and Upload Image"}
-        </Text>
-      </TouchableOpacity>
+          {image && (
+            <View style={styles.imageContainer}>
+              <Image source={{ uri: image }} style={styles.imagePreview} />
+            </View>
+          )}
 
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 300, height: 300 }} />
-      )}
+          <TouchableOpacity onPress={handleSignUp} 
+            disabled={!(screenNameValid && emailValid && passwordValid)}
+            style={[styles.button, !(screenNameValid && emailValid && passwordValid) && styles.disabledButton]}>
+              <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleSignUp} style={styles.button}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-    </View>
+          {!(screenNameValid && emailValid && passwordValid) && <Text style={styles.warningText}>Missing some fields</Text>}
+        </View>
+      </View>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#5e7975",
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlignVertical: "center",
-  },
-  input: {
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-    width: "80%",
-  },
-  button: {
-    backgroundColor: "#0782F9",
-    width: "60%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 20,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  disabledButton: {
-    opacity: 0.5,
-  },
-});
 
 export default SignUp;

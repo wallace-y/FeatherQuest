@@ -10,38 +10,33 @@ import {
 } from "react-native";
 import { db, auth } from "../firebaseConfig";
 import { useEffect, useState, useContext } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import CustomButton from "./CustomButton";
+import { UserContext } from "../utils/UserContext";
+import { getUserData } from "../utils/pullUserInfo";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
 export default SightingList = ({ navigation }) => {
   const [allSightings, setAllSightings] = useState([]);
-  // const [allBirds, setAllBirds] = useState([]);
-  // const [allUsers, setAllUsers] = useState([]);
-  // const [allComments, setAllComments] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchAllBirds = async () => {
       try {
         setLoading(true);
-
-        const [
-          sightingsQuerySnapshot,
-
-        ] = await Promise.all([
-          getDocs(collection(db, "sightings")),
- 
-        ]);
+        const q = query(
+          collection(db, "sightings"),
+          orderBy("date_spotted", "desc")
+        );
+        const [sightingsQuerySnapshot] = await Promise.all([getDocs(q)]);
         const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
           doc.data()
         );
 
         setAllSightings(sightingsData);
- 
       } catch (error) {
         console.log(error.message);
         setError("Failed to fetch sightings data. Please try again later.");
@@ -72,19 +67,32 @@ export default SightingList = ({ navigation }) => {
         <View style={styles.row}>
           {allSightings.map((bird, index) => (
             <View key={index} style={styles.birdCard}>
-              <Text style={styles.birdName}>{bird.bird}</Text>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("Sighting", bird);
                 }}
               >
-                <Image
-                  source={{
-                    uri: bird.sighting_img_url,
-                  }}
-                  style={styles.image}
-                />
+                {bird.sighting_img_url === "" ? (
+                  <Image
+                    source={require("../assets/slawek-k-mZF-_SXc_6c-unsplash.jpg")}
+                    style={styles.image}
+                  />
+                ) : (
+                  <Image
+                    source={{
+                      uri: bird.sighting_img_url,
+                    }}
+                    style={styles.image}
+                  />
+                )}
               </TouchableOpacity>
+              <Text
+                style={styles.birdName}
+                numberOfLines={2}
+                ellipsizeMode="tail"
+              >
+                {bird.bird}
+              </Text>
             </View>
           ))}
         </View>
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    aspectRatio: 1,
+    height: 100,
     resizeMode: "cover",
     marginBottom: 10,
   },

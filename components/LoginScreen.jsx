@@ -1,82 +1,48 @@
-import { StatusBar } from "expo-status-bar";
+import { auth } from "../firebaseConfig";
+import {signInWithEmailAndPassword} from "firebase/auth";
 import { useEffect, useState } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import {
-  KeyboardAvoidingView,
-  StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
   Image,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
+import styles from '../styles/style.js'
 
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../firebaseConfig";
-import { useNavigation } from "@react-navigation/native";
-import { db } from "../firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
-import SignUp from "./SignUp";
 
 export default LoginScreen = ({ navigation }) => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const navigation1 = useNavigation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation1.navigate("SightingList");
+        navigation1.navigate("Home", { prevPage: "LoginScreen" });
       }
     });
 
     return unsubscribe;
   }, []);
 
-  const handleSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        setDoc(doc(db, "users/" + user.uid), {
-          created_at: user.metadata.creationTime,
-          first_name: "",
-          follower_list: [],
-          friend_list: [],
-          last_name: "",
-          location: "",
-          perch_list: [],
-          profile_image_url: "",
-          screen_name: "",
-          spotted_list: [],
-        });
-      })
-      .then(() => {
-        alert("Account Registered");
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
-
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        alert("Logged in");
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    .then((userCredentials) => {
+      alert("Logged in");
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
   };
-
+  
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView style={styles.pageContainer} behavior="padding">
       <View style={styles.inputContainer}>
-        <Text style={styles.title}>WELCOME TO FEATHER QUEST!</Text>
+        <Text style={styles.titleText}>WELCOME TO FEATHER QUEST!</Text>
         <View style={styles.iconContainer}>
           <Image source={require("../assets/feather.png")} />
         </View>
@@ -98,81 +64,23 @@ export default LoginScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
+        <TouchableOpacity 
+          onPress={handleLogin} 
+          style={styles.button}
+          >
+            <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => navigation.navigate("SignUp")}
-          style={[styles.button, styles.buttonOutline]}
+          style={styles.button}
         >
-          <Text style={styles.buttonOutlineText}>Sign Up!</Text>
+          <Text style={styles.buttonText}>Sign Up!</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
-          <Text style={styles.buttonText}>Forgot Password</Text>
+          <Text style={styles.textClickable}>Forgot Password</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#5e7975",
-  },
-  title: {
-    fontFamily: "Virgil",
-    fontSize: 30,
-    marginBottom: 20,
-    textAlign: "center",
-    color: 'white'
-  },
-  iconContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingBottom: 20,
-  },
-  inputContainer: {
-    width: "80%",
-  },
-  input: {
-    fontFamily: "Virgil",
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-  },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-  },
-  button: {
-    backgroundColor: "#0782F9",
-    width: "100%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
-  },
-  buttonText: {
-    fontFamily: "Virgil",
-    color: "white",
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    fontFamily: "Virgil",
-    color: "#0782F9",
-    fontSize: 16,
-  },
-});
