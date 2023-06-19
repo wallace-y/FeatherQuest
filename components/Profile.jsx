@@ -12,6 +12,7 @@ import { useEffect, useState, useContext } from "react";
 import UserPerchAlerts from "./UserPerchAlerts";
 import { auth } from "../firebaseConfig";
 import { UserContext } from "../utils/UserContext";
+import GetUserLocation from "./postSightings/GetUserLocation";
 
 let width = Dimensions.get("window").width;
 
@@ -20,7 +21,7 @@ export default Profile = ({ navigation }) => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    console.log(globalUser)
+    // console.log(globalUser)
     setUser({
       userId: globalUser.userId,
       first_name: globalUser.first_name,
@@ -34,6 +35,7 @@ export default Profile = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {/* <GetUserLocation/> */}
       <View style={styles.userInfocontainer}>
         <View>
           <Image

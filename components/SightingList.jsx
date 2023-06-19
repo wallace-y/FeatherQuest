@@ -50,6 +50,7 @@ export default SightingList = ({ navigation }) => {
 
 
   return (
+    <>
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.header}>All Sightings</Text>
@@ -103,7 +104,7 @@ export default SightingList = ({ navigation }) => {
         )}
       </View>
     </ScrollView>
-  );
+    </>);
 };
 
 const styles = StyleSheet.create({

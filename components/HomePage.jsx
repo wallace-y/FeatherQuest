@@ -3,12 +3,13 @@ import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
 import { useContext, useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View, BackHandler } from "react-native";
-
+import GetUserLocation from "./postSightings/GetUserLocation";
 
 export default HomePage = ({ navigation, route }) => {
 
   const { globalUser, setGlobalUser } = useContext(UserContext)
   const [ loadingUser, setLoadingUser ] = useState(true)
+  const [ userLocation, setUserLocation ] = useState([0,0])
 
   
 
@@ -28,6 +29,7 @@ export default HomePage = ({ navigation, route }) => {
           username: data.screen_name,
           profile_image_url: data.profile_image_url,
           perch_list: [...data.perch_list],
+          coordinates: [...userLocation]
         });
         setLoadingUser(false)
       })
@@ -35,7 +37,9 @@ export default HomePage = ({ navigation, route }) => {
         console.log(err);
       });
     }
-  }, [auth.currentUser]);
+    console.log('user location is on home page', userLocation);
+    console.log('global user on home page>>>>', globalUser);
+  }, []);
 
   if(loadingUser){
     return (
@@ -46,6 +50,7 @@ export default HomePage = ({ navigation, route }) => {
   }
   return (
     <View style={styles.container}>
+      <GetUserLocation userLocation={userLocation} setUserLocation={setUserLocation}/>
       <TouchableOpacity>
         <Text style={styles.welcomeText}>Welcome, { globalUser.username || globalUser.first_name || "User"} </Text>
       </TouchableOpacity>
