@@ -3,7 +3,7 @@ import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
 import { useContext, useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View, BackHandler } from "react-native";
-import GetUserLocation from "./postSightings/GetUserLocation";
+import { getUserLocation } from "../utils/getUserLocation";
 
 export default HomePage = ({ navigation, route }) => {
 
@@ -14,9 +14,11 @@ export default HomePage = ({ navigation, route }) => {
   
 
   useEffect(() => {
-    /* This prevents navigation by phone buttons on all pages, 
-      but fixes the problem of signout button not nagiating back to LoginScreen */
     BackHandler.addEventListener('hardwareBackPress', () =>  true )
+
+    getUserLocation().then((location) => {
+      setUserLocation([...location])
+    })
 
     if(auth.currentUser){
       getUserData(auth.currentUser.uid)
@@ -37,8 +39,6 @@ export default HomePage = ({ navigation, route }) => {
         console.log(err);
       });
     }
-    console.log('user location is on home page', userLocation);
-    console.log('global user on home page>>>>', globalUser);
   }, []);
 
   if(loadingUser){
@@ -50,7 +50,7 @@ export default HomePage = ({ navigation, route }) => {
   }
   return (
     <View style={styles.container}>
-      <GetUserLocation userLocation={userLocation} setUserLocation={setUserLocation}/>
+      {/* <GetUserLocation userLocation={userLocation} setUserLocation={setUserLocation}/> */}
       <TouchableOpacity>
         <Text style={styles.welcomeText}>Welcome, { globalUser.username || globalUser.first_name || "User"} </Text>
       </TouchableOpacity>

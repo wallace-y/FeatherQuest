@@ -12,7 +12,8 @@ import { useEffect, useState, useContext } from "react";
 import UserPerchAlerts from "./UserPerchAlerts";
 import { auth } from "../firebaseConfig";
 import { UserContext } from "../utils/UserContext";
-import GetUserLocation from "./postSightings/GetUserLocation";
+// import GetUserLocation from "./postSightings/oldfile";
+import { getUserLocation } from "../utils/getUserLocation";
 
 let width = Dimensions.get("window").width;
 
@@ -30,9 +31,10 @@ export default Profile = ({ navigation }) => {
       username: globalUser.username,
       profile_image_url: globalUser.profile_image_url,
       perch_list: [...globalUser.perch_list],
+      coordinates: globalUser.coordinates,
     });
   }, [globalUser]);
-
+  
   return (
     <View style={styles.container}>
       {/* <GetUserLocation/> */}
