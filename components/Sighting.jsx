@@ -14,25 +14,21 @@ import {
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../utils/UserContext";
 import { db } from "../firebaseConfig";
-import { collection, addDoc, doc } from "firebase/firestore";
+import { collection, addDoc, doc, query, where, getDocs  } from "firebase/firestore";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
 export default Sighting = ({ route, navigation }) => {
-  const {
-    id,
-    bird,
-    sighting_img_url,
-    coordinates,
-    date_spotted,
-    rarity,
-    user,
-  } = route.params;
+
   const dateDay = dayjs(date_spotted).format("DD-MM-YYYY");
   const dateTime = dayjs(date_spotted).format("HH:mm:ss");
   const [newComment, setNewComment] = useState("");
   const { globalUser, setGlobalUser } = useContext(UserContext);
+  const { id, bird, sighting_img_url, coordinates, date_spotted, rarity, user } =
+    route.params;
+
+  const [birdDetails, setBirdDetails] = useState(null);
 
   const postComment = async () => {
     try {
@@ -49,6 +45,26 @@ export default Sighting = ({ route, navigation }) => {
       console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    const fetchBirdDetails = async () => {
+      try {
+        const birdQuery = query(
+          collection(db, "birds"),
+          where("common_name", "==", bird)
+        );
+        const birdQuerySnapshot = await getDocs(birdQuery);
+        if (!birdQuerySnapshot.empty) {
+          const birdDoc = birdQuerySnapshot.docs[0];
+          const birdData = birdDoc.data();
+          setBirdDetails(birdData);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchBirdDetails();
+  }, [bird]);
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -69,7 +85,9 @@ export default Sighting = ({ route, navigation }) => {
         </Text>
         <Text style={styles.birdInfo}>Rarity: {rarity} </Text>
         <Text style={styles.birdInfo}>Spotted by: {user}</Text>
-
+        {birdDetails && (
+          <Text style={styles.birdInfo}>Details: {birdDetails.description}</Text>
+        )}
         <View style={styles.inputContainer}>
           <TextInput
             autoCapitalize="none"
@@ -87,7 +105,7 @@ export default Sighting = ({ route, navigation }) => {
         </View>
       </View>
     </ScrollView>
-  );
+  )
 };
 
 const styles = StyleSheet.create({

@@ -51,7 +51,7 @@ export default Species = ({ navigation }) => {
       })
     );
   }, [searchQuery]);
-
+  console.log(searchQuery)
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
