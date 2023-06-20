@@ -1,4 +1,4 @@
-import MapView, {PROVIDER_GOOGLE } from 'react-native-maps'; //https://github.com/react-native-maps/react-native-maps/blob/master/docs/mapview.md
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; //https://github.com/react-native-maps/react-native-maps/blob/master/docs/mapview.md
 import { View, Text, StyleSheet} from 'react-native';
 import { collection, getDocs} from "firebase/firestore";
 import { useEffect, useState} from 'react';
@@ -7,6 +7,7 @@ import { db } from '../../firebaseConfig.js'
 import SightingMarker from './SightingMarker.jsx';
 import mapStyle from '../../styles/mapStyle.js'
 import * as React from 'react'
+import { smallMapStyles, styles, textStyles } from "../../styles/style.js"
 
 export default Maps = ({ navigation }) => {
   
@@ -20,7 +21,6 @@ export default Maps = ({ navigation }) => {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01
   };
-  
   
   //Fetch sightings data
   useEffect( () => {
@@ -39,61 +39,63 @@ export default Maps = ({ navigation }) => {
   }, [])
 
   if( loadingMarkers ){
-    return <Text>Loading...</Text>
+    return <Text style={textStyles.loadingText}>Loading...</Text>
   }else{
     return (
-      <View styles={styles.container}>
-        <Text style={styles.headerText}>Sightings Near You</Text>
-        <View style={styles.mapContainer}>
-       
-          <MapView 
-            provider={PROVIDER_GOOGLE}
-            onRegionChangeComplete={()=> { setMapCentered(true)} }
-            onRegionChange={()=> { setMapCentered(false)} }
-            style={styles.map}
-            initialRegion={region}
-            customMapStyle={mapStyle}
-            >
-            {sightingsList.map( (sighting) => {
-              return <SightingMarker key={sighting.created_at} navigation={navigation} sighting={sighting} mapCentered={mapCentered} setMapCentered={setMapCentered}/>
-            })}
-          </MapView>
+      <View style={styles.pageContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={textStyles.titleText}>Sightings Near You</Text>
+        </View>
+        <View style={[smallMapStyles.container, {widht: 200, height: 200}]}>
+          <View style={smallMapStyles.mapContainer}>
+            <MapView 
+              provider={PROVIDER_GOOGLE}
+              onRegionChangeComplete={()=> { setMapCentered(true)} }
+              onRegionChange={()=> { setMapCentered(false)} }
+              style={smallMapStyles.map}
+              initialRegion={region}
+              customMapStyle={mapStyle}
+              >
+              {sightingsList.map( (sighting) => {
+                return <SightingMarker key={sighting.created_at} navigation={navigation} sighting={sighting} mapCentered={mapCentered} setMapCentered={setMapCentered}/>
+              })}
+            </MapView>
+          </View>
         </View>
       </View>
     );
   }
 };
 
-const styles = StyleSheet.create({
-  container:{
-    backgroundColor: "#7A918D",
-    borderWidth: 2,
-    color: 'red'
-  },
-  headerContainer:{
-    backgroundColor: "#7A918D",
-    borderWidth: 2,
-    color: 'red'
-  },
-  headerText: {
-    minHeight: '5%',
-    textAlign: 'center',
-    fontSize: 20,
-    color: 'white',
-    backgroundColor: "#7A918D"
+// const styles = StyleSheet.create({
+//   container:{
+//     backgroundColor: "#7A918D",
+//     borderWidth: 2,
+//     color: 'red'
+//   },
+//   headerContainer:{
+//     backgroundColor: "#7A918D",
+//     borderWidth: 2,
+//     color: 'red'
+//   },
+//   headerText: {
+//     minHeight: '5%',
+//     textAlign: 'center',
+//     fontSize: 20,
+//     color: 'white',
+//     backgroundColor: "#7A918D"
 
-  },
-  mapContainer: {
-    borderRadius: 10, 
-    borderWidth: 5,
-    borderColor: '#7A918D',
-    margin: 10,
-    overflow: 'hidden',
-    minHeight: "90%",
-    backgroundColor: "#7A918D"
-},
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  
-})
+//   },
+//   mapContainer: {
+//     borderRadius: 10, 
+//     borderWidth: 5,
+//     borderColor: '#7A918D',
+//     margin: 10,
+//     overflow: 'hidden',
+//     minHeight: "90%",
+//     backgroundColor: "#7A918D"
+// },
+//   map: {
+//     ...StyleSheet.absoluteFillObject,
+//   },
+// })

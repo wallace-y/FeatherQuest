@@ -39,6 +39,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         minHeight: 180,
         paddingVertical: 20,
+        
     },
 
     pageContainer: {
@@ -233,6 +234,7 @@ export const styles = StyleSheet.create({
     },
     
 });
+
 export const textStyles = {
     textContainer: {
         borderWidth: devBoder,
@@ -369,7 +371,6 @@ export const navStyles = StyleSheet.create({
         width: "100%",
         justifyContent: "space-evenly",
         backgroundColor: "#AAC0AA",
-    
       },
       image: {
         width: 60,
@@ -390,7 +391,8 @@ export const smallMapStyles = StyleSheet.create({
         borderWidth: 3,
         borderColor: lightGreen,
         borderRadius: 10,
-        width: '80%',
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
     },
     mapContainer: {
         flex: 1,
