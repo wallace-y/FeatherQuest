@@ -9,7 +9,7 @@ import { StyleSheet, Dimensions } from "react-native";
     purple:     #736372
 */
 
-const devBoder = 0;
+const devBoder = 1;
 
 let SCREEN_WIDTH = Dimensions.get("window").width;
 let SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -40,6 +40,13 @@ export const styles = StyleSheet.create({
         backgroundColor: darkGreen,
         paddingBottom: 70, //necesasary for scroll view
 
+    },
+    centeredContainer: {
+        borderWidth: devBoder,
+        ...StyleSheet.absoluteFillObject,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: -100
     },
     titleContainer: {
         borderWidth: devBoder,

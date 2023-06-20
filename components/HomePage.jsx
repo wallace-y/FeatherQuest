@@ -46,13 +46,14 @@ export default HomePage = ({ navigation, route }) => {
   }
   return (
     <View style={styles.pageContainer}>
-      <Text style={styles.titleText}>Welcome, { globalUser.username || globalUser.first_name || "User"} </Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("SightingList");}}>
-          <Text style={styles.buttonText}>Start Twitching!</Text>
-        </TouchableOpacity>
+      <View style={styles.centeredContainer}> 
+        <Text style={styles.titleText}>Welcome, { globalUser.username || globalUser.first_name || "User"} </Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("SightingList");}}>
+            <Text style={styles.buttonText}>Start Twitching!</Text>
+          </TouchableOpacity>
       </View>
-      
+      </View>
     </View>
   );
 };
