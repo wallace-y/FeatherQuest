@@ -288,6 +288,10 @@ export const styles = StyleSheet.create({
 });
 
 export const navStyles = StyleSheet.create({
+    fillerHeader: {
+        paddingTop:30,
+        backgroundColor: darkGreen
+    },
     navContainer: {
         flexDirection: "row",
         marginTop: "10%",

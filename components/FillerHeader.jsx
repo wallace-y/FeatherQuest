@@ -8,7 +8,7 @@ export default FillerHeader = () => {
         <TouchableOpacity
           onPress={() => {navigation.goBack()}}
           title="LoginScreen"
-          style={[navStyles.navContainer, {backgroundColor: "#5e7975"}]}
+          style={navStyles.fillerHeader}
         >  
          
         </TouchableOpacity>
