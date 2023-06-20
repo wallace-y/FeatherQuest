@@ -90,7 +90,7 @@ export default NavigationBar = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   navContainer: {
-    marginTop: 28,
+    paddingTop: 28,
     width: "100%",
     backgroundColor: "#AAC0AA",
   },
