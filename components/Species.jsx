@@ -17,7 +17,6 @@ import { styles, textStyles } from "../styles/style.js";
 
 let height = Dimensions.get("window").height;
 
-
 export default Species = ({ navigation }) => {
   const [birds, setBirds] = useState([]);
   const [error, setError] = useState(null);
@@ -47,7 +46,9 @@ export default Species = ({ navigation }) => {
   useEffect(() => {
     setFilteredList(
       birds.filter((bird) => {
-        return bird.common_name.toLowerCase().includes(searchQuery.toLowerCase());
+        return bird.common_name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
       })
     );
   }, [searchQuery]);
@@ -57,11 +58,16 @@ export default Species = ({ navigation }) => {
         <View style={styles.titleContainer}>
           <Text style={textStyles.titleText}>All Birds</Text>
         </View>
-        {loading && <Text style={textStyles.loadingText}>Loading...Please Wait</Text>}
+        {loading && (
+          <Text style={styles.loadingText}>Loading...Please Wait</Text>
+        )}
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-            <Text style={textStyles.buttonText}>Go Back</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.buttonText}>Go Back</Text>
           </TouchableOpacity>
         </View>
 
@@ -76,13 +82,22 @@ export default Species = ({ navigation }) => {
           />
         </View>
 
+        {filteredList.length === 0 ? (
+          <View>
+            <Text style={styles.warningText}>
+              Oops. Nothing here, please search again...
+            </Text>
+          </View>
+        ) : null}
+
         <View style={styles.listContainer}>
           {filteredList.map((bird, index) => (
-            <TouchableOpacity key={index}
-                style={styles.birdCardContainer}
-                onPress={() => {
-                  navigation.navigate("Bird", bird);
-                }}
+            <TouchableOpacity
+              key={index}
+              style={styles.birdCardContainer}
+              onPress={() => {
+                navigation.navigate("Bird", bird);
+              }}
             >
               <View style={styles.birdCardImageContainer}>
                 <Image
@@ -90,83 +105,16 @@ export default Species = ({ navigation }) => {
                     uri: bird.bird_image_url,
                   }}
                   style={[styles.birdCardImage]}
-                  />
+                />
               </View>
-              <Text
-                style={textStyles.text}
-                numberOfLines={2}
-                ellipsizeMode="tail"
-                >
+              <Text style={textStyles.text} numberOfLines={2} ellipsizeMode="tail">
                 {bird.common_name}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
-
       </View>
       {error && <Text style={textStyles.warningText}>{error}</Text>}
     </ScrollView>
   );
 };
-
-// const styles = StyleSheet.create({
-// 
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#7A918D",
-//     alignItems: "center",
-//     paddingTop: 20,
-//     paddingBottom: 40,
-//   },
-//   row: {
-//     flexDirection: "row",
-//     flexWrap: "wrap",
-//     alignItems: "flex-start",
-//   },
-//   image: {
-//     width: "100%",
-//     aspectRatio: 1,
-//     resizeMode: "cover",
-//     marginBottom: 10,
-//   },
-//   header: {
-//     fontFamily: "Virgil",
-//     textAlign: "center",
-//     marginTop: 10,
-//     marginBottom: 10,
-//     fontSize: 40,
-//   },
-//   birdCard: {
-//     width: "33%",
-//     height: 180,
-//     marginBottom: 20,
-//     borderWidth: 1,
-//     borderColor: "#A18276",
-//     borderRadius: 5,
-//     padding: 10,
-//     backgroundColor: "#AAC0AA",
-//   },
-//   birdName: {
-//     fontFamily: "Virgil",
-//     textAlign: "center",
-//     fontSize: 15,
-//     marginBottom: 5,
-//   },
-//   buttonContainer: {
-//     marginBottom: 15,
-//   },
-//   inputContainer: {
-//     width: "80%",
-//     flexDirection: "row",
-//     alignItems: "center",
-//   },
-//   input: {
-//     flex: 1,
-//     fontFamily: "Virgil",
-//     backgroundColor: "white",
-//     paddingHorizontal: 15,
-//     paddingVertical: 10,
-//     borderRadius: 10,
-//     marginBottom: 10,
-//   },
-// });

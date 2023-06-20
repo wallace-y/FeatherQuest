@@ -14,6 +14,8 @@ import CustomButton from "./CustomButton";
 import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
 import { styles, textStyles } from "../styles/style.js"
+import { distanceCalculate } from "../utils/distanceCalculator";
+
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -22,6 +24,9 @@ export default SightingList = ({ navigation }) => {
   const [allSightings, setAllSightings] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [birdsByDistance, setBirdsByDistance] = useState([])
+  const { globalUser, setGlobalUser } = useContext(UserContext)
+
 
   useEffect(() => {
     const fetchAllBirds = async () => {
@@ -32,10 +37,14 @@ export default SightingList = ({ navigation }) => {
           orderBy("date_spotted", "desc")
         );
         const [sightingsQuerySnapshot] = await Promise.all([getDocs(q)]);
+
         const sightingsData = sightingsQuerySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
+        distanceCalculate(globalUser.coordinates, sightingsData).then((data) => {
+        setBirdsByDistance(data)
+        })
 
         setAllSightings(sightingsData);
       } catch (error) {
@@ -45,7 +54,6 @@ export default SightingList = ({ navigation }) => {
         setLoading(false);
       }
     };
-
     fetchAllBirds();
   }, []);
 
@@ -64,9 +72,9 @@ export default SightingList = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.listContainer}>
-          {allSightings.map((bird, index) => (
 
+        <View style={styles.listContainer}>
+          {birdsByDistance.map((bird, index) => (
               <TouchableOpacity key={index}
                 style={styles.birdCardContainer}
                 onPress={() => {navigation.navigate("Sighting", bird);}}
@@ -74,14 +82,14 @@ export default SightingList = ({ navigation }) => {
                 <View style={styles.birdCardImageContainer}>
                   {bird.sighting_img_url === "" ? (
                     <Image
-                      source={require("../assets/default-sighting-img.jpg")}
-                      style={[styles.birdCardImage]}
+                    source={require("../assets/default-sighting-img.jpg")}
+                    style={[styles.birdCardImage]}
                     />
-                  ) : (
-                    <Image
+                    ) : (
+                      <Image
                       source={{ uri: bird.sighting_img_url}}
                       style={styles.birdCardImage}
-                    />
+                      />
                   )}
                 </View>
                 <View style={textStyles.textContainer}> 
