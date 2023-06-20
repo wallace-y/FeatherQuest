@@ -1,13 +1,14 @@
 import { View, StyleSheet } from 'react-native';
-import DateSelector from './DateSelector.jsx'
-import TimeSelector from './TimeSelector.jsx'
-import { useState, useEffect } from 'react'
+import DateSelector from './DateSelector.jsx';
+import TimeSelector from './TimeSelector.jsx';
+import { useState, useEffect } from 'react';
+import { styles } from "../../styles/style.js"
 
 export default DateSelection = ( { sightingData, setSightingData} ) => {
 
 
-    const defaultTimeText = "Select time of sighting";
-    const defaultDateText = "Select date of sighting";
+    const defaultDateText = "Select date";
+    const defaultTimeText = "Select time";
 
     const [ dateIsSet, setDateIsSet ] = useState(false)
     const [ timeIsSet, setTimeIsSet ] = useState(false)
@@ -24,15 +25,9 @@ export default DateSelection = ( { sightingData, setSightingData} ) => {
     }, [ dateIsSet, timeIsSet])
     
     return (
-        <View style={styles.containerDate}>
+        <View style={styles.dateTimeContainer}>
             <DateSelector setDateIsSet={setDateIsSet} date={date} setDate={setDate}/>
             { dateIsSet && <TimeSelector time={time} setTime={setTime} setTimeIsSet={setTimeIsSet}/>}
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    containerDate: {
-        borderWidth: 2,
-    }
-})

@@ -1,25 +1,26 @@
-import { View, Text, Image, StyleSheet, Keyboard} from 'react-native';
+import { View, Text, Image, Keyboard} from 'react-native';
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { db } from '../../firebaseConfig.js'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SelectDropdown from 'react-native-select-dropdown';
-
+import { dropDownStyle } from '../../styles/style.js';
 
 
 export default BirdSelection = ( { setSightingData, sightingData }) => {
     const [ birdList , setBirdList ] = useState([]);
-    const [ dropDownMargin, setDropDownMargin ] = useState(-90);
+    const [ dropDownMargin, setDropDownMargin ] = useState(-120);
 
+    /* Command to remove bird list from local storage */
     // AsyncStorage.removeItem('birdList').then( (result) => {
     // })
 
     Keyboard.addListener('keyboardDidShow', () => {
-        setDropDownMargin(245)
+        setDropDownMargin(150)
     })
-    Keyboard.addListener('keyboardDidHide', () => {
-        setDropDownMargin(-90)
+    Keyboard.addListener('keyboardDidHide', () => { 
+        setDropDownMargin(-120)
     })
     
     
@@ -64,79 +65,79 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
         let tempSightingData = {...sightingData}
         tempSightingData.bird = data.common_name
         tempSightingData.sighting_img_url = data.sighting_img_url
-        
         setSightingData(tempSightingData)
     }
 
     return (
-        <View style={styles.containerSelectBirds}>
-                <SelectDropdown
-                    data={birdList}
-                    onSelect={handleBirdSelect}
-                    dropdownStyle={ { marginTop: dropDownMargin, minHeight: 500 }}
-                    buttonStyle={styles.dropDownButton}
-                    rowStyle={styles.dropdownRow}
-                    search
-                    searchPlaceHolder={"Search..."}
-                    searchInputStyle={styles.searchInput}
-                    renderCustomizedButtonChild={(selectedItem, index) => {
-                        return (
-                            <View style={styles.row}>
-                                    {selectedItem ? (
-                                        <Image source={{uri: selectedItem.sighting_img_url}} style={styles.image}/>
-                                        ) : ( 
-                                        <Image source={require('../../assets/bird-select.jpg')} style={styles.image}/>
-                                        )} 
-                                    <Text style={styles.dropDownText} >{selectedItem ? selectedItem.common_name : 'Select Bird'}</Text>
-                            </View>
-                        );
-                    }}
-                    renderCustomizedRowChild={(item, index) => {
-                        return (
-                            <View style={styles.row}>
-                                <Image source={{uri: item.sighting_img_url}} style={styles.image}/>
-                                <Text style={styles.dropDownText} >{item.common_name}</Text>
-                            </View>
-                        );
-                    }}
-                />
+        <View>
+            <SelectDropdown
+                data={birdList}
+                onSelect={handleBirdSelect}
+                dropdownStyle={{marginTop: dropDownMargin, minHeight: 500, borderRadius: 10}}//Only works with one style sorouce
+                buttonStyle={dropDownStyle.dropDownButton}
+                rowStyle={dropDownStyle.dropdownRow}
+                search
+                searchPlaceHolderColor='white'
+                searchInputTxtStyle={dropDownStyle.searchInputText}
+                searchPlaceHolder={"Search..."}
+                searchInputStyle={dropDownStyle.searchInput}
+                renderCustomizedButtonChild={(selectedItem, index) => {
+                    return (
+                        <View style={dropDownStyle.row}>
+                            {selectedItem ? (
+                                <Image source={{uri: selectedItem.sighting_img_url}} style={dropDownStyle.image} />
+                                ) : ( 
+                                <Image source={require('../../assets/bird-select.jpg')} style={dropDownStyle.image}/>
+                                )} 
+                            <Text style={dropDownStyle.dropDownText} >{selectedItem ? selectedItem.common_name : 'Select Bird'}</Text>
+                        </View>
+                    );
+                }}
+                renderCustomizedRowChild={(item, index) => {
+                    return (
+                        <View style={dropDownStyle.row}>
+                            <Image source={{uri: item.sighting_img_url}} style={dropDownStyle.image}/>
+                            <Text style={dropDownStyle.dropDownText} >{item.common_name}</Text>
+                        </View>
+                    );
+                }}
+            />
         </View>
     )
 }
 
-const styles = StyleSheet.create({
-    containerSelectBirds: {
-        backgroundColor: "#7A918D"
-    },
-    image: {
-        ...StyleSheet.absoluteFillObject,
-    },
-    dropdownRow: {
-        height: 200,
-        width: '100%',
-    },
-    dropDownButton: {
-        borderWidth: 2,
-        height: 200,
-        width: '100%',
-        backgroundColor: "#7A918D"
-    },
-    row: {
-        flex:1,
-        flexDirection: 'row',
-    },
-    dropDownText: {
-        fontSize: 25,
-        margin: 30,
-        width: '100%',
-        color: 'white',
-        fontWeight: 'bold'
-    },
-    dropDown: {
-        flex:1,
-        minHeight: 1000,
-    },
-    searchInput: {
-        backgroundColor: "rgb(100, 150, 100)",
-    }
-})
+// const styles = StyleSheet.create({
+//     containerSelectBirds: {
+//         backgroundColor: "#7A918D"
+//     },
+//     image: {
+//         ...StyleSheet.absoluteFillObject,
+//     },
+//     dropDownButton: {
+//         borderWidth: 2,
+//         height: 200,
+//         width: '80%',
+//         backgroundColor: "#7A918D"
+//     },
+//     dropdownRow: {
+//         height: 200,
+//     },
+//     row: {
+//         flex:1,
+//         flexDirection: 'row',
+//     },
+//     dropDownText: {
+//         fontSize: 25,
+//         margin: 30,
+//         width: '100%',
+//         color: 'white',
+//         fontWeight: 'bold'
+//     },
+//     dropDown: {
+//         flex:1,
+//         minHeight: 1000,
+//     },
+//     searchInput: {
+//         backgroundColor: "rgb(100, 150, 100)",
+//     }
+// })

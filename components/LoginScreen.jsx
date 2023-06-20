@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from "react-native";
-import styles from '../styles/style.js'
+import { styles } from '../styles/style.js'
 
 
 export default LoginScreen = ({ navigation }) => {
@@ -41,11 +41,11 @@ export default LoginScreen = ({ navigation }) => {
   
   return (
     <KeyboardAvoidingView style={styles.pageContainer} behavior="padding">
+      <Text style={styles.titleText}>WELCOME TO FEATHER QUEST!</Text>
+      <View style={styles.logoContainer}>
+        <Image source={require("../assets/feather.png")} />
+      </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.titleText}>WELCOME TO FEATHER QUEST!</Text>
-        <View style={styles.iconContainer}>
-          <Image source={require("../assets/feather.png")} />
-        </View>
         <TextInput
           autoCapitalize="none"
           placeholder="Email"
