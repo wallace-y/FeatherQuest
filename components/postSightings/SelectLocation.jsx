@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, Image} from 'react-native';
 import MapView, { Marker } from 'react-native-maps'; //https://github.com/react-native-maps/react-native-maps/blob/master/docs/mapview.md
 import { useState } from 'react';
+import { smallMapStyles, styles } from '../../styles/style.js';
+import mapStyle from '../../styles/mapStyle.js'
 
 export default SelectLocation = ( { sightingData, setSightingData }) => {
 
@@ -20,12 +22,15 @@ export default SelectLocation = ( { sightingData, setSightingData }) => {
     }
 
     return (
-         <View style={styles.container}>
-            <Text>Select Location</Text>
-            <View style={styles.mapContainer}>
-                <MapView style={styles.map}
+         <View style={smallMapStyles.container}>
+            <View>
+                <Text style={styles.textMedium}>Select Location</Text>
+            </View>
+            <View style={smallMapStyles.mapContainer}>
+                <MapView style={smallMapStyles.map}
                     initialRegion={region}
-                    onRegionChangeComplete={handleRegionChange}>
+                    onRegionChangeComplete={handleRegionChange}
+                    customMapStyle={mapStyle}>
                     <Marker coordinate={region} style={{height: 35, width:35}}>
                         <Image source={require('../../assets/Binos2.png')} style={{height:25, width:35}}/>
                     </Marker>
@@ -35,18 +40,3 @@ export default SelectLocation = ( { sightingData, setSightingData }) => {
     )
 }
 
-const styles = StyleSheet.create({
-    map: {
-        ...StyleSheet.absoluteFillObject,
-    },
-    mapContainer: {
-        borderWidth: 2,
-        ...StyleSheet.absoluteFillObject,
-    },container:{
-        flex: 1,
-        borderWidth: 2,
-        borderColor: "#7A918D",
-        height: '100%',
-        width: '100%',
-    }
-})

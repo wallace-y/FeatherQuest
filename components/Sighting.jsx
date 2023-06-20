@@ -150,6 +150,8 @@ export default Sighting = ({ route, navigation }) => {
             <Text style={styles.buttonText}>Post</Text>
           </TouchableOpacity>
         </View>
+
+        <View style={styles.commentContainer}>
         {allComments.map((comment, index) => (
           <View key={index} style={styles.commentCard}>
             <View style={styles.commentTitle}>
@@ -161,6 +163,7 @@ export default Sighting = ({ route, navigation }) => {
             <Text>{comment.body}</Text>
           </View>
         ))}
+         </View>
       </View>
     </ScrollView>
   );
@@ -230,6 +233,10 @@ const styles = StyleSheet.create({
     paddingVertical: 35,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
+  },
+  commentContainer: {
+    marginTop: 10,
+    marginBottom:100
   },
   commentTitle: {
     display: "flex",
