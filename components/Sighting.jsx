@@ -150,19 +150,20 @@ export default Sighting = ({ route, navigation }) => {
             <Text style={styles.buttonText}>Post</Text>
           </TouchableOpacity>
         </View>
+
         <View style={styles.commentContainer}>
-          {allComments.map((comment) => (
-            <View style={styles.commentCard}>
-              <View style={styles.commentTitle}>
-                <Text style={styles.userName}>{comment.user} </Text>
-                <Text style={styles.commentDate}>
-                  Posted: {commentDay} at {commentTime}
-                </Text>
-              </View>
-              <Text>{comment.body}</Text>
+        {allComments.map((comment, index) => (
+          <View key={index} style={styles.commentCard}>
+            <View style={styles.commentTitle}>
+              <Text style={styles.userName}>{comment.user} </Text>
+              <Text style={styles.commentDate}>
+                Posted: {commentDay} at {commentTime}
+              </Text>
             </View>
-          ))}
-        </View>
+            <Text>{comment.body}</Text>
+          </View>
+        ))}
+         </View>
       </View>
     </ScrollView>
   );
