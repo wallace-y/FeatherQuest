@@ -3,7 +3,7 @@ import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
 import { useContext, useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View, BackHandler } from "react-native";
-
+import { styles } from '../styles/style.js'
 
 export default HomePage = ({ navigation, route }) => {
 
@@ -45,44 +45,15 @@ export default HomePage = ({ navigation, route }) => {
     )
   }
   return (
-    <View style={styles.container}>
-      <TouchableOpacity>
-        <Text style={styles.welcomeText}>Welcome, { globalUser.username || globalUser.first_name || "User"} </Text>
-      </TouchableOpacity>
-        <Button 
-          style={styles.button}
-          color={"#AAC0AA"}
-          onPress={() => {
-            navigation.navigate("SightingList");
-          }}
-          title="Welcome"
-        />
-      
+    <View style={styles.pageContainer}>
+      <View style={styles.centeredContainer}> 
+        <Text style={styles.titleText}>Welcome, { globalUser.username || globalUser.first_name || "User"} </Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("SightingList");}}>
+            <Text style={styles.buttonText}>Start Twitching!</Text>
+          </TouchableOpacity>
+      </View>
+      </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#7A918D",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: {
-    backgroundColor: "#1782F9",
-    width: "100%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  welcomeText: {
-    fontSize: 40,
-    color: "white"
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-});

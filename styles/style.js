@@ -8,9 +8,13 @@ import { StyleSheet, Dimensions } from "react-native";
     pink:       #B24C63
     purple:     #736372
 */
+
+const devBoder = 1;
+
 let SCREEN_WIDTH = Dimensions.get("window").width;
 let SCREEN_HEIGHT = Dimensions.get("window").height;
 
+/* Colors */
 const darkGreen = "#5e7975"
 const lightGreen = "#AAC0AA"
 const salmon = "#A18276"
@@ -19,94 +23,254 @@ const purple = "#736372"
 const textWhite = "white"
 const textBlack = "black"
 const inputColor = "white"
+/* Fonts */
 const font = "Virgil"
 
-export default styles = StyleSheet.create({
+export const styles = StyleSheet.create({
 /* Containers */
-scrollView: {
-    minHeight: SCREEN_HEIGHT,
-    paddingTop: 100,
-    paddingBottom: 60,
-    backgroundColor: darkGreen,
-},
-pageContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: darkGreen,
-  },
-iconContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingBottom: 20,
-},
-buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-},
-inputContainer: {
-    width: "80%",
-},
-/* Input */
-input: {
-    fontFamily: font,
-    backgroundColor: inputColor,
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    borderRadius: 10,
-    marginTop: 5,
-},
-/*  Button */
-button: {
-    backgroundColor: lightGreen,
-    width: "100%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 5,
-    borderColor: purple,
-    borderWidth: 2,
-},
-disabledButton:{
-    opacity: 0.5
-},
-/* text */
-titleText: {
-    fontFamily: font,
-    fontSize: 30,
-    marginBottom: 20,
-    textAlign: "center",
-    color: textWhite
-},
-buttonText: {
-    fontFamily: font,
-    color: textBlack,
-    fontSize: 18,
-},
+    scrollView: {
+        borderWidth: devBoder,
+        minHeight: SCREEN_HEIGHT,
+        backgroundColor: darkGreen,
+    },
+    pageContainer: {
+        borderWidth: devBoder,
+        flex: 1,
+        alignItems: "center",
+        backgroundColor: darkGreen,
+        paddingBottom: 70, //necesasary for scroll view
 
-textClickable: {
-    fontFamily: font,
-    color: textWhite,
-    fontSize: 18
-},
-warningText: {
-    fontFamily: font,
-    color: textBlack,
-    fontSize: 18
-},
-imageContainer: {
-    margin: 10,
-    height: "30%",
-    width: "80%",
-    borderRadius: 20,
-    borderWidth: 4,
-    borderColor: "#7A918D",
-    overflow: 'hidden',
-},
-imagePreview: {
-    ...StyleSheet.absoluteFillObject,
-}
+    },
+    centeredContainer: {
+        borderWidth: devBoder,
+        ...StyleSheet.absoluteFillObject,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: -100
+    },
+    titleContainer: {
+        borderWidth: devBoder,
+        maxHeight: 60,
+    },
+    iconContainer: {
+        borderWidth: devBoder,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingBottom: 20,
+    },
+    buttonContainer: {
+        borderWidth: devBoder,
+        width: "60%",
+        justifyContent: "center",
+        alignItems: "center",
+        marginVertical: 5
+    },
+    inputContainer: {
+        borderWidth: devBoder,
+        width: "80%",
+        margin: 5,
+    },
+    listContainer: {
+        flex: 1,
+        borderWidth: devBoder,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        alignItems: "flex-start",
+    },
+    birdCardContainer: {
+        flex: 1,
+        minWidth: "33%",
+        maxWidth: "33%",
+        height: 180,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: salmon,
+        backgroundColor: lightGreen,
+        borderRadius: 5,
+        padding: 1,
+    },
+    imagePreviewContainer: {
+        margin: 10,
+        minHeight: 150,
+        width: "60%",
+        borderRadius: 20,
+        borderWidth: 4,
+        borderColor: "#7A918D",
+        overflow: 'hidden',
+    },
+    dateTimeContainer: {
+        flexDirection: 'row',
+        borderWidth: devBoder,
+        width: "60%",
+        justifyContent: "center",
+        alignItems: "center",
+        marginVertical: 5
+    },
+    /* Input */
+    input: {
+        fontFamily: font,
+        backgroundColor: inputColor,
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+        borderRadius: 10,
+        marginTop: 5,
+    },
+    /*  Button */
+    button: {
+        backgroundColor: lightGreen,
+        borderColor: purple,
+        width: "100%",
+        paddingHorizontal: 15,
+        paddingVertical: 3,
+        borderRadius: 10,
+        alignItems: "center",
+        marginVertical: 2,
+        borderWidth: 2,
+    },
+    disabledButton:{
+        opacity: 0.5
+    },
+    /* text */
+    titleText: {
+        fontFamily: font,
+        fontSize: 30,
+        textAlign: "center",
+        color: textWhite
+    },
+    text:{
+        fontFamily: "Virgil",
+        textAlign: "center",
+        fontSize: 12,
+    },
+    textMedium: {
+        fontFamily: "Virgil",
+        textAlign: "center",
+        fontSize: 18,
+        color: textWhite
+    },
+    buttonText: {
+        fontFamily: font,
+        color: textBlack,
+        fontSize: 18,
+    },
 
+    textClickable: {
+        fontFamily: font,
+        color: textWhite,
+        fontSize: 18
+    },
+    loadingText: {
+        fontFamily: font,
+        textAlign: "center",
+        fontSize: 25,
+    },
+    warningText: {
+        fontFamily: font,
+        color: textBlack,
+        fontSize: 18
+    },
+    /* Images */
+    birdCardImageContainer: {
+        width: "100%",
+        height: "80%",
+        borderRadius: 10,
+        borderColor: darkGreen,
+        overflow: 'hidden',
+        
+    },
+    birdCardImage: {
+        aspectRatio:1,
+        height: "100%",
+    },
+    imagePreview: {
+        ...StyleSheet.absoluteFillObject,
+    }
 });
+
+export const navStyles = StyleSheet.create({
+    navContainer: {
+        flexDirection: "row",
+        marginTop: "10%",
+        height: 60,
+        width: "100%",
+        justifyContent: "space-evenly",
+        backgroundColor: "#AAC0AA",
+    
+      },
+      image: {
+        width: 60,
+        height: 60,
+        alignSelf: "center",
+        justifyContent: "center",
+      },
+      text: {
+        alignSelf: 'center',
+        fontFamily:'Virgil',
+        fontSize: 20,
+      },
+})
+
+export const smallMapStyles = StyleSheet.create({
+    container:{
+        flex: 1,
+        // height: 220,
+        borderWidth: 3,
+        borderColor: lightGreen,
+        borderRadius: 10,
+        width: '80%',
+    },
+    mapContainer: {
+        flex: 1,
+        borderWidth: 4,
+        borderColor: salmon,
+        borderRadius: 10,
+        width: "100%",
+        height: "100%"
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    },
+})
+
+
+export const dropDownStyle = StyleSheet.create({
+    dropDownButton: {
+        width: '80%',
+        height: 200,
+        backgroundColor: darkGreen,
+        borderWidth: 3,
+        borderColor: lightGreen,
+        borderRadius: 10,
+        marginVertical: 2,
+    },
+    dropdownRow: {
+        height: 200,
+    },
+    row: {
+        flex:1,
+        flexDirection: 'row',
+    },
+    image: {
+        ...StyleSheet.absoluteFillObject,
+        maxHeight: 199,
+        maxWidth: "100%",
+        borderWidth: 2,
+        
+    },
+    dropDownText: {
+        fontSize: 25,
+        margin: 30,
+        width: '100%',
+        color: 'white',
+        fontFamily: font,
+    },
+    searchInput: {
+        backgroundColor: lightGreen,
+        fontFamily: font,
+        color: textWhite
+    },
+    searchInputText: {
+        fontFamily: "Virgil",
+         color: "white"
+    }
+})
