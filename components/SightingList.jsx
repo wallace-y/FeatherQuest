@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   Text,
   View,
   Image,
@@ -14,7 +13,7 @@ import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import CustomButton from "./CustomButton";
 import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
-import { styles } from "../styles/style.js"
+import { styles, textStyles } from "../styles/style.js"
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -53,19 +52,21 @@ export default SightingList = ({ navigation }) => {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.pageContainer}>
+
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>All Sightings</Text>
+          <Text style={textStyles.titleText}>All Sightings</Text>
         </View>
-        {loading && ( <Text style={styles.loadingText}>Loading...Please Wait</Text> )}
+        {loading && ( <Text style={textStyles.loadingText}>Loading...Please Wait</Text> )}
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-            <Text style={styles.buttonText}>Go Back</Text>
+            <Text style={textStyles.buttonText}>Go Back</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.listContainer}>
           {allSightings.map((bird, index) => (
+
               <TouchableOpacity key={index}
                 style={styles.birdCardContainer}
                 onPress={() => {navigation.navigate("Sighting", bird);}}
@@ -82,23 +83,14 @@ export default SightingList = ({ navigation }) => {
                       style={styles.birdCardImage}
                     />
                   )}
-                  
                 </View>
-
-                <Text
-                style={styles.text}
-                numberOfLines={2}
-                ellipsizeMode="tail"
-                >
-                  {bird.bird}
-                </Text>
-                </TouchableOpacity>
+                <View style={textStyles.textContainer}> 
+                  <Text style={textStyles.text} numberOfLines={2} ellipsizeMode="tail">{bird.bird}</Text>
+                </View>
+              </TouchableOpacity>
           ))}
         </View>
-        {error && (
-          <View>
-            <Text style={styles.warningText}>{error}</Text>
-          </View>
+        {error && (<View><Text style={textStyles.warningText}>{error}</Text></View>
         )}
       </View>
     </ScrollView>

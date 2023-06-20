@@ -3,7 +3,7 @@ import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
 import { useContext, useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View, BackHandler } from "react-native";
-import { styles } from '../styles/style.js'
+import { styles, textStyles } from '../styles/style.js'
 
 export default HomePage = ({ navigation, route }) => {
 
@@ -39,18 +39,18 @@ export default HomePage = ({ navigation, route }) => {
 
   if(loadingUser){
     return (
-      <View styles={styles.container}>
-          <Text> Loading...</Text>
+      <View styles={styles.pageContainer}>
+          <Text style={textStyles.loadingText}> Loading...</Text>
       </View>
     )
   }
   return (
     <View style={styles.pageContainer}>
       <View style={styles.centeredContainer}> 
-        <Text style={styles.titleText}>Welcome, { globalUser.username || globalUser.first_name || "User"} </Text>
+        <Text style={textStyles.titleText}>Welcome, { globalUser.username || globalUser.first_name || "User"} </Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("SightingList");}}>
-            <Text style={styles.buttonText}>Start Twitching!</Text>
+            <Text style={textStyles.buttonText}>Start Twitching!</Text>
           </TouchableOpacity>
       </View>
       </View>
