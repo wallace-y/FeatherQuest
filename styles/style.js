@@ -294,8 +294,8 @@ export const navStyles = StyleSheet.create({
     },
     navContainer: {
         flexDirection: "row",
-        marginTop: "10%",
-        height: 60,
+        paddingTop: "10%",
+        height: 100,
         width: "100%",
         justifyContent: "space-evenly",
         backgroundColor: "#AAC0AA",
