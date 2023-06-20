@@ -32,6 +32,7 @@ function ManagePerch({ id }) {
               username: data.username,
               profile_image_url: data.profile_image_url,
               perch_list: [...data.perch_list],
+              coordinates: currUser.coordinates
             };
           });
         });
@@ -54,6 +55,7 @@ function ManagePerch({ id }) {
               username: data.username,
               profile_image_url: data.profile_image_url,
               perch_list: [...data.perch_list],
+              coordinates: currUser.coordinates
             };
           });
         });

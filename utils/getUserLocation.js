@@ -4,7 +4,6 @@ import * as Location from 'expo-location';
 
 
 async function getUserLocation () {
-    console.log('in function');
       if (Platform.OS === 'android' && !Device.isDevice) {
         setErrorMsg(
           'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
@@ -22,8 +21,6 @@ try {
 } catch {
 console.log(err);
 } finally {
-    // return dynamicLocation;
-    console.log('im function');
 }
 };
 export { getUserLocation }

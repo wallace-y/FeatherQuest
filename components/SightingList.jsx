@@ -14,6 +14,9 @@ import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import CustomButton from "./CustomButton";
 import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
+import { distanceCalculate } from "../utils/distanceCalculator";
+
+
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -22,6 +25,9 @@ export default SightingList = ({ navigation }) => {
   const [allSightings, setAllSightings] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [birdsByDistance, setBirdsByDistance] = useState([])
+  const { globalUser, setGlobalUser } = useContext(UserContext)
+
 
     useEffect(() => {
     const fetchAllBirds = async () => {
@@ -35,7 +41,9 @@ export default SightingList = ({ navigation }) => {
         const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
           doc.data()
         );
-
+        distanceCalculate(globalUser.coordinates, sightingsData).then((data) => {
+        setBirdsByDistance(data)
+        })
         setAllSightings(sightingsData);
       } catch (error) {
         console.log(error.message);
@@ -44,10 +52,8 @@ export default SightingList = ({ navigation }) => {
         setLoading(false);
       }
     };
-
     fetchAllBirds();
   }, []);
-
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -65,7 +71,7 @@ export default SightingList = ({ navigation }) => {
         </View>
 
         <View style={styles.row}>
-          {allSightings.map((bird, index) => (
+          {birdsByDistance.map((bird, index) => (
             <View key={index} style={styles.birdCard}>
               <TouchableOpacity
                 onPress={() => {

@@ -10,6 +10,7 @@ export default HomePage = ({ navigation, route }) => {
   const { globalUser, setGlobalUser } = useContext(UserContext)
   const [ loadingUser, setLoadingUser ] = useState(true)
   const [ userLocation, setUserLocation ] = useState([0,0])
+  const [loadingUserLocation, setLoadingUserLocation ] = useState(true)
 
   
 
@@ -18,6 +19,7 @@ export default HomePage = ({ navigation, route }) => {
 
     getUserLocation().then((location) => {
       setUserLocation([...location])
+      setLoadingUserLocation(false);
     })
 
     if(auth.currentUser){
@@ -39,7 +41,7 @@ export default HomePage = ({ navigation, route }) => {
         console.log(err);
       });
     }
-  }, []);
+  }, [loadingUserLocation]);
 
   if(loadingUser){
     return (

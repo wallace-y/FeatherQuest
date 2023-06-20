@@ -28,10 +28,9 @@ export default Profile = ({ navigation }) => {
       username: globalUser.username,
       profile_image_url: globalUser.profile_image_url,
       perch_list: [...globalUser.perch_list],
-      coordinates: globalUser.coordinates,
     });
   }, [globalUser]);
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.userInfocontainer}>
