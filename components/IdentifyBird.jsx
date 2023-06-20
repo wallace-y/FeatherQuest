@@ -3,7 +3,7 @@ import * as ImagePicker from "expo-image-picker";
 import { getApps } from "firebase/app";
 import { storage } from "../firebaseConfig";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   ActivityIndicator,
   Button,
@@ -16,7 +16,7 @@ import {
   LogBox,
   FlatList,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import uuid from "uuid";
@@ -28,106 +28,40 @@ if (!getApps().length) {
 
 LogBox.ignoreLogs([`Setting a timer for a long period`]);
 
-export default class App extends React.Component {
-  state = {
-    image: null,
-    uploading: false,
-    googleResponse: null,
-  };
+const IdentifyBird = ({ navigation }) => {
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [googleResponse, setGoogleResponse] = useState(null);
 
-  async componentDidMount() {
-    if (Platform.OS !== "web") {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
       }
-    }
-  }
+    })();
+  }, []);
 
-  render() {
-    let { image } = this.state;
 
-    return (
-      <View style={styles.container}>
-        {this.state.googleResponse && (
-          <View>
-            <Text style={styles.bestGuess}>
-              Our best guess is:{" "}
-              {
-                this.state.googleResponse.responses[0].webDetection
-                  .webEntities[0].description
-              }
-            </Text>
-            <TouchableOpacity>
-              <Text>To use this guess in a posting please click</Text>
-              <CustomButton
-                title="here"
-                onPress={() => {
-                  navigation.goBack();
-                }}
-              ></CustomButton>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {!image && (
-          <View>
-            <CustomButton
-              title="Pick an image from camera roll"
-              onPress={this._pickImage}
-            ></CustomButton>
-            <CustomButton
-              title="Take a photo"
-              onPress={this._takePhoto}
-            ></CustomButton>
-          </View>
-        )}
-
-        {this._maybeRenderImage()}
-        {this._maybeRenderUploadingOverlay()}
-
-        <StatusBar barStyle="default" />
-
-        {image && (
-          <View>
-            <CustomButton
-              onPress={() => this.submitToGoogle()}
-              title="Analyze!"
-            ></CustomButton>
-          </View>
-        )}
-
-        {/* {this.state.googleResponse && (
-            <Text onPress={this._copyToClipboard} onLongPress={this._share}>
-              {JSON.stringify(this.state.googleResponse.responses)}
-            </Text>
-          )} */}
-        {/* {this.state.googleResponse && (
-          <FlatList
-            data={
-              this.state.googleResponse.responses[0].webDetection.webEntities
-            }
-            extraData={this.state}
-            keyExtractor={this._keyExtractor}
-            renderItem={({ item }) => <Text>Item: {item.description}</Text>}
-          />
-        )} */}
-      </View>
-    );
-  }
-
-  submitToGoogle = async () => {
+  const submitToGoogle = async () => {
     try {
-      this.setState({ uploading: true });
-      let { image } = this.state;
-      let body = JSON.stringify({
+      setUploading(true);
+      const body = JSON.stringify({
         requests: [
           {
             features: [
-              //   { type: "LABEL_DETECTION", maxResults: 5 },
-              //   { type: "OBJECT_LOCALIZATION", maxResults: 2 },
               { type: "WEB_DETECTION", maxResults: 3 },
+              {
+                maxResults: 3,
+                type: "OBJECT_LOCALIZATION",
+              },
+              {
+                maxResults: 3,
+                type: "LABEL_DETECTION",
+              },
             ],
             image: {
               source: {
@@ -137,9 +71,8 @@ export default class App extends React.Component {
           },
         ],
       });
-      let response = await fetch(
-        "https://vision.googleapis.com/v1/images:annotate?key=" +
-          VISION_API_KEY,
+      const response = await fetch(
+        `https://vision.googleapis.com/v1/images:annotate?key=${VISION_API_KEY}`,
         {
           headers: {
             Accept: "application/json",
@@ -149,20 +82,17 @@ export default class App extends React.Component {
           body: body,
         }
       );
-      let responseJson = await response.json();
-      // console.log(responseJson);
-      console.log(responseJson.responses[0]);
-      this.setState({
-        googleResponse: responseJson,
-        uploading: false,
-      });
+      const responseJson = await response.json();
+      setGoogleResponse(responseJson);
+      // console.log(responseJson.localizedObjectAnnotations);
+      setUploading(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-  _maybeRenderUploadingOverlay = () => {
-    if (this.state.uploading) {
+  const maybeRenderUploadingOverlay = () => {
+    if (uploading) {
       return (
         <View
           style={[
@@ -180,8 +110,7 @@ export default class App extends React.Component {
     }
   };
 
-  _maybeRenderImage = () => {
-    let { image } = this.state;
+  const maybeRenderImage = () => {
     if (!image) {
       return;
     }
@@ -208,70 +137,125 @@ export default class App extends React.Component {
         >
           <Image source={{ uri: image }} style={{ width: 250, height: 250 }} />
         </View>
-        {/* <Text
-          onPress={this._copyToClipboard}
-          onLongPress={this._share}
-          style={{ paddingVertical: 10, paddingHorizontal: 10 }}
-        >
-          {image}
-        </Text> */}
       </View>
     );
   };
 
-  _share = () => {
-    Share.share({
-      message: this.state.image,
-      title: "Check out this photo",
-      url: this.state.image,
-    });
-  };
-
-  _copyToClipboard = () => {
-    Clipboard.setString(this.state.image);
-    alert("Copied image URL to clipboard");
-  };
-
-  _takePhoto = async () => {
-    let pickerResult = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-
-    this._handleImagePicked(pickerResult.assets);
-  };
-
-  _pickImage = async () => {
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-
-    // console.log({ pickerResult });
-
-    this._handleImagePicked(pickerResult.assets);
-  };
-
-  _handleImagePicked = async (assets) => {
+  const handleImagePicked = async (assets) => {
     try {
-      this.setState({ uploading: true });
+      setUploading(true);
 
       if (assets && assets.length > 0) {
         const uploadUrl = await uploadImageAsync(assets[0].uri);
-        this.setState({ image: uploadUrl });
+        setImage(uploadUrl);
       }
     } catch (e) {
       console.log(e);
       alert("Upload failed, sorry :(");
     } finally {
-      this.setState({ uploading: false });
+      setUploading(false);
     }
   };
-}
+
+  const takePhoto = async () => {
+    const pickerResult = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    handleImagePicked(pickerResult.assets);
+  };
+
+  const pickImage = async () => {
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    handleImagePicked(pickerResult.assets);
+  };
+
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        {googleResponse && (
+          <View>
+            <View>
+              <Text style={styles.bestGuess}>
+                Our best guess is:
+                {
+                  googleResponse.responses[0].webDetection.webEntities[0]
+                    .description
+                }
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.objectGuess}>
+                Main object:{" "}
+                {
+                  googleResponse.responses[0].localizedObjectAnnotations[0].name
+                }
+              </Text>
+              <Text>
+                Confidence: {(googleResponse.responses[0].localizedObjectAnnotations[0].score*100).toFixed(0)} %
+              </Text>
+            </View>
+            <View>
+              <Text>
+                Likely:{" "}
+                {googleResponse.responses[0].labelAnnotations[0].description}
+              </Text>
+              <Text>
+              Likely:{" "}
+                {googleResponse.responses[0].labelAnnotations[1].description}
+              </Text>
+              <Text>
+              Likely:{" "}
+                {googleResponse.responses[0].labelAnnotations[2].description}
+              </Text>
+            </View>
+
+            <TouchableOpacity>
+              <Text>To use this guess in a posting please click</Text>
+              <CustomButton
+                title="here"
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              ></CustomButton>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {!image && (
+          <View>
+            <CustomButton
+              title="Pick an image from camera roll"
+              onPress={pickImage}
+            ></CustomButton>
+            <CustomButton
+              title="Take a photo"
+              onPress={takePhoto}
+            ></CustomButton>
+          </View>
+        )}
+
+        {maybeRenderImage()}
+        {maybeRenderUploadingOverlay()}
+
+        <StatusBar barStyle="default" />
+
+        {image && (
+          <View>
+            <CustomButton onPress={submitToGoogle} title="Analyze!" />
+          </View>
+        )}
+      </View>
+    </ScrollView>
+  );
+};
 
 async function uploadImageAsync(uri) {
-  // Why are we using XMLHttpRequest? See:
-  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
   const blob = await new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -289,7 +273,6 @@ async function uploadImageAsync(uri) {
   const fileRef = ref(storage, uuid.v4());
   const result = await uploadBytes(fileRef, blob);
 
-  // We're done with the blob, close and release it
   blob.close();
 
   return await getDownloadURL(fileRef);
@@ -300,9 +283,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#7A918D",
   },
   bestGuess: {
     fontFamily: "Virgil",
-    fontWeight: 700,
+    fontWeight: "700",
   },
 });
+
+export default IdentifyBird;

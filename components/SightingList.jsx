@@ -15,7 +15,7 @@ import CustomButton from "./CustomButton";
 import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
 import { distanceCalculate } from "../utils/distanceCalculator";
-
+import { styles } from "../styles/style.js"
 
 
 let width = Dimensions.get("window").width;
@@ -29,7 +29,7 @@ export default SightingList = ({ navigation }) => {
   const { globalUser, setGlobalUser } = useContext(UserContext)
 
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchAllBirds = async () => {
       try {
         setLoading(true);
@@ -38,12 +38,15 @@ export default SightingList = ({ navigation }) => {
           orderBy("date_spotted", "desc")
         );
         const [sightingsQuerySnapshot] = await Promise.all([getDocs(q)]);
-        const sightingsData = sightingsQuerySnapshot.docs.map((doc) =>
-          doc.data()
-        );
+
+        const sightingsData = sightingsQuerySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         distanceCalculate(globalUser.coordinates, sightingsData).then((data) => {
         setBirdsByDistance(data)
         })
+
         setAllSightings(sightingsData);
       } catch (error) {
         console.log(error.message);
@@ -57,18 +60,18 @@ export default SightingList = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
-        <Text style={styles.header}>All Sightings</Text>
-        {loading && (
-          <Text style={styles.loadingText}>Loading...Please Wait</Text>
-        )}
+      <View style={styles.pageContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>All Sightings</Text>
+        </View>
+        {loading && ( <Text style={styles.loadingText}>Loading...Please Wait</Text> )}
 
         <View style={styles.buttonContainer}>
-          <CustomButton
-            title="Go Back"
-            onPress={() => navigation.goBack()}
-          ></CustomButton>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+            <Text style={styles.buttonText}>Go Back</Text>
+          </TouchableOpacity>
         </View>
+
 
         <View style={styles.row}>
           {birdsByDistance.map((bird, index) => (
@@ -78,96 +81,38 @@ export default SightingList = ({ navigation }) => {
                   navigation.navigate("Sighting", bird);
                 }}
               >
-                {bird.sighting_img_url === "" ? (
-                  <Image
-                    source={require("../assets/slawek-k-mZF-_SXc_6c-unsplash.jpg")}
-                    style={styles.image}
-                  />
-                ) : (
-                  <Image
-                    source={{
-                      uri: bird.sighting_img_url,
-                    }}
-                    style={styles.image}
-                  />
-                )}
-              </TouchableOpacity>
-              <Text
-                style={styles.birdName}
+                <View style={styles.birdCardImageContainer}>
+                  {bird.sighting_img_url === "" ? (
+                    <Image
+                      source={require("../assets/default-sighting-img.jpg")}
+                      style={[styles.birdCardImage]}
+                    />
+                  ) : (
+                    <Image
+                      source={{ uri: bird.sighting_img_url}}
+                      style={styles.birdCardImage}
+                    />
+                  )}
+                  
+                </View>
+
+                <Text
+                style={styles.text}
                 numberOfLines={2}
                 ellipsizeMode="tail"
-              >
-                {bird.bird}
-              </Text>
-            </View>
+                >
+                  {bird.bird}
+                </Text>
+                </TouchableOpacity>
           ))}
         </View>
         {error && (
           <View>
-            <Text style={styles.errorText}>{error}</Text>
+            <Text style={styles.warningText}>{error}</Text>
           </View>
         )}
       </View>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    minHeight: height,
-    backgroundColor: "#7A918D",
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    paddingTop: 20,
-    marginBottom: 100,
-  },
-  image: {
-    width: "100%",
-    height: 100,
-    resizeMode: "cover",
-    marginBottom: 10,
-  },
-  header: {
-    fontFamily: "Virgil",
-    textAlign: "center",
-    marginTop: 10,
-    marginBottom: 10,
-    fontSize: 40,
-  },
-  birdCard: {
-    width: "33%",
-    height: 180,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "#A18276",
-    borderRadius: 5,
-    padding: 10,
-    backgroundColor: "#AAC0AA",
-  },
-  birdName: {
-    fontFamily: "Virgil",
-    textAlign: "center",
-    fontSize: 15,
-    marginBottom: 5,
-  },
-  buttonContainer: {
-    marginBottom: 15,
-  },
-  loadingText: {
-    fontFamily: "Virgil",
-    textAlign: "center",
-    fontSize: 25,
-  },
-  errorText: {
-    fontFamily: "Virgil",
-    textAlign: "center",
-    fontSize: 25,
-  },
-  row: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start",
-  },
-});
+ 

@@ -6,7 +6,7 @@ import {
   Alert,
   Keyboard,
   TextInput,
-  StyleSheet,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 import { auth } from "../firebaseConfig";
@@ -16,7 +16,10 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import NavToLoginBar from './NavToLoginBar.jsx'
 import * as ImagePicker from "expo-image-picker";
+import { styles } from '../styles/style.js'
 
+
+// TODO: add scrolview or otherwise fix things going of the page
 const SignUp = ( { navigation }) => {
   const [screenName, setScreenName] = useState("");
   const [screenNameValid, setScreenNameValid] = useState(false)
@@ -116,7 +119,6 @@ const SignUp = ( { navigation }) => {
     }  
   }
   const handlerPassword = (text) => {
-    console.log(text)
     if(text.length >= 6){
       setPassword(text)
       setPasswordValid(true)
@@ -156,127 +158,80 @@ const SignUp = ( { navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
-      <TextInput
-        autoCapitalize="none"
-        placeholder="Username *"
-        onChangeText={handleUsername}
-        style={styles.input}
-      />
-      {!screenNameValid && screenName !== "" && <Text>Username too short</Text>}
-      <TextInput
-        autoCapitalize="none"
-        placeholder="Email *"
-        onChangeText={handleEmail}
-        style={styles.input}
-      />
-      {!emailValid && email !== "" && <Text>Email invalid</Text>}
-      <TextInput
-        autoCapitalize="none"
-        placeholder="Password *"
-        onChangeText={handlerPassword}
-        style={styles.input}
-        secureTextEntry
-      />
-       {!passwordValid && password !== "" && <Text>Password to short. Should be at least 6 characters long</Text>}
-      <TextInput
-        placeholder="First Name"
-        value={firstName}
-        onChangeText={(text) => setFirstName(text)}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Last Name"
-        value={lastName}
-        onChangeText={(text) => setLastName(text)}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Location"
-        value={location}
-        onChangeText={(text) => setLocation(text)}
-        style={styles.input}
-      />
+    <ScrollView contentContainerStyle={styles.scrollView}>
+      <View style={styles.pageContainer}>
+        <Text style={styles.titleText}>Sign Up</Text>
+        <View style={styles.inputContainer}>
 
-      <TouchableOpacity
-        onPress={handleImageUpload}
-        style={[styles.button, uploading && styles.disabledButton]}
-        disabled={uploading}
-      >
-        <Text style={styles.buttonText}>
-          {uploading ? "Uploading..." : "Select and Upload Image"}
-        </Text>
-      </TouchableOpacity>
-
-      {image && (
-        <View style={styles.imageContainer}>
-          <Image source={{ uri: image }} style={styles.imagePreview} />
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Username *"
+            onChangeText={handleUsername}
+            style={styles.input}
+            />
+          {!screenNameValid && screenName !== "" && <Text style={styles.warningText}>Username too short</Text>}
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Email *"
+            onChangeText={handleEmail}
+            style={styles.input}
+            />
+          {!emailValid && email !== "" && <Text style={styles.warningText}>Email invalid</Text>}
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Password *"
+            onChangeText={handlerPassword}
+            style={styles.input}
+            secureTextEntry
+            />
+          {!passwordValid && password !== "" && <Text style={styles.warningText}>Password to short</Text>}
+          <TextInput
+            placeholder="First Name"
+            value={firstName}
+            onChangeText={(text) => setFirstName(text)}
+            style={styles.input}
+            />
+          <TextInput
+            placeholder="Last Name"
+            value={lastName}
+            onChangeText={(text) => setLastName(text)}
+            style={styles.input}
+            />
+          <TextInput
+            placeholder="Location"
+            value={location}
+            onChangeText={(text) => setLocation(text)}
+            style={[styles.input, ]}
+            />
         </View>
-      )}
+          {image && (
+            <View style={styles.imagePreviewContainer}>
+              <Image source={{ uri: image }} style={styles.imagePreview} />
+            </View>
+          )}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={handleImageUpload}
+            style={[styles.button, uploading && styles.disabledButton]}
+            disabled={uploading}
+            >
+            <Text style={styles.buttonText}>
+              {uploading ? "Uploading..." : "Upload Avatar"}
+            </Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleSignUp} 
-        disabled={
-          !(screenNameValid && emailValid && passwordValid)
-        }
-          style={[styles.button, !(screenNameValid && emailValid && passwordValid) && styles.disabledButton]}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-      {!(screenNameValid && emailValid && passwordValid) && <Text>Missing some fields</Text>}
-    </View>
+
+          <TouchableOpacity onPress={handleSignUp} 
+            disabled={!(screenNameValid && emailValid && passwordValid)}
+            style={[styles.button, !(screenNameValid && emailValid && passwordValid) && styles.disabledButton]}>
+              <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+
+          {!(screenNameValid && emailValid && passwordValid) && <Text style={styles.warningText}>Missing some fields</Text>}
+        </View>
+      </View>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#5e7975",
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlignVertical: "center",
-  },
-  input: {
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    borderRadius: 10,
-    marginTop: 5,
-    width: "80%",
-  },
-  button: {
-    backgroundColor: "#0782F9",
-    width: "60%",
-    padding: 10,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 20,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  disabledButton: {
-    opacity: 0.5,
-  },
-  imageContainer: {
-    margin: 10,
-    height: "30%",
-    width: "80%",
-    borderRadius: 20,
-    borderWidth: 4,
-    borderColor: "#7A918D",
-    overflow: 'hidden',
-  },
-  imagePreview: {
-    ...StyleSheet.absoluteFillObject,
-    
-  }
-});
 
 export default SignUp;

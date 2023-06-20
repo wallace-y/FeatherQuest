@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { auth } from "../firebaseConfig";
 import {
   View,
   Text,
@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import React, { useState } from "react";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import { styles } from '../styles/style.js';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -24,67 +25,32 @@ const ForgotPassword = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {resetSent ? (
-        <Text style={styles.resetText}>Password reset email sent!</Text>
+    <> 
+    {resetSent ? (
+        <View style={styles.pageContainer}>
+          <Text style={styles.resetText}>Password reset email sent!</Text>
+        </View>
       ) : (
-        <>
-          <Text style={styles.title}>Forgot Password</Text>
+        <View style={styles.pageContainer}>
+        <Text style={styles.titleText}>Forgot Password</Text>
+        <View style={styles.inputContainer}>
           <TextInput
             autoCapitalize="none"
             placeholder="Email"
             value={email}
             onChangeText={(text) => setEmail(text)}
             style={styles.input}
-          />
+            />
+        </View>
+        <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleResetPassword} style={styles.button}>
             <Text style={styles.buttonText}>Reset Password</Text>
           </TouchableOpacity>
-        </>
+        </View>
+      </View>
       )}
-    </View>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#5e7975",
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-    color: "white",
-  },
-  input: {
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 10,
-    width: "80%",
-  },
-  button: {
-    backgroundColor: "#0782F9",
-    width: "80%",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 20,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  resetText: {
-    color: "white",
-    fontSize: 16,
-  },
-});
 
 export default ForgotPassword;
