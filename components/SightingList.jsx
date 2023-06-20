@@ -73,29 +73,28 @@ export default SightingList = ({ navigation }) => {
         </View>
 
 
-        <View style={styles.row}>
+        <View style={styles.listContainer}>
           {birdsByDistance.map((bird, index) => (
-            <View key={index} style={styles.birdCard}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("Sighting", bird);
-                }}
+              <TouchableOpacity key={index}
+                style={styles.birdCardContainer}
+                onPress={() => {navigation.navigate("Sighting", bird);}}
               >
                 <View style={styles.birdCardImageContainer}>
                   {bird.sighting_img_url === "" ? (
                     <Image
-                      source={require("../assets/default-sighting-img.jpg")}
-                      style={[styles.birdCardImage]}
+                    source={require("../assets/default-sighting-img.jpg")}
+                    style={[styles.birdCardImage]}
                     />
-                  ) : (
-                    <Image
+                    ) : (
+                      <Image
                       source={{ uri: bird.sighting_img_url}}
                       style={styles.birdCardImage}
-                    />
+                      />
                   )}
                   
                 </View>
 
+                 
                 <Text
                 style={styles.text}
                 numberOfLines={2}
