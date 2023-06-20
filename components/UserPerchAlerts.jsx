@@ -99,20 +99,21 @@ function UserPerchAlerts({ birds, user, navigation }) {
 //     textAlign: "center",
 //   },
 
-//   ScrollViewContainer: {
-//     alignItems: "center",
-//     justifyContent: "center",
-//     // backgroundColor: 'blue',
-//     width: width,
-//     top: 140,
-//   },
 
-//   userSights: {
-//     width: 90,
-//     height: 90,
-//     backgroundColor: "red",
-//     margin: 8,
-//     borderRadius: 10,
+  ScrollViewContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: width,
+    top: 140,
+  },
+
+  userSights: {
+    width: 90,
+    height: 90,
+    backgroundColor: "#AAC0AA",
+    margin: 8,
+    borderRadius: 10,
+
 
 //     // flexDirection: 'row',
 //   },
