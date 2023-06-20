@@ -3,6 +3,7 @@ import {
   Text,
   Button,
   StyleSheet,
+  TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
 import { useState, useContext } from "react";
@@ -14,6 +15,8 @@ import BirdSelection from "./BirdSelection.jsx";
 import DateSelection from "./DateSelection.jsx";
 import SelectLocation from "./SelectLocation.jsx";
 import CustomButton from "../CustomButton";
+import { styles } from "../../styles/style.js";
+
 
 export default PostSighting = ({ navigation }) => {
 
@@ -30,7 +33,6 @@ export default PostSighting = ({ navigation }) => {
 
   //Post sightings data to db
   const Submit = () => {
-      
       console.log(globalUser)
       let tempSightingData = {...sightingData}
       tempSightingData.created_at = new Date().toISOString()
@@ -45,94 +47,89 @@ export default PostSighting = ({ navigation }) => {
       // .catch(err => {
       //     console.log("Failed to submit a sighting")
       // })
+
+      //TODO: navigate to the new sighting page
   }
 
-    console.log(sightingData.bird === "" ||
-    sightingData.date_spotted === "" ||
-    sightingData.coordinates === "", sightingData)
   return (
-      <View
-        style={[
-          styles.pageContainer,
-          {
-            minHeight: Math.round(windowHeight - 100),
-            maxHeight: Math.round(windowHeight),
-          },
+      <View style={[styles.pageContainer ,
+        // { minHeight: Math.round(windowHeight - 100),
+        //   maxHeight: Math.round(windowHeight)}
         ]}
       >
-        <View>
-          <Text style={styles.pageTitle}>Post Your Sighting</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Post Your Sighting</Text>
         </View>
         <BirdSelection
           setSightingData={setSightingData}
           sightingData={sightingData}
         />
-        <View>
-          <CustomButton
-            title="Identify"
-            onPress={() => {
-              navigation.navigate("IdentifyBird");
-            }}
-          />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("IdentifyBird")}>
+            <Text style={styles.buttonText}>Identify</Text>
+          </TouchableOpacity>
         </View>
-
         <DateSelection
           setSightingData={setSightingData}
           sightingData={sightingData}
         />
+
         <SelectLocation
           sightingData={sightingData}
           setSightingData={setSightingData}
         />
-        <View style={styles.submit}>
-          <Button
-            title="Submit"
-            onPress={Submit}
-            style={styles.submit}
-            disabled={
-              sightingData.bird === "" ||
-              sightingData.date_spotted === "" ||
-              sightingData.coordinates === ""
-            }
-          />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+            style={[styles.button, 
+              (sightingData.bird === "" ||
+               sightingData.date_spotted === "" ||
+               sightingData.coordinates === "") && styles.disabledButton]}
+             disabled={
+               sightingData.bird === "" ||
+               sightingData.date_spotted === "" ||
+               sightingData.coordinates === ""
+             } 
+            onPress={Submit}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
         </View>
       </View>
   );
 };
 
-const styles = StyleSheet.create({
-  pageContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#7A918D",
-  },
-  submit: {
-    position: "relative",
-  },
-  pageTitle: {
-    fontSize: 30,
-    color: "white",
-    paddingLeft: 10,
-    textAlign: "center",
-    marginTop: 10,
-    marginBottom: 20,
-    fontFamily: "Virgil",
-  },
-  buttonContainer: {
-    width: "60%",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-    borderWidth: 2,
-    borderRadius: 5,
-    borderColor: "black",
-    backgroundColor: "#AAC0AA",
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  buttonText: {
-    fontFamily: "Virgil",
-    color: "white",
-  },
-});
+// const styles = StyleSheet.create({
+//   pageContainer: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     backgroundColor: "#7A918D",
+//   },
+//   submit: {
+//     position: "relative",
+//   },
+//   pageTitle: {
+//     fontSize: 30,
+//     color: "white",
+//     paddingLeft: 10,
+//     textAlign: "center",
+//     marginTop: 10,
+//     marginBottom: 20,
+//     fontFamily: "Virgil",
+//   },
+//   buttonContainer: {
+//     width: "60%",
+//     alignItems: "center",
+//     justifyContent: "center",
+//     padding: 10,
+//     borderWidth: 2,
+//     borderRadius: 5,
+//     borderColor: "black",
+//     backgroundColor: "#AAC0AA",
+//     marginTop: 5,
+//     marginBottom: 5,
+//   },
+//   buttonText: {
+//     fontFamily: "Virgil",
+//     color: "white",
+//   },
+// });
