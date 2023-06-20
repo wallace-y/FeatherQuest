@@ -9,7 +9,7 @@ import { StyleSheet, Dimensions } from "react-native";
     purple:     #736372
 */
 
-const devBoder = 1;
+const devBoder = 0;
 
 let SCREEN_WIDTH = Dimensions.get("window").width;
 let SCREEN_HEIGHT = Dimensions.get("window").height;
