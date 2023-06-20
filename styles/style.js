@@ -33,6 +33,11 @@ export const styles = StyleSheet.create({
         minHeight: SCREEN_HEIGHT,
         backgroundColor: darkGreen,
     },
+    scrollViewHorizontal: {
+        borderWidth: devBoder,
+        flex: 1,
+        paddingVertical: 20,
+    },
     pageContainer: {
         borderWidth: devBoder,
         flex: 1,
@@ -48,6 +53,11 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: -100
     },
+    logoContainer:{
+        borderWidth: devBoder,
+        width: 200,
+        height: 200,
+    },  
     titleContainer: {
         borderWidth: devBoder,
         maxHeight: 60,
@@ -56,7 +66,8 @@ export const styles = StyleSheet.create({
         borderWidth: devBoder,
         justifyContent: "center",
         alignItems: "center",
-        paddingBottom: 20,
+        width: 60,
+        height: 60,
     },
     buttonContainer: {
         borderWidth: devBoder,
@@ -87,6 +98,17 @@ export const styles = StyleSheet.create({
         borderColor: salmon,
         backgroundColor: lightGreen,
         borderRadius: 5,
+        padding: 1,
+    },
+    birdCardContainerHorizontal: {
+        minWidth: 110,
+        maxWidth: 160,
+        height: 180,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: salmon,
+        backgroundColor: lightGreen,
+        borderRadius: 10,
         padding: 1,
     },
     imagePreviewContainer: {
@@ -135,12 +157,24 @@ export const styles = StyleSheet.create({
         fontFamily: font,
         fontSize: 30,
         textAlign: "center",
-        color: textWhite
+        color: textWhite,
+        shadowColor: 'black',
+        // shadowOffset: 10,
+        shadowRadius: 10, 
+        textShadowColor: lightGreen,
+        textShadowRadius: 10,
+
     },
     text:{
         fontFamily: "Virgil",
         textAlign: "center",
         fontSize: 12,
+    },
+    textWhite: {
+        fontFamily: "Virgil",
+        textAlign: "center",
+        fontSize: 12,
+        color: "white"
     },
     textMedium: {
         fontFamily: "Virgil",
@@ -181,10 +215,76 @@ export const styles = StyleSheet.create({
     birdCardImage: {
         aspectRatio:1,
         height: "100%",
+        width: "100%",
+    },
+    /* Profile */
+    container: {
+        flex: 1
+    },
+    horizontalContainer: {
+        borderWidth: devBoder,
+        flex: 2,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 10,
+        marginBottom: 10,
+        padding: 5,
+    },
+    horizontalBorderedContainer: {
+        borderWidth: devBoder,
+        flex: 1,
+        maxHeight: "30%",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 10,
+        marginBottom: 10,
+        padding: 5,
+        borderWidth: 3,
+        borderRadius: 10,
+        borderColor: lightGreen,
+    },
+    verticalContainer: {
+        borderWidth: devBoder,
+        flex: 1,
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 10,
+        marginBottom: 10,
+        padding: 5,
+        borderWidth: 3,
+        borderRadius: 10,
+        borderColor: lightGreen,
+    },
+    icon:{
+        width: 60,
+        height: 60,
+        alignSelf: "center",
+        justifyContent: "center",
+    },
+    textContainer: {
+        borderWidth: devBoder,
+        flex: 1,
+        backgroundColor: lightGreen,
+        borderRadius: 10,
+        margin: 2,
+        textAlign: "justify"
+    },
+    avatarContainer: {
+        borderWidth: devBoder,
+        flex: 1,
+        width:"100%",
+        height: "100%",
+        borderWidth: 2,
+        borderColor: salmon,
+        borderRadius: 10,
+        overflow: 'hidden',
     },
     imagePreview: {
         ...StyleSheet.absoluteFillObject,
-    }
+    },
 });
 
 export const navStyles = StyleSheet.create({
@@ -213,7 +313,6 @@ export const navStyles = StyleSheet.create({
 export const smallMapStyles = StyleSheet.create({
     container:{
         flex: 1,
-        // height: 220,
         borderWidth: 3,
         borderColor: lightGreen,
         borderRadius: 10,
@@ -225,13 +324,13 @@ export const smallMapStyles = StyleSheet.create({
         borderColor: salmon,
         borderRadius: 10,
         width: "100%",
-        height: "100%"
+        height: "100%",
+        overflow: 'hidden',
     },
     map: {
         ...StyleSheet.absoluteFillObject,
     },
 })
-
 
 export const dropDownStyle = StyleSheet.create({
     dropDownButton: {

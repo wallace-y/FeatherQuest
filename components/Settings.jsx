@@ -7,12 +7,11 @@ import {
 } from "react-native";
 import { db } from "../firebaseConfig";
 import { auth } from "../firebaseConfig";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { doc, updateDoc, onSnapshot } from "firebase/firestore";
 import { confirmPasswordReset, updatePassword } from "firebase/auth";
 
 export default Settings = ({ navigation }) => {
-
   const [user, setUser] = useState({});
   const [screenNameUpdated, setScreenNameUpdated] = useState(false);
   const [firstNameUpdated, setFirstNameUpdated] = useState(false);
@@ -25,7 +24,7 @@ export default Settings = ({ navigation }) => {
   const [newLastName, setNewLastName] = useState("");
   const [newLocation, setNewLocation] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  
+
   const [newScreenNameValid, setNewScreenNameValid] = useState(true);
   const [newFirstNameValid, setNewFirstNameValid] = useState(true);
   const [newLastNameValid, setNewLastNameValid] = useState(true);
@@ -47,7 +46,6 @@ export default Settings = ({ navigation }) => {
     getUser();
   }, [handleSubmit]);
 
-
   const updateScreenName = async () => {
     try {
       const current_user = auth.currentUser;
@@ -66,7 +64,6 @@ export default Settings = ({ navigation }) => {
 
   const updatedFirstName = async () => {
     try {
-
       const userRef = doc(db, "users", auth.currentUser.uid);
       await updateDoc(userRef, {
         first_name: newFirstName,
@@ -116,19 +113,20 @@ export default Settings = ({ navigation }) => {
     } catch (error) {
       console.log(error);
     } finally {
-      console.log('Password Updated');
+      console.log("Password Updated");
     }
   };
 
   const handleSignOut = () => {
-    auth.signOut()
-    .then(() => {
-      console.log("User signed out");
-      navigation.navigate("LoginScreen")
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
+    auth
+      .signOut()
+      .then(() => {
+        console.log("User signed out");
+        navigation.navigate("LoginScreen");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   const handleSubmit = async () => {
@@ -169,7 +167,6 @@ export default Settings = ({ navigation }) => {
         if (newPasswordValid) {
           await updateUserPassword();
           setPasswordUpdated(false);
-
         } else {
           throw new Error("Invalid Password");
         }
@@ -292,23 +289,24 @@ export default Settings = ({ navigation }) => {
 
       <View style={styles.inputGroup}>
         <Text>Change Password:</Text>
-        <TextInput 
-         inputMode="text"
-         textAlign="center"
-         autoCapitalize="none"
-        style={styles.inputText} 
-        value={newPassword}
-        onChangeText={(text) => {
-          setNewPassword(text);
-          setPasswordUpdated(true);
+        <TextInput
+          inputMode="text"
+          textAlign="center"
+          autoCapitalize="none"
+          style={styles.inputText}
+          value={newPassword}
+          onChangeText={(text) => {
+            setNewPassword(text);
+            setPasswordUpdated(true);
 
-          if (newPassword.length < 1) {
-            setNewPasswordValid(false);
-          } else {
-            setNewPasswordValid(true);
-          }
-        }}
-        placeholder="****TBC****" />
+            if (newPassword.length < 1) {
+              setNewPasswordValid(false);
+            } else {
+              setNewPasswordValid(true);
+            }
+          }}
+          placeholder="****TBC****"
+        />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -330,59 +328,64 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  inputGroup: {
-    fontFamily: "Virgil",
-    padding: 10,
-    marginBottom: 20,
-    width: "100%",
-    flexDirection: "row",
-    backgroundColor: "#A18276",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputText: {
-    fontFamily: "Virgil",
-    marginLeft: 10,
-    color: "white",
-  },
   header: {
     fontFamily: "Virgil",
-    color: "white",
+    color: "#333",
     marginTop: 20,
     marginBottom: 20,
     textAlign: "center",
     fontSize: 30,
+    fontWeight: "bold",
+  },
+  inputGroup: {
+    padding: 10,
+    marginBottom: 20,
+    width: "80%",
+    flexDirection: "row",
+    backgroundColor: "#E0E0E0",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  inputText: {
+    flex: 1,
+    marginLeft: 10,
+    color: "#333",
+    fontSize: 16,
+  },
+  validationMessage: {
+    color: "#F44336",
+    fontSize: 12,
+    marginTop: 5,
+    marginLeft: 10,
   },
   buttonContainer: {
     width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
     marginTop: 20,
+    alignItems: "center",
   },
   button: {
-    backgroundColor: "#736372",
+    backgroundColor: "#4CAF50",
     width: "100%",
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
     alignItems: "center",
   },
   buttonText: {
     color: "white",
-    fontWeight: "700",
     fontSize: 16,
+    fontWeight: "bold",
   },
-
   signOutButton: {
-    backgroundColor: "#B24C63",
+    backgroundColor: "#F44336",
     width: "100%",
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
     alignItems: "center",
     marginTop: 10,
   },
   signOutButtonText: {
     color: "white",
-    fontWeight: "700",
     fontSize: 16,
+    fontWeight: "bold",
   },
 });
