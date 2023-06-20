@@ -10,7 +10,6 @@ import {
 import { getUserData } from "../utils/pullUserInfo";
 import { useEffect, useState, useContext } from "react";
 import UserPerchAlerts from "./UserPerchAlerts";
-import { auth } from "../firebaseConfig";
 import { UserContext } from "../utils/UserContext";
 import { styles } from "../styles/style.js";
 
@@ -21,7 +20,7 @@ export default Profile = ({ navigation }) => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    console.log(globalUser)
+    // console.log(globalUser)
     setUser({
       userId: globalUser.userId,
       first_name: globalUser.first_name,

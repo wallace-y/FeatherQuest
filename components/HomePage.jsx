@@ -3,19 +3,28 @@ import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
 import { useContext, useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View, BackHandler } from "react-native";
+
+import { getUserLocation } from "../utils/getUserLocation";
+
 import { styles } from '../styles/style.js'
+
 
 export default HomePage = ({ navigation, route }) => {
 
   const { globalUser, setGlobalUser } = useContext(UserContext)
   const [ loadingUser, setLoadingUser ] = useState(true)
+  const [ userLocation, setUserLocation ] = useState([0,0])
+  const [loadingUserLocation, setLoadingUserLocation ] = useState(true)
 
   
 
   useEffect(() => {
-    /* This prevents navigation by phone buttons on all pages, 
-      but fixes the problem of signout button not nagiating back to LoginScreen */
     BackHandler.addEventListener('hardwareBackPress', () =>  true )
+
+    getUserLocation().then((location) => {
+      setUserLocation([...location])
+      setLoadingUserLocation(false);
+    })
 
     if(auth.currentUser){
       getUserData(auth.currentUser.uid)
@@ -28,6 +37,7 @@ export default HomePage = ({ navigation, route }) => {
           username: data.screen_name,
           profile_image_url: data.profile_image_url,
           perch_list: [...data.perch_list],
+          coordinates: [...userLocation]
         });
         setLoadingUser(false)
       })
@@ -35,8 +45,7 @@ export default HomePage = ({ navigation, route }) => {
         console.log(err);
       });
     }
-  }, [auth.currentUser]);
-
+  }, [loadingUserLocation]);
   if(loadingUser){
     return (
       <View styles={styles.container}>
