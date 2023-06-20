@@ -14,7 +14,7 @@ import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import CustomButton from "./CustomButton";
 import { UserContext } from "../utils/UserContext";
 import { getUserData } from "../utils/pullUserInfo";
-import { styles } from "../styles/style.js"
+import { styles } from "../styles/style.js";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -56,43 +56,46 @@ export default SightingList = ({ navigation }) => {
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>All Sightings</Text>
         </View>
-        {loading && ( <Text style={styles.loadingText}>Loading...Please Wait</Text> )}
+        {loading && (
+          <Text style={styles.loadingText}>Loading...Please Wait</Text>
+        )}
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.goBack()}
+          >
             <Text style={styles.buttonText}>Go Back</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.listContainer}>
           {allSightings.map((bird, index) => (
-              <TouchableOpacity key={index}
-                style={styles.birdCardContainer}
-                onPress={() => {navigation.navigate("Sighting", bird);}}
-              >
-                <View style={styles.birdCardImageContainer}>
-                  {bird.sighting_img_url === "" ? (
-                    <Image
-                      source={require("../assets/default-sighting-img.jpg")}
-                      style={[styles.birdCardImage]}
-                    />
-                  ) : (
-                    <Image
-                      source={{ uri: bird.sighting_img_url}}
-                      style={styles.birdCardImage}
-                    />
-                  )}
-                  
-                </View>
+            <TouchableOpacity
+              key={index}
+              style={styles.birdCardContainer}
+              onPress={() => {
+                navigation.navigate("Sighting", bird);
+              }}
+            >
+              <View style={styles.birdCardImageContainer}>
+                {bird.sighting_img_url === "" ? (
+                  <Image
+                    source={require("../assets/default-sighting-img.jpg")}
+                    style={[styles.birdCardImage]}
+                  />
+                ) : (
+                  <Image
+                    source={{ uri: bird.sighting_img_url }}
+                    style={styles.birdCardImage}
+                  />
+                )}
+              </View>
 
-                <Text
-                style={styles.text}
-                numberOfLines={2}
-                ellipsizeMode="tail"
-                >
-                  {bird.bird}
-                </Text>
-                </TouchableOpacity>
+              <Text style={styles.text} numberOfLines={2} ellipsizeMode="tail">
+                {bird.bird}
+              </Text>
+            </TouchableOpacity>
           ))}
         </View>
         {error && (
@@ -104,4 +107,3 @@ export default SightingList = ({ navigation }) => {
     </ScrollView>
   );
 };
- 
