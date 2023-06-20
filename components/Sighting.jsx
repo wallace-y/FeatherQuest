@@ -15,13 +15,19 @@ import {
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../utils/UserContext";
 import { db } from "../firebaseConfig";
-import { collection, addDoc, doc, query, where, getDocs  } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  doc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
 export default Sighting = ({ route, navigation }) => {
-
   const dateDay = dayjs(date_spotted).format("DD-MM-YYYY");
   const dateTime = dayjs(date_spotted).format("HH:mm:ss");
   const commentDay = dayjs(created_at).format("DD-MM-YYYY");
@@ -29,9 +35,18 @@ export default Sighting = ({ route, navigation }) => {
 
   const [newComment, setNewComment] = useState("");
   const [birdDetails, setBirdDetails] = useState(null);
-  
+
   const { globalUser, setGlobalUser } = useContext(UserContext);
-  const { id, bird, sighting_img_url, coordinates, date_spotted, rarity, user, created_at } = route.params;
+  const {
+    id,
+    bird,
+    sighting_img_url,
+    coordinates,
+    date_spotted,
+    rarity,
+    user,
+    created_at,
+  } = route.params;
 
   const [allSightings, setAllSightings] = useState([]);
   const [allComments, setAllComments] = useState([]);
@@ -116,7 +131,9 @@ export default Sighting = ({ route, navigation }) => {
         <Text style={styles.birdInfo}>Rarity: {rarity} </Text>
         <Text style={styles.birdInfo}>Spotted by: {user}</Text>
         {birdDetails && (
-          <Text style={styles.birdInfo}>Details: {birdDetails.description}</Text>
+          <Text style={styles.birdInfo}>
+            Details: {birdDetails.description}
+          </Text>
         )}
         <View style={styles.inputContainer}>
           <TextInput
@@ -133,20 +150,20 @@ export default Sighting = ({ route, navigation }) => {
             <Text style={styles.buttonText}>Post</Text>
           </TouchableOpacity>
         </View>
-          {allComments.map((comment) => (
-            <View style={styles.commentCard}>
-              <View style={styles.commentTitle}>
-                <Text style={styles.userName}>{comment.user} </Text>
-                <Text style={styles.commentDate}>
-                  Posted: {commentDay} at {commentTime}
-                </Text>
-              </View>
-              <Text>{comment.body}</Text>
+        {allComments.map((comment, index) => (
+          <View key={index} style={styles.commentCard}>
+            <View style={styles.commentTitle}>
+              <Text style={styles.userName}>{comment.user} </Text>
+              <Text style={styles.commentDate}>
+                Posted: {commentDay} at {commentTime}
+              </Text>
             </View>
-          ))}
+            <Text>{comment.body}</Text>
+          </View>
+        ))}
       </View>
     </ScrollView>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
