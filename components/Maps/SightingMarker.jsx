@@ -33,8 +33,8 @@ export default SightingMarker = ( { navigation, sighting, mapCentered, setMapCen
 
     //Gett coordinates for a marker
     const sightingCoordinates = {
-        latitude: Number(sighting.coordinates.coordinates[1].toFixed(4)),
-        longitude: Number(sighting.coordinates.coordinates[0].toFixed(4)),
+        latitude: Number(sighting.coordinates.coordinates[0].toFixed(4)),
+        longitude: Number(sighting.coordinates.coordinates[1].toFixed(4)),
         latitudeDelta: 0.02,
         longitudeDelta: 0.02,
     }

@@ -42,7 +42,6 @@ export default HomePage = ({ navigation, route }) => {
       });
     }
   }, [loadingUserLocation]);
-
   if(loadingUser){
     return (
       <View styles={styles.container}>

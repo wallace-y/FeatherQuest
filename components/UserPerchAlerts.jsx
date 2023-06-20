@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
   ScrollViewContainer: {
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: 'blue',
     width: width,
     top: 140,
   },
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
   userSights: {
     width: 90,
     height: 90,
-    backgroundColor: "red",
+    backgroundColor: "#AAC0AA",
     margin: 8,
     borderRadius: 10,
 
