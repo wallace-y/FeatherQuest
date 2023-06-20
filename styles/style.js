@@ -157,7 +157,13 @@ export const styles = StyleSheet.create({
         fontFamily: font,
         fontSize: 30,
         textAlign: "center",
-        color: textWhite
+        color: textWhite,
+        shadowColor: 'black',
+        // shadowOffset: 10,
+        shadowRadius: 10, 
+        textShadowColor: lightGreen,
+        textShadowRadius: 10,
+
     },
     text:{
         fontFamily: "Virgil",
@@ -212,7 +218,20 @@ export const styles = StyleSheet.create({
         width: "100%",
     },
     /* Profile */
+    container: {
+        flex: 1
+    },
     horizontalContainer: {
+        borderWidth: devBoder,
+        flex: 2,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 10,
+        marginBottom: 10,
+        padding: 5,
+    },
+    horizontalBorderedContainer: {
         borderWidth: devBoder,
         flex: 1,
         maxHeight: "30%",
@@ -251,6 +270,7 @@ export const styles = StyleSheet.create({
         backgroundColor: lightGreen,
         borderRadius: 10,
         margin: 2,
+        textAlign: "justify"
     },
     avatarContainer: {
         borderWidth: devBoder,

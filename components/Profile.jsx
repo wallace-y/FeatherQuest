@@ -38,7 +38,7 @@ export default Profile = ({ navigation }) => {
       <View style={styles.titleContainer}>
           <Text style={styles.titleText}>Profile</Text>
         </View>
-      <View style={styles.horizontalContainer}>
+      <View style={styles.horizontalBorderedContainer}>
         <View style={styles.avatarContainer}>
           <Image
             source={{
@@ -49,18 +49,26 @@ export default Profile = ({ navigation }) => {
             style={styles.imagePreview}
           />
         </View>
-        <View style={ { flex: 1 }}>
+        <View style={styles.container}>
+          <View style={styles.horizontalContainer}>
             <View style={styles.textContainer}>
-              <Text style={styles.text}>Username {"\t"}- {user.username}</Text>
-              <Text style={styles.text}>Forename {"\t"}- {user.first_name}</Text>
-              <Text style={styles.text}>Surname {"\t"}- {user.last_name}</Text>
-              <Text style={styles.text}>Region {"\t"}- {user.location}</Text>
+              <Text style={styles.text}>Username:</Text>
+              <Text style={styles.text}>Forename:</Text>
+              <Text style={styles.text}>Surname:</Text>
+              <Text style={styles.text}>Region:</Text>
             </View>
-            <TouchableOpacity style={styles.iconContainer}
-              onPress={() => {navigation.navigate("Settings");}} title="Settings"
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>{user.username}</Text>
+              <Text style={styles.text}>{user.first_name}</Text>
+              <Text style={styles.text}>{user.last_name}</Text>
+              <Text style={styles.text}>{user.location}</Text>
+            </View>
+          </View>
+          <TouchableOpacity style={styles.iconContainer}
+            onPress={() => {navigation.navigate("Settings");}} title="Settings"
             >
-                <Image source={require("../assets/Settings.png")} style={styles.icon}/>
-            </TouchableOpacity>
+              <Image source={require("../assets/Settings.png")} style={styles.icon}/>
+          </TouchableOpacity>
         </View>
       </View>
       <UserPerchAlerts
