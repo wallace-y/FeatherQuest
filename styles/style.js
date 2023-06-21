@@ -24,6 +24,14 @@ const purple = "#736372";
 const textWhite = "white";
 const textBlack = "black";
 const inputColor = "white";
+
+/* Rarity Colors */
+const common = "grey";
+const uncomon = "green";
+const rare = "blue";
+const epic = "purple";
+const legendary = "red"
+
 /* Fonts */
 const font = "Virgil";
 
@@ -180,6 +188,12 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         justifyContent: "center",
     },
+    buletPoint:{
+        width: 20,
+        height: 20,
+        alignSelf: "center",
+        justifyContent: "center",
+    },
     imagePreview: {
         ...StyleSheet.absoluteFillObject,
     },
@@ -238,9 +252,19 @@ export const styles = StyleSheet.create({
 export const textStyles = {
     textContainer: {
         borderWidth: devBorder,
-        flex: 1,
         backgroundColor: lightGreen,
         borderRadius: 10,
+        margin: 2,
+        padding: 5,
+    },
+    textContainerHorizontal: {
+        borderWidth: devBorder,
+        flex: 1,
+        maxWidth: "100%",
+        flexDirection: "row",
+        backgroundColor: lightGreen,
+        borderRadius: 10,
+        paddingHorizontal: 5,
         margin: 2,
     },
      titleText: {
@@ -257,7 +281,13 @@ export const textStyles = {
         fontFamily: font,
         textAlign: "center",
         fontSize: 12,
-        
+    },
+    textEmphasized: {
+        fontFamily: font,
+        textAlign: "center",
+        fontSize: 13,
+        textShadowRadius: 2,
+        textShadowColor: darkGreen,
     },
     textLeft: {
         fontFamily: font,
@@ -278,6 +308,7 @@ export const textStyles = {
         color: textWhite
     },
     textMediumBlack: {
+        flexWrap: "wrap",
         fontFamily: font,
         textAlign: "center",
         fontSize: 18,
