@@ -184,32 +184,34 @@ export default Sighting = ({ route, navigation }) => {
               <Text style={styles.loadingText}>Loading...Please Wait</Text>
             </View>
           )}
-          {allComments.map((comment, index) => (
-            <View key={index} style={styles.commentCard}>
-              <View style={styles.commentTitle}>
-                <Text style={styles.userName}>{comment.user} </Text>
-                <Text style={styles.commentDate}>
-                  {dayjs(comment.created_at).format("DD-MM-YYYY")} at{" "}
-                  {dayjs(comment.created_at).format("HH:mm:ss")}
-                </Text>
-              </View>
-              <Text>{comment.body}</Text>
-              {loadingDeleteComment ? (
-                <View style={styles.loadingTextContainer}>
-                  <Text style={styles.loadingText}>Loading...Please Wait</Text>
-                </View>
-              ) : (
-                <TouchableOpacity
-                  comment_id={comment.comment_id}
-                  onPress={() => {
-                    deleteComment(comment.comment_id);
-                  }}
-                >
-                  <Text style={styles.deleteButton}>Delete</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          ))}
+{allComments.map((comment, index) => (
+  <View key={index} style={styles.commentCard}>
+    <View style={styles.commentTitle}>
+      <Text style={styles.userName}>{comment.user} </Text>
+      <Text style={styles.commentDate}>
+        {dayjs(comment.created_at).format("DD-MM-YYYY")} at{" "}
+        {dayjs(comment.created_at).format("HH:mm:ss")}
+      </Text>
+    </View>
+    <Text>{comment.body}</Text>
+    {comment.user === globalUser.username ? (
+      loadingDeleteComment ? (
+        <View style={styles.loadingTextContainer}>
+          <Text style={styles.loadingText}>Loading...Please Wait</Text>
+        </View>
+      ) : (
+        <TouchableOpacity
+          comment_id={comment.comment_id}
+          onPress={() => {
+            deleteComment(comment.comment_id);
+          }}
+        >
+          <Text style={styles.deleteButton}>Delete</Text>
+        </TouchableOpacity>
+      )
+    ) : null}
+  </View>
+))}
         </View>
       </View>
     </ScrollView>
