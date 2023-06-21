@@ -26,7 +26,7 @@ import {
   orderBy,
   onSnapshot,
 } from "firebase/firestore";
-import LikeDislikeCard from "./LikeDislike";
+import LikeCard from "./LikeCard";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -136,7 +136,7 @@ export default Sighting = ({ route, navigation }) => {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
-      <View style={styles.buttonContainer}>
+        <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.goBack()}
@@ -203,7 +203,8 @@ export default Sighting = ({ route, navigation }) => {
                 </Text>
               </View>
               <Text>{comment.body}</Text>
-              <LikeDislikeCard comment = {comment} />
+
+              <LikeCard comment={comment} />
               {comment.user === globalUser.username ? (
                 loadingDeleteComment ? (
                   <View style={styles.loadingTextContainer}>
@@ -222,7 +223,6 @@ export default Sighting = ({ route, navigation }) => {
                   </TouchableOpacity>
                 )
               ) : null}
-
             </View>
           ))}
         </View>
