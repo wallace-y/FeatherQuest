@@ -1,29 +1,32 @@
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; //https://github.com/react-native-maps/react-native-maps/blob/master/docs/mapview.md
-import { View, Text, StyleSheet} from 'react-native';
-import { collection, getDocs} from "firebase/firestore";
-import { useEffect, useState} from 'react';
-import { db } from '../../firebaseConfig.js'
 
-import SightingMarker from './SightingMarker.jsx';
-import mapStyle from '../../styles/mapStyle.js'
-import * as React from 'react'
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps"; //https://github.com/react-native-maps/react-native-maps/blob/master/docs/mapview.md
+import { View, Text, StyleSheet } from "react-native";
+import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useState, useContext } from "react";
+import { db } from "../../firebaseConfig.js";
+import { UserContext } from "../../utils/UserContext.js";
+
+import SightingMarker from "./SightingMarker.jsx";
+import mapStyle from "../../styles/mapStyle.js";
+import * as React from "react";
 import { smallMapStyles, styles, textStyles } from "../../styles/style.js"
 
+
 export default Maps = ({ navigation }) => {
-  
-  const [ sightingsList, setSightingList ] = useState([]);
-  const [ loadingMarkers, setLoadingMarkers ] = useState(true);
-  const [ mapCentered, setMapCentered] = useState(false);
+  const [sightingsList, setSightingList] = useState([]);
+  const [loadingMarkers, setLoadingMarkers] = useState(true);
+  const [mapCentered, setMapCentered] = useState(false);
+  const { globalUser } = useContext(UserContext);
 
   const region = {
-    latitude: 53.475906,
-    longitude: -2.248188,
+    latitude: Number(globalUser.coordinates[0]),
+    longitude: Number(globalUser.coordinates[1]),
     latitudeDelta: 0.01,
-    longitudeDelta: 0.01
+    longitudeDelta: 0.01,
   };
-  
+
   //Fetch sightings data
-  useEffect( () => {
+  useEffect(() => {
     getDocs(collection(db, "sightings"))
     .then((data) => {
         const sightingArr =  []
@@ -61,6 +64,7 @@ export default Maps = ({ navigation }) => {
               })}
             </MapView>
           </View>
+
         </View>
       </View>
     );
@@ -99,3 +103,4 @@ export default Maps = ({ navigation }) => {
 //     ...StyleSheet.absoluteFillObject,
 //   },
 // })
+
