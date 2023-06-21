@@ -315,7 +315,9 @@ export const textStyles = {
     },
     warningText: {
         fontFamily: font,
-        color: purple,
+        color: pink,
+        textShadowColor: lightGreen,
+        textShadowRadius: 5,
         fontSize: 18
     },
 }
