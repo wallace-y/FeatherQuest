@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image} from 'react-native';
 import MapView, { Marker } from 'react-native-maps'; //https://github.com/react-native-maps/react-native-maps/blob/master/docs/mapview.md
 import { useState } from 'react';
-import { smallMapStyles, styles } from '../../styles/style.js';
+import { smallMapStyles, styles, textStyles } from '../../styles/style.js';
 import mapStyle from '../../styles/mapStyle.js'
 
 export default SelectLocation = ( { sightingData, setSightingData }) => {
@@ -24,7 +24,7 @@ export default SelectLocation = ( { sightingData, setSightingData }) => {
     return (
          <View style={smallMapStyles.container}>
             <View>
-                <Text style={styles.textMedium}>Select Location</Text>
+                <Text style={textStyles.textMedium}>Select Location</Text>
             </View>
             <View style={smallMapStyles.mapContainer}>
                 <MapView style={smallMapStyles.map}

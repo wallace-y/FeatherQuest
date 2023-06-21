@@ -1,7 +1,7 @@
 import DateTimePicker from '@react-native-community/datetimepicker'; //https://github.com/react-native-datetimepicker/datetimepicker#expo-users-notice
 import { Text, View, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
-import { styles } from '../../styles/style.js'
+import { styles, textStyles } from '../../styles/style.js'
 
 export default TimeSelector = ( { onChange, setTimeIsSet,  time, setTime } ) => {
     const [ showTime, setShowTime ] = useState(false) 
@@ -9,16 +9,12 @@ export default TimeSelector = ( { onChange, setTimeIsSet,  time, setTime } ) => 
     return (
         <View>
             <TouchableOpacity style={styles.button} onPress={ () => {setShowTime(true); setTimeIsSet(false)}}>
-                <Text style={styles.textMedium}>{time}</Text>
+                <Text style={textStyles.textMedium}>{time}</Text>
             </TouchableOpacity>
             {showTime && <DateTimePicker 
                 mode='time' 
                 value={new Date()}
                 style={styless.timePicker}
-                textColor={'red'}
-                accentColor='red'
-                tintColor="red"
-                overlayColor="red"
 
                 onChange={(event, date) => {
                     setShowTime(false)

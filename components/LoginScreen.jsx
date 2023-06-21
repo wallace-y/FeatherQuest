@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from "react-native";
-import { styles } from '../styles/style.js'
+import { styles, textStyles } from '../styles/style.js'
 
 
 export default LoginScreen = ({ navigation }) => {
@@ -41,7 +41,7 @@ export default LoginScreen = ({ navigation }) => {
   
   return (
     <KeyboardAvoidingView style={styles.pageContainer} behavior="padding">
-      <Text style={styles.titleText}>WELCOME TO FEATHER QUEST!</Text>
+      <Text style={textStyles.titleText}>WELCOME TO FEATHER QUEST!</Text>
       <View style={styles.logoContainer}>
         <Image source={require("../assets/feather.png")} />
       </View>
@@ -68,17 +68,17 @@ export default LoginScreen = ({ navigation }) => {
           onPress={handleLogin} 
           style={styles.button}
           >
-            <Text style={styles.buttonText}>Login</Text>
+            <Text style={textStyles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => navigation.navigate("SignUp")}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Sign Up!</Text>
+          <Text style={textStyles.buttonText}>Sign Up!</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
-          <Text style={styles.textClickable}>Forgot Password</Text>
+          <Text style={textStyles.textClickable}>Forgot Password</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

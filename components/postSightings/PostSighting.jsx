@@ -15,7 +15,7 @@ import BirdSelection from "./BirdSelection.jsx";
 import DateSelection from "./DateSelection.jsx";
 import SelectLocation from "./SelectLocation.jsx";
 import CustomButton from "../CustomButton";
-import { styles } from "../../styles/style.js";
+import { styles, textStyles } from "../../styles/style.js";
 
 
 export default PostSighting = ({ navigation }) => {
@@ -52,13 +52,9 @@ export default PostSighting = ({ navigation }) => {
   }
 
   return (
-      <View style={[styles.pageContainer ,
-        // { minHeight: Math.round(windowHeight - 100),
-        //   maxHeight: Math.round(windowHeight)}
-        ]}
-      >
+      <View style={[styles.pageContainer]}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>Post Your Sighting</Text>
+          <Text style={textStyles.titleText}>Post Your Sighting</Text>
         </View>
         <BirdSelection
           setSightingData={setSightingData}
@@ -66,7 +62,7 @@ export default PostSighting = ({ navigation }) => {
         />
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("IdentifyBird")}>
-            <Text style={styles.buttonText}>Identify</Text>
+            <Text style={textStyles.buttonText}>Identify</Text>
           </TouchableOpacity>
         </View>
         <DateSelection
@@ -90,7 +86,7 @@ export default PostSighting = ({ navigation }) => {
                sightingData.coordinates === ""
              } 
             onPress={Submit}>
-            <Text style={styles.buttonText}>Submit</Text>
+            <Text style={textStyles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
       </View>
