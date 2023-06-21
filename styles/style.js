@@ -198,13 +198,29 @@ export const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
     },
 
-    /* Profile */
+    /* Containers  */
     container: {
         borderWidth: devBorder,
         flex: 1,
         padding: 5,
         justifyContent: 'center',
         alignItems: 'center',
+        width: "100%",
+    },
+    containerHorizontal:{
+        borderWidth: devBorder,
+        flex: 1,
+        flexDirection: "row",
+        padding: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: "100%",
+    },
+    containerRight:{
+        borderWidth: devBorder,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems:"flex-end",
         width: "100%",
     },
     containerFilledLight: {
@@ -232,8 +248,20 @@ export const styles = StyleSheet.create({
         borderWidth: 3,
         backgroundColor: lightGreen,
     },
-    
     containerFilledDark: {
+        borderWidth: devBorder,
+        flex: 1,
+        width: "100%",
+        padding: 5,
+        margin: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: salmon,
+        backgroundColor: darkGreen,
+    },
+    containerFilledPurple: {
         borderWidth: devBorder,
         flex: 1,
         width: "100%",
@@ -246,9 +274,24 @@ export const styles = StyleSheet.create({
         borderColor: salmon,
         backgroundColor: purple,
     },
-    
 });
 
+export const buttonStyle = StyleSheet.create({
+    deleteButton: {
+        backgroundColor: pink,
+        borderRadius: 20,
+        width: 25,
+        height: 25,
+        justifyContent: "center",
+    },
+    voteButton: {
+        // backgroundColor: pink,
+        borderRadius: 20,
+        width: 25,
+        height: 25,
+        justifyContent: "center",
+    }
+})
 export const textStyles = {
     textContainer: {
         borderWidth: devBorder,
@@ -263,6 +306,16 @@ export const textStyles = {
         maxWidth: "100%",
         flexDirection: "row",
         backgroundColor: lightGreen,
+        borderRadius: 10,
+        paddingHorizontal: 5,
+        margin: 2,
+    },
+    textContainerHorizontalDark: {
+        borderWidth: devBorder,
+        flex: 1,
+        maxWidth: "100%",
+        flexDirection: "row",
+        backgroundColor: darkGreen,
         borderRadius: 10,
         paddingHorizontal: 5,
         margin: 2,
@@ -285,14 +338,23 @@ export const textStyles = {
     textEmphasized: {
         fontFamily: font,
         textAlign: "center",
-        fontSize: 13,
+        fontSize: 14,
         textShadowRadius: 2,
         textShadowColor: darkGreen,
     },
+    textEmphasizedLight: {
+        fontFamily: font,
+        color: textWhite,
+        textAlign: "center",
+        fontSize: 14,
+        textShadowRadius: 2,
+        textShadowColor: lightGreen,
+    },
+    
     textLeft: {
         fontFamily: font,
         textAlign: "left",
-        paddingHorizontal: 20,
+        paddingHorizontal: 5,
         fontSize: 12,
     },
     textWhite: {
@@ -329,6 +391,10 @@ export const textStyles = {
         fontFamily: font,
         color: textBlack,
         fontSize: 18,
+    },
+    buttonDeleteText: {
+        fontSize: 18,
+        textAlign: "center",
     },
 
     textClickable: {
@@ -486,3 +552,32 @@ export const dropDownStyle = StyleSheet.create({
     color: "white",
   },
 });
+
+export const birdCardStyles = StyleSheet.create({
+    cardContainer: {
+      flex: 1,
+      width: "100%",
+      padding: 5,
+      margin: 2,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      borderWidth: 3,
+    },
+    imageContainer: {
+      borderWidth: 5,
+      borderColor: "#5e7975",
+      borderRadius: 10,
+      width: "100%",
+      flex: 2,
+      overflow: "hidden"
+  
+    },
+    image: {
+      width: "100%",
+      aspectRatio: 1,
+      resizeMode: "contain",
+      alignSelf: "center",
+      justifyContent: "center",
+    },
+  });

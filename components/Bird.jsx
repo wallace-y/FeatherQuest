@@ -9,7 +9,7 @@ import {
   ImageBackground
 } from "react-native";
 import ManagePerch from "./ManagePerch";
-import { styles, textStyles } from "../styles/style.js";
+import { styles, textStyles, birdCardStyles } from "../styles/style.js";
 
 let width = Dimensions.get("window").width;
 
@@ -117,35 +117,6 @@ export default Bird = ({ route, navigation }) => {
     </ScrollView>
   );
 };
-
-const birdCardStyles = StyleSheet.create({
-  cardContainer: {
-    flex: 1,
-    width: "100%",
-    padding: 5,
-    margin: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    borderWidth: 3,
-  },
-  imageContainer: {
-    borderWidth: 5,
-    borderColor: "#5e7975",
-    borderRadius: 10,
-    width: "100%",
-    flex: 2,
-    overflow: "hidden"
-
-  },
-  image: {
-    width: "100%",
-    aspectRatio: 1,
-    resizeMode: "contain",
-    alignSelf: "center",
-    justifyContent: "center",
-  },
-});
 
 
 function setRarityNameAndColor(rarity){
