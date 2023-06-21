@@ -1,5 +1,5 @@
 import { View, Text, Image, Keyboard} from 'react-native';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs,onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { db } from '../../firebaseConfig.js'
 
@@ -60,6 +60,35 @@ export default BirdSelection = ( { setSightingData, sightingData }) => {
             console.log( "Failed to load birds from local storage", err)
         })
     }
+    // Remove the local storage of birds if there is a change to the collection (ie for a refresh)
+    useEffect(() => {
+        const birdsCollectionRef = collection(db, 'birds');
+    
+        const clearListOnChange = onSnapshot(birdsCollectionRef, (snapshot) => {
+          const arr = [];
+          snapshot.forEach((bird) => {
+            arr.push({
+              id: bird.data().id,
+              common_name: bird.data().common_name,
+              sighting_img_url: bird.data().bird_image_url,
+            });
+          });
+    
+          setBirdList(arr);
+    
+          AsyncStorage.removeItem('birdList')
+            .then(() => {
+              console.log('Bird list cleared from AsyncStorage');
+            })
+            .catch((err) => {
+              console.log('Failed to clear bird list from AsyncStorage', err);
+            });
+        });
+    
+        return () => {
+            clearListOnChange();
+        };
+      }, []);
 
     const handleBirdSelect = (data) => {
         let tempSightingData = {...sightingData}

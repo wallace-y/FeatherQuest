@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import {
-  StyleSheet,
   Text,
   View,
   Image,
@@ -14,7 +13,7 @@ import { db } from "../firebaseConfig";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import CustomButton from "./CustomButton";
-import { styles } from "../styles/style.js";
+import { styles, textStyles } from "../styles/style.js";
 
 let height = Dimensions.get("window").height;
 
@@ -57,7 +56,7 @@ export default Species = ({ navigation }) => {
     <ScrollView style={styles.scrollView}>
       <View style={styles.pageContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>All Birds</Text>
+          <Text style={textStyles.titleText}>All Birds</Text>
         </View>
         {loading && (
           <Text style={styles.loadingText}>Loading...Please Wait</Text>
@@ -108,76 +107,14 @@ export default Species = ({ navigation }) => {
                   style={[styles.birdCardImage]}
                 />
               </View>
-              <Text style={styles.text} numberOfLines={2} ellipsizeMode="tail">
+              <Text style={textStyles.text} numberOfLines={2} ellipsizeMode="tail">
                 {bird.common_name}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
       </View>
-      {error && <Text style={styles.warningText}>{error}</Text>}
+      {error && <Text style={textStyles.warningText}>{error}</Text>}
     </ScrollView>
   );
 };
-
-// const styles = StyleSheet.create({
-//
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#7A918D",
-//     alignItems: "center",
-//     paddingTop: 20,
-//     paddingBottom: 40,
-//   },
-//   row: {
-//     flexDirection: "row",
-//     flexWrap: "wrap",
-//     alignItems: "flex-start",
-//   },
-//   image: {
-//     width: "100%",
-//     aspectRatio: 1,
-//     resizeMode: "cover",
-//     marginBottom: 10,
-//   },
-//   header: {
-//     fontFamily: "Virgil",
-//     textAlign: "center",
-//     marginTop: 10,
-//     marginBottom: 10,
-//     fontSize: 40,
-//   },
-//   birdCard: {
-//     width: "33%",
-//     height: 180,
-//     marginBottom: 20,
-//     borderWidth: 1,
-//     borderColor: "#A18276",
-//     borderRadius: 5,
-//     padding: 10,
-//     backgroundColor: "#AAC0AA",
-//   },
-//   birdName: {
-//     fontFamily: "Virgil",
-//     textAlign: "center",
-//     fontSize: 15,
-//     marginBottom: 5,
-//   },
-//   buttonContainer: {
-//     marginBottom: 15,
-//   },
-//   inputContainer: {
-//     width: "80%",
-//     flexDirection: "row",
-//     alignItems: "center",
-//   },
-//   input: {
-//     flex: 1,
-//     fontFamily: "Virgil",
-//     backgroundColor: "white",
-//     paddingHorizontal: 15,
-//     paddingVertical: 10,
-//     borderRadius: 10,
-//     marginBottom: 10,
-//   },
-// });

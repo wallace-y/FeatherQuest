@@ -16,7 +16,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import NavToLoginBar from './NavToLoginBar.jsx'
 import * as ImagePicker from "expo-image-picker";
-import { styles } from '../styles/style.js'
+import { styles, textStyles } from '../styles/style.js'
 
 
 // TODO: add scrolview or otherwise fix things going of the page
@@ -160,23 +160,22 @@ const SignUp = ( { navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.pageContainer}>
-        <Text style={styles.titleText}>Sign Up</Text>
+        <Text style={textStyles.titleText}>Sign Up</Text>
         <View style={styles.inputContainer}>
-
           <TextInput
             autoCapitalize="none"
             placeholder="Username *"
             onChangeText={handleUsername}
             style={styles.input}
             />
-          {!screenNameValid && screenName !== "" && <Text style={styles.warningText}>Username too short</Text>}
+          {!screenNameValid && screenName !== "" && <Text style={textStyles.warningText}>Username too short</Text>}
           <TextInput
             autoCapitalize="none"
             placeholder="Email *"
             onChangeText={handleEmail}
             style={styles.input}
             />
-          {!emailValid && email !== "" && <Text style={styles.warningText}>Email invalid</Text>}
+          {!emailValid && email !== "" && <Text style={textStyles.warningText}>Email invalid</Text>}
           <TextInput
             autoCapitalize="none"
             placeholder="Password *"
@@ -184,7 +183,7 @@ const SignUp = ( { navigation }) => {
             style={styles.input}
             secureTextEntry
             />
-          {!passwordValid && password !== "" && <Text style={styles.warningText}>Password to short</Text>}
+          {!passwordValid && password !== "" && <Text style={textStyles.warningText}>Password to short</Text>}
           <TextInput
             placeholder="First Name"
             value={firstName}
@@ -215,7 +214,7 @@ const SignUp = ( { navigation }) => {
             style={[styles.button, uploading && styles.disabledButton]}
             disabled={uploading}
             >
-            <Text style={styles.buttonText}>
+            <Text style={textStyles.buttonText}>
               {uploading ? "Uploading..." : "Upload Avatar"}
             </Text>
           </TouchableOpacity>
@@ -224,10 +223,10 @@ const SignUp = ( { navigation }) => {
           <TouchableOpacity onPress={handleSignUp} 
             disabled={!(screenNameValid && emailValid && passwordValid)}
             style={[styles.button, !(screenNameValid && emailValid && passwordValid) && styles.disabledButton]}>
-              <Text style={styles.buttonText}>Sign Up</Text>
+              <Text style={textStyles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
 
-          {!(screenNameValid && emailValid && passwordValid) && <Text style={styles.warningText}>Missing some fields</Text>}
+          {!(screenNameValid && emailValid && passwordValid) && <Text style={textStyles.warningText}>Missing some fields</Text>}
         </View>
       </View>
     </ScrollView>

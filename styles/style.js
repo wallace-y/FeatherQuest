@@ -2,6 +2,7 @@ import { StyleSheet, Dimensions } from "react-native";
 
 /*
     Colors:
+
     darkGreen : #5e7975
     lightGreen: #AAC0AA
     salmon:     #A18276
@@ -9,81 +10,85 @@ import { StyleSheet, Dimensions } from "react-native";
     purple:     #736372
 */
 
-const devBoder = 0;
+const devBorder = 0;
 
 let SCREEN_WIDTH = Dimensions.get("window").width;
 let SCREEN_HEIGHT = Dimensions.get("window").height;
 
 /* Colors */
-const darkGreen = "#5e7975"
-const lightGreen = "#AAC0AA"
-const salmon = "#A18276"
-const pink = "#B24C63"
-const purple = "#736372"
-const textWhite = "white"
-const textBlack = "black"
-const inputColor = "white"
+const darkGreen = "#5e7975";
+const lightGreen = "#AAC0AA";
+const salmon = "#A18276";
+const pink = "#B24C63";
+const purple = "#736372";
+const textWhite = "white";
+const textBlack = "black";
+const inputColor = "white";
 /* Fonts */
-const font = "Virgil"
+const font = "Virgil";
 
 export const styles = StyleSheet.create({
 /* Containers */
     scrollView: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         minHeight: SCREEN_HEIGHT,
         backgroundColor: darkGreen,
     },
     scrollViewHorizontal: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
+        minHeight: 180,
         paddingVertical: 20,
+        
     },
+
     pageContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
         alignItems: "center",
+        alignContent: 'center',
         backgroundColor: darkGreen,
         paddingBottom: 70, //necesasary for scroll view
-
     },
+
     centeredContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: -100
     },
     logoContainer:{
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         width: 200,
         height: 200,
     },  
     titleContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         maxHeight: 60,
     },
     iconContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         justifyContent: "center",
         alignItems: "center",
         width: 60,
         height: 60,
     },
     buttonContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         width: "60%",
         justifyContent: "center",
         alignItems: "center",
         marginVertical: 5
     },
     inputContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         width: "80%",
         margin: 5,
     },
     listContainer: {
         flex: 1,
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flexDirection: "row",
         flexWrap: "wrap",
         alignItems: "flex-start",
@@ -92,13 +97,13 @@ export const styles = StyleSheet.create({
         flex: 1,
         minWidth: "33%",
         maxWidth: "33%",
-        height: 180,
+        height: 200,
         marginBottom: 10,
         borderWidth: 1,
         borderColor: salmon,
         backgroundColor: lightGreen,
-        borderRadius: 5,
-        padding: 1,
+        borderRadius: 11,
+        // padding: 1,
     },
     birdCardContainerHorizontal: {
         minWidth: 110,
@@ -111,6 +116,22 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 1,
     },
+    /* Images */
+    birdCardImageContainer: {
+        width: "100%",
+        height: "80%",
+        borderWidth: 2,
+        borderRadius: 10,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+        borderColor: darkGreen,
+        overflow: 'hidden',
+    },
+    birdCardImage: {
+        aspectRatio:1,
+        height: "100%",
+        width: "100%",
+    },
     imagePreviewContainer: {
         margin: 10,
         minHeight: 150,
@@ -122,7 +143,7 @@ export const styles = StyleSheet.create({
     },
     dateTimeContainer: {
         flexDirection: 'row',
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         width: "60%",
         justifyContent: "center",
         alignItems: "center",
@@ -148,39 +169,130 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         marginVertical: 2,
         borderWidth: 2,
+        shadowRadius: 100,
     },
     disabledButton:{
         opacity: 0.5
     },
-    /* text */
-    titleText: {
+    icon:{
+        width: 60,
+        height: 60,
+        alignSelf: "center",
+        justifyContent: "center",
+    },
+    imagePreview: {
+        ...StyleSheet.absoluteFillObject,
+    },
+
+    /* Profile */
+    container: {
+        borderWidth: devBorder,
+        flex: 1,
+        padding: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: "100%",
+    },
+    containerFilledLight: {
+        borderWidth: devBorder,
+        flex: 1,
+        width: "100%",
+        padding: 5,
+        margin: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        borderWidth: 3,
+        backgroundColor: lightGreen,
+    },
+    containerFilledLightH: {
+        borderWidth: devBorder,
+        flex: 1,
+        flexDirection: "row",
+        width: "100%",
+        padding: 5,
+        margin: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        borderWidth: 3,
+        backgroundColor: lightGreen,
+    },
+    
+    containerFilledDark: {
+        borderWidth: devBorder,
+        flex: 1,
+        width: "100%",
+        padding: 5,
+        margin: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: salmon,
+        backgroundColor: purple,
+    },
+    
+});
+
+export const textStyles = {
+    textContainer: {
+        borderWidth: devBorder,
+        flex: 1,
+        backgroundColor: lightGreen,
+        borderRadius: 10,
+        margin: 2,
+    },
+     titleText: {
         fontFamily: font,
         fontSize: 30,
         textAlign: "center",
         color: textWhite,
         shadowColor: 'black',
-        // shadowOffset: 10,
         shadowRadius: 10, 
         textShadowColor: lightGreen,
         textShadowRadius: 10,
-
     },
     text:{
-        fontFamily: "Virgil",
+        fontFamily: font,
         textAlign: "center",
+        fontSize: 12,
+        
+    },
+    textLeft: {
+        fontFamily: font,
+        textAlign: "left",
+        paddingHorizontal: 20,
         fontSize: 12,
     },
     textWhite: {
-        fontFamily: "Virgil",
+        fontFamily: font,
         textAlign: "center",
         fontSize: 12,
         color: "white"
     },
     textMedium: {
-        fontFamily: "Virgil",
+        fontFamily: font,
         textAlign: "center",
         fontSize: 18,
         color: textWhite
+    },
+    textMediumBlack: {
+        fontFamily: font,
+        textAlign: "center",
+        fontSize: 18,
+    },
+    textMediumBlackRight: {
+        fontFamily: font,
+        fontSize: 18,
+        textAlign: "right",
+        paddingHorizontal: 20,
+    },
+    textMediumBlackLeft: {
+        fontFamily: font,
+        fontSize: 18,
+        textAlign: "left",
+        paddingHorizontal: 20,
     },
     buttonText: {
         fontFamily: font,
@@ -191,7 +303,10 @@ export const styles = StyleSheet.create({
     textClickable: {
         fontFamily: font,
         color: textWhite,
-        fontSize: 18
+        fontSize: 18,
+        textShadowRadius: 10,
+        textShadowColor: lightGreen,
+
     },
     loadingText: {
         fontFamily: font,
@@ -200,54 +315,41 @@ export const styles = StyleSheet.create({
     },
     warningText: {
         fontFamily: font,
-        color: textBlack,
+        color: purple,
         fontSize: 18
     },
-    /* Images */
-    birdCardImageContainer: {
-        width: "100%",
-        height: "80%",
-        borderRadius: 10,
-        borderColor: darkGreen,
+}
+
+const profilePicSize = 100;
+export const profileStyles = StyleSheet.create({
+    avatarContainer: {
+        borderWidth: devBorder,
+        width: profilePicSize,
+        height: profilePicSize,
+        maxHeight: profilePicSize,
+        maxWidth: profilePicSize,
+        minHeight: profilePicSize,
+        minWidth: profilePicSize,
+        borderWidth: 4,
+        borderColor: salmon ,
+        borderRadius: 1000,
         overflow: 'hidden',
-        
     },
-    birdCardImage: {
-        aspectRatio:1,
-        height: "100%",
-        width: "100%",
-    },
-    /* Profile */
-    container: {
-        flex: 1
-    },
-    horizontalContainer: {
-        borderWidth: devBoder,
-        flex: 2,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 10,
-        marginBottom: 10,
-        padding: 5,
-    },
-    horizontalBorderedContainer: {
-        borderWidth: devBoder,
+    userInfoConatainer: {
+        borderWidth: devBorder,
         flex: 1,
-        maxHeight: "30%",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 10,
-        marginBottom: 10,
         padding: 5,
         borderWidth: 3,
         borderRadius: 10,
         borderColor: lightGreen,
     },
-    verticalContainer: {
-        borderWidth: devBoder,
+    perchContainer: {
+        borderWidth: devBorder,
         flex: 1,
+        minWidth: SCREEN_WIDTH,
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
@@ -258,44 +360,22 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: lightGreen,
     },
-    icon:{
-        width: 60,
-        height: 60,
-        alignSelf: "center",
-        justifyContent: "center",
-    },
-    textContainer: {
-        borderWidth: devBoder,
-        flex: 1,
-        backgroundColor: lightGreen,
-        borderRadius: 10,
-        margin: 2,
-        textAlign: "justify"
-    },
-    avatarContainer: {
-        borderWidth: devBoder,
-        flex: 1,
-        width:"100%",
-        height: "100%",
-        borderWidth: 2,
-        borderColor: salmon,
-        borderRadius: 10,
-        overflow: 'hidden',
-    },
-    imagePreview: {
-        ...StyleSheet.absoluteFillObject,
-    },
-});
+    
+})
 
 export const navStyles = StyleSheet.create({
+    fillerHeader: {
+        backgroundColor: darkGreen
+    },
     navContainer: {
         flexDirection: "row",
-        marginTop: "10%",
-        height: 60,
+        paddingTop: "10%",
+        height: 100,
         width: "100%",
         justifyContent: "space-evenly",
         backgroundColor: "#AAC0AA",
     
+
       },
       image: {
         width: 60,
@@ -316,7 +396,8 @@ export const smallMapStyles = StyleSheet.create({
         borderWidth: 3,
         borderColor: lightGreen,
         borderRadius: 10,
-        width: '80%',
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
     },
     mapContainer: {
         flex: 1,
@@ -333,43 +414,42 @@ export const smallMapStyles = StyleSheet.create({
 })
 
 export const dropDownStyle = StyleSheet.create({
-    dropDownButton: {
-        width: '80%',
-        height: 200,
-        backgroundColor: darkGreen,
-        borderWidth: 3,
-        borderColor: lightGreen,
-        borderRadius: 10,
-        marginVertical: 2,
-    },
-    dropdownRow: {
-        height: 200,
-    },
-    row: {
-        flex:1,
-        flexDirection: 'row',
-    },
-    image: {
-        ...StyleSheet.absoluteFillObject,
-        maxHeight: 199,
-        maxWidth: "100%",
-        borderWidth: 2,
-        
-    },
-    dropDownText: {
-        fontSize: 25,
-        margin: 30,
-        width: '100%',
-        color: 'white',
-        fontFamily: font,
-    },
-    searchInput: {
-        backgroundColor: lightGreen,
-        fontFamily: font,
-        color: textWhite
-    },
-    searchInputText: {
-        fontFamily: "Virgil",
-         color: "white"
-    }
-})
+  dropDownButton: {
+    width: "80%",
+    height: 200,
+    backgroundColor: darkGreen,
+    borderWidth: 3,
+    borderColor: lightGreen,
+    borderRadius: 10,
+    marginVertical: 2,
+  },
+  dropdownRow: {
+    height: 200,
+  },
+  row: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    maxHeight: 199,
+    maxWidth: "100%",
+    borderWidth: 2,
+  },
+  dropDownText: {
+    fontSize: 25,
+    margin: 30,
+    width: "100%",
+    color: "white",
+    fontFamily: font,
+  },
+  searchInput: {
+    backgroundColor: lightGreen,
+    fontFamily: font,
+    color: textWhite,
+  },
+  searchInputText: {
+    fontFamily: "Virgil",
+    color: "white",
+  },
+});
