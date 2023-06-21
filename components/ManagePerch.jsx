@@ -76,24 +76,14 @@ function ManagePerch({ id }) {
   return (
     <View>
       {birdAdded ? (
-        <TouchableOpacity
-          onPress={() => {
-            handleRemoveBird();
-          }}
-          style={styles.addContainer}
-        >
-          <Image source={require("../assets/added.png")} style={styles.image} />
-          <Text style={styles.perchText}>Saved to Perch Alert!</Text>
+        <TouchableOpacity onPress={() => {handleRemoveBird()}} style={styles.addContainer}>
+          <Image source={require("../assets/added.png")} style={styles.imageAdded} />
+          {/* <Text style={styles.perchText}>Saved to Perch Alert!</Text> */}
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity
-          onPress={() => {
-            handleAddBird();
-          }}
-          style={styles.addContainer}
-        >
-          <Image source={require("../assets/add.png")} style={styles.image} />
-          <Text style={styles.perchText}>Add to Perch Alert</Text>
+        <TouchableOpacity onPress={() => { handleAddBird()}} style={styles.addContainer}>
+          <Image source={require("../assets/add.png")} style={styles.imageAdd} />
+          {/* <Text style={styles.perchText}>Add to Perch Alert</Text> */}
         </TouchableOpacity>
       )}
     </View>
@@ -104,8 +94,16 @@ const styles = StyleSheet.create({
   addContainer: {
     justifyContent: "center",
   },
-  image: {
+  imageAdded: {
     alignSelf: "center",
+    width: 40,
+    height: 40,
+    tintColor: "green"
+  },
+  imageAdd: {
+    alignSelf: "center",
+    width: 40,
+    height: 40,
   },
   perchText: {
     fontFamily: "Virgil",
