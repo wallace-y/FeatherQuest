@@ -18,6 +18,8 @@ export default DateSelection = ( { sightingData, setSightingData} ) => {
     useEffect(() => {
         if( dateIsSet && timeIsSet){
             let sightingDate = [...date.split("/").reverse(), ...time.split(":")].map( str => Number(str))
+            sightingDate[1] -= 1; // Subtract 1 from the month value as JavaScript dates are zero based
+            console.log(sightingDate)
             let tempSightingData = {...sightingData}
             tempSightingData.date_spotted = new Date(Date.UTC(...sightingDate)).toISOString()
             setSightingData(tempSightingData)

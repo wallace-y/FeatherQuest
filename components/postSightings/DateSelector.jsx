@@ -18,7 +18,7 @@ export default DateSelector = ( { onChange, setDateIsSet, date, setDate } ) => {
                     setShowDate(false)
                     setDate(date.toLocaleDateString())
                     setDateIsSet(true)
-                    onChange(event, date.getDate())
+                    // onChange(event, date.getDate())
                 }}
             />}
         </View>
