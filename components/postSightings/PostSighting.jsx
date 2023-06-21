@@ -32,21 +32,23 @@ export default PostSighting = ({ navigation }) => {
   const windowHeight = useWindowDimensions().height;
 
   //Post sightings data to db
-  const Submit = () => {
-      console.log(globalUser)
+  const Submit = async () => {
+      // console.log(globalUser)
       let tempSightingData = {...sightingData}
       tempSightingData.created_at = new Date().toISOString()
       setSightingData({ bird: "", date_spotted: "", coordinates: "", user: globalUser.userId, sighting_img_url: ""})
-      console.log("submited", tempSightingData)
+      // console.log("submited", tempSightingData)
 
       // COOMENTED for dev purpososes
-      // addDoc(collection(db, "sightings"), tempSightingData)
-      // .then( docRef => {
-      //     // console.log(docRef)
-      // })
-      // .catch(err => {
-      //     console.log("Failed to submit a sighting")
-      // })
+      try {
+        const newSighting = await addDoc(collection(db, "sightings"), tempSightingData)
+        alert("Sighting successfully posted.")
+        navigation.navigate("SightingList")
+      } catch (err) {
+        console.log(err)
+        alert("Error posting sighting. Please try again later.")
+      }
+      
 
       //TODO: navigate to the new sighting page
   }
