@@ -135,6 +135,14 @@ export default Sighting = ({ route, navigation }) => {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
+      <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.buttonText}>Go Back</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.birdName}>{bird}</Text>
         <Image
           source={{
