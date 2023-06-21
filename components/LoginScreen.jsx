@@ -41,27 +41,28 @@ export default LoginScreen = ({ navigation }) => {
   
   return (
     <KeyboardAvoidingView style={styles.pageContainer} behavior="padding">
-      <Text style={textStyles.titleText}>WELCOME TO FEATHER QUEST!</Text>
-      <View style={styles.logoContainer}>
-        <Image source={require("../assets/feather.png")} />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          autoCapitalize="none"
-          placeholder="Email"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          style={styles.input}
-        />
-        <TextInput
-          autoCapitalize="none"
-          placeholder="Password"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-      </View>
+      <View style={styles.centeredContainer}>
+        <Text style={textStyles.titleText}>WELCOME TO FEATHER QUEST!</Text>
+        <View style={styles.logoContainer}>
+          <Image source={require("../assets/feather.png")} />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Email"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            style={styles.input}
+            />
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Password"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            style={styles.input}
+            secureTextEntry
+          />
+        </View>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity 
@@ -74,13 +75,14 @@ export default LoginScreen = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => navigation.navigate("SignUp")}
           style={styles.button}
-        >
+          >
           <Text style={textStyles.buttonText}>Sign Up!</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
           <Text style={textStyles.textClickable}>Forgot Password</Text>
         </TouchableOpacity>
       </View>
+    </View>
     </KeyboardAvoidingView>
   );
 };

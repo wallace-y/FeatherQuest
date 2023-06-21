@@ -29,7 +29,9 @@ const ForgotPassword = () => {
     <> 
     {resetSent ? (
         <View style={styles.pageContainer}>
-          <Text style={textStyles.titleText}>Password reset email sent!</Text>
+          <View style={styles.centeredContainer}>
+            <Text style={textStyles.titleText}>Password reset email sent!</Text>
+          </View>
         </View>
       ) : (
         <View style={styles.pageContainer}>
