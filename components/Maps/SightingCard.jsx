@@ -43,8 +43,8 @@ export default SightingCard = ( { sightedBird, navigation, sighting, modalVisibl
             <View style={{width: 200, height: 200, overflow: "hidden"}}>
                 <Modal isVisible={true} 
                         coverScreen={false}
-                        backdropColor={"white"}
-                        backdropOpacity={1}
+                        // backdropColor={"white"}
+                        backdropOpacity={0}
                         
                         children={
                             <View style={{backgroundColor: "#5e7975", borderRadius: 20, marginTop: 100, borderWidth: 3, borderColor: "#A18276", height: 70}}>
