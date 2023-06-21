@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from "react-native";
-import { styles } from '../styles/style.js'
+import { styles, textStyles } from '../styles/style.js'
 
 
 export default LoginScreen = ({ navigation }) => {
@@ -42,45 +42,44 @@ export default LoginScreen = ({ navigation }) => {
   return (
     <KeyboardAvoidingView style={styles.pageContainer} behavior="padding">
       <View style={styles.centeredContainer}>
-
-      <Text style={styles.titleText}>WELCOME TO FEATHER QUEST!</Text>
-      <View style={styles.logoContainer}>
-        <Image source={require("../assets/feather.png")} />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          autoCapitalize="none"
-          placeholder="Email"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          style={styles.input}
+        <Text style={textStyles.titleText}>WELCOME TO FEATHER QUEST!</Text>
+        <View style={styles.logoContainer}>
+          <Image source={require("../assets/feather.png")} />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Email"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            style={styles.input}
+            />
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Password"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            style={styles.input}
+            secureTextEntry
           />
-        <TextInput
-          autoCapitalize="none"
-          placeholder="Password"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-      </View>
+        </View>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity 
           onPress={handleLogin} 
           style={styles.button}
           >
-            <Text style={styles.buttonText}>Login</Text>
+            <Text style={textStyles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => navigation.navigate("SignUp")}
           style={styles.button}
           >
-          <Text style={styles.buttonText}>Sign Up!</Text>
+          <Text style={textStyles.buttonText}>Sign Up!</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
-          <Text style={styles.textClickable}>Forgot Password</Text>
+          <Text style={textStyles.textClickable}>Forgot Password</Text>
         </TouchableOpacity>
       </View>
     </View>
