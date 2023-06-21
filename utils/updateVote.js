@@ -1,13 +1,4 @@
-import {
-  query,
-  collection,
-  getDocs,
-  where,
-  updateDoc,
-  doc,
-  arrayUnion,
-  arrayRemove,
-} from "firebase/firestore";
+import { updateDoc, doc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
 const upVoteComment = async (userId, commentId, voteCount) => {
