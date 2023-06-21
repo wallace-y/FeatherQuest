@@ -24,7 +24,7 @@ export default Profile = ({ navigation }) => {
   return (
     <View style={styles.pageContainer}>
       <ScrollView style={styles.scrollView}>
-        <View style={styles.containerFilledDark}>
+        <View style={styles.containerFilledPurple}>
           <View style={profileStyles.avatarContainer}>
             <Image
               source={{
