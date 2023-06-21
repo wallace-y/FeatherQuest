@@ -10,9 +10,11 @@ import { auth } from "../firebaseConfig";
 import { useState, useEffect } from "react";
 import { doc, updateDoc, onSnapshot } from "firebase/firestore";
 import { confirmPasswordReset, updatePassword } from "firebase/auth";
+import { UserContext } from "../utils/UserContext";
+import { useContext } from "react";
 
 export default Settings = ({ navigation }) => {
-  const [user, setUser] = useState({});
+  const { globalUser, setGlobalUser } = useContext(UserContext);
   const [screenNameUpdated, setScreenNameUpdated] = useState(false);
   const [firstNameUpdated, setFirstNameUpdated] = useState(false);
   const [lastNameUpdated, setLastNameUpdated] = useState(false);
@@ -36,7 +38,18 @@ export default Settings = ({ navigation }) => {
       try {
         const current_user = auth.currentUser;
         onSnapshot(doc(db, "users", current_user.uid), (doc) => {
-          setUser(doc.data());
+          setGlobalUser((currUser) => {
+            return {
+              userId: currUser.userId,
+              first_name: doc.data().first_name,
+              last_name: doc.data().last_name,
+              location: doc.data().location,
+              username: doc.data().screen_name,
+              profile_image_url: doc.data().profile_image_url,
+              perch_list: [...doc.data().perch_list],
+              coordinates: [...currUser.coordinates],
+            };
+          });
         });
       } catch (error) {
         console.log(error);
@@ -58,7 +71,7 @@ export default Settings = ({ navigation }) => {
       console.log(error);
     } finally {
       setNewScreenName("");
-      alert("Details successfully updated");
+      // alert("Details successfully updated");
     }
   };
 
@@ -188,7 +201,7 @@ export default Settings = ({ navigation }) => {
           textAlign="center"
           autoCapitalize="none"
           style={styles.inputText}
-          placeholder={user.screen_name}
+          placeholder={globalUser.username}
           value={newScreenName}
           onChangeText={(text) => {
             setNewScreenName(text);
@@ -214,7 +227,7 @@ export default Settings = ({ navigation }) => {
           textAlign="center"
           autoCapitalize="none"
           style={styles.inputText}
-          placeholder={user.first_name}
+          placeholder={globalUser.first_name}
           value={newFirstName}
           onChangeText={(text) => {
             setNewFirstName(text);
@@ -240,7 +253,7 @@ export default Settings = ({ navigation }) => {
           textAlign="center"
           autoCapitalize="none"
           style={styles.inputText}
-          placeholder={user.last_name}
+          placeholder={globalUser.last_name}
           value={newLastName}
           onChangeText={(text) => {
             setNewLastName(text);
@@ -267,7 +280,7 @@ export default Settings = ({ navigation }) => {
           textAlign="center"
           autoCapitalize="none"
           style={styles.inputText}
-          placeholder={user.location}
+          placeholder={globalUser.location}
           value={newLocation}
           onChangeText={(text) => {
             setNewLocation(text);
