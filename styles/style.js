@@ -10,22 +10,22 @@ import { StyleSheet, Dimensions } from "react-native";
     purple:     #736372
 */
 
-const devBoder = 0;
+const devBorder = 0;
 
 let SCREEN_WIDTH = Dimensions.get("window").width;
 let SCREEN_HEIGHT = Dimensions.get("window").height;
 
 /* Colors */
-const darkGreen = "#5e7975"
-const lightGreen = "#AAC0AA"
-const salmon = "#A18276"
-const pink = "#B24C63"
-const purple = "#736372"
-const textWhite = "white"
-const textBlack = "black"
-const inputColor = "white"
+const darkGreen = "#5e7975";
+const lightGreen = "#AAC0AA";
+const salmon = "#A18276";
+const pink = "#B24C63";
+const purple = "#736372";
+const textWhite = "white";
+const textBlack = "black";
+const inputColor = "white";
 /* Fonts */
-const font = "Virgil"
+const font = "Virgil";
 
 export const styles = StyleSheet.create({
 /* Containers */
@@ -409,43 +409,42 @@ export const smallMapStyles = StyleSheet.create({
 })
 
 export const dropDownStyle = StyleSheet.create({
-    dropDownButton: {
-        width: '80%',
-        height: 200,
-        backgroundColor: darkGreen,
-        borderWidth: 3,
-        borderColor: lightGreen,
-        borderRadius: 10,
-        marginVertical: 2,
-    },
-    dropdownRow: {
-        height: 200,
-    },
-    row: {
-        flex:1,
-        flexDirection: 'row',
-    },
-    image: {
-        ...StyleSheet.absoluteFillObject,
-        maxHeight: 199,
-        maxWidth: "100%",
-        borderWidth: 2,
-        
-    },
-    dropDownText: {
-        fontSize: 25,
-        margin: 30,
-        width: '100%',
-        color: 'white',
-        fontFamily: font,
-    },
-    searchInput: {
-        backgroundColor: lightGreen,
-        fontFamily: font,
-        color: textWhite
-    },
-    searchInputText: {
-        fontFamily: "Virgil",
-         color: "white"
-    }
-})
+  dropDownButton: {
+    width: "80%",
+    height: 200,
+    backgroundColor: darkGreen,
+    borderWidth: 3,
+    borderColor: lightGreen,
+    borderRadius: 10,
+    marginVertical: 2,
+  },
+  dropdownRow: {
+    height: 200,
+  },
+  row: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    maxHeight: 199,
+    maxWidth: "100%",
+    borderWidth: 2,
+  },
+  dropDownText: {
+    fontSize: 25,
+    margin: 30,
+    width: "100%",
+    color: "white",
+    fontFamily: font,
+  },
+  searchInput: {
+    backgroundColor: lightGreen,
+    fontFamily: font,
+    color: textWhite,
+  },
+  searchInputText: {
+    fontFamily: "Virgil",
+    color: "white",
+  },
+});

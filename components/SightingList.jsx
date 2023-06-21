@@ -24,9 +24,8 @@ export default SightingList = ({ navigation }) => {
   const [allSightings, setAllSightings] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [birdsByDistance, setBirdsByDistance] = useState([])
-  const { globalUser, setGlobalUser } = useContext(UserContext)
-
+  const [birdsByDistance, setBirdsByDistance] = useState([]);
+  const { globalUser, setGlobalUser } = useContext(UserContext);
 
   useEffect(() => {
     const fetchAllBirds = async () => {
@@ -42,9 +41,11 @@ export default SightingList = ({ navigation }) => {
           id: doc.id,
           ...doc.data(),
         }));
-        distanceCalculate(globalUser.coordinates, sightingsData).then((data) => {
-        setBirdsByDistance(data)
-        })
+        distanceCalculate(globalUser.coordinates, sightingsData).then(
+          (data) => {
+            setBirdsByDistance(data);
+          }
+        );
 
         setAllSightings(sightingsData);
       } catch (error) {
@@ -72,16 +73,18 @@ export default SightingList = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-
         <View style={styles.listContainer}>
           {birdsByDistance.map((bird, index) => (
-              <TouchableOpacity key={index}
-                style={styles.birdCardContainer}
-                onPress={() => {navigation.navigate("Sighting", bird);}}
-              >
-                <View style={styles.birdCardImageContainer}>
-                  {bird.sighting_img_url === "" ? (
-                    <Image
+            <TouchableOpacity
+              key={index}
+              style={styles.birdCardContainer}
+              onPress={() => {
+                navigation.navigate("Sighting", bird);
+              }}
+            >
+              <View style={styles.birdCardImageContainer}>
+                {bird.sighting_img_url === "" ? (
+                  <Image
                     source={require("../assets/default-sighting-img.jpg")}
                     style={[styles.birdCardImage]}
                     />
@@ -104,4 +107,3 @@ export default SightingList = ({ navigation }) => {
     </ScrollView>
   );
 };
- 
