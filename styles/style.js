@@ -285,26 +285,30 @@ export const styles = StyleSheet.create({
 });
 
 export const navStyles = StyleSheet.create({
-  navContainer: {
-    flexDirection: "row",
-    marginTop: "10%",
-    height: 60,
-    width: "100%",
-    justifyContent: "space-evenly",
-    backgroundColor: "#AAC0AA",
-  },
-  image: {
-    width: 60,
-    height: 60,
-    alignSelf: "center",
-    justifyContent: "center",
-  },
-  text: {
-    alignSelf: "center",
-    fontFamily: "Virgil",
-    fontSize: 20,
-  },
-});
+    fillerHeader: {
+        backgroundColor: darkGreen
+    },
+    navContainer: {
+        flexDirection: "row",
+        paddingTop: "10%",
+        height: 100,
+        width: "100%",
+        justifyContent: "space-evenly",
+        backgroundColor: "#AAC0AA",
+    
+      },
+      image: {
+        width: 60,
+        height: 60,
+        alignSelf: "center",
+        justifyContent: "center",
+      },
+      text: {
+        alignSelf: 'center',
+        fontFamily:'Virgil',
+        fontSize: 20,
+      },
+})
 
 export const smallMapStyles = StyleSheet.create({
   container: {

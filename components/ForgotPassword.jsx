@@ -28,25 +28,29 @@ const ForgotPassword = () => {
     <> 
     {resetSent ? (
         <View style={styles.pageContainer}>
-          <Text style={styles.resetText}>Password reset email sent!</Text>
+          <View style={styles.centeredContainer}>
+            <Text style={styles.titleText}>Password reset email sent!</Text>
+          </View>
         </View>
       ) : (
         <View style={styles.pageContainer}>
-        <Text style={styles.titleText}>Forgot Password</Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            autoCapitalize="none"
-            placeholder="Email"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            style={styles.input}
-            />
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleResetPassword} style={styles.button}>
-            <Text style={styles.buttonText}>Reset Password</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.centeredContainer}>
+            <Text style={styles.titleText}>Forgot Password</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                autoCapitalize="none"
+                placeholder="Email"
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+                style={styles.input}
+                />
+            </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity onPress={handleResetPassword} style={styles.button}>
+                <Text style={styles.buttonText}>Reset Password</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
       </View>
       )}
     </>

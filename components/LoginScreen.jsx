@@ -41,6 +41,8 @@ export default LoginScreen = ({ navigation }) => {
   
   return (
     <KeyboardAvoidingView style={styles.pageContainer} behavior="padding">
+      <View style={styles.centeredContainer}>
+
       <Text style={styles.titleText}>WELCOME TO FEATHER QUEST!</Text>
       <View style={styles.logoContainer}>
         <Image source={require("../assets/feather.png")} />
@@ -52,7 +54,7 @@ export default LoginScreen = ({ navigation }) => {
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
-        />
+          />
         <TextInput
           autoCapitalize="none"
           placeholder="Password"
@@ -74,13 +76,14 @@ export default LoginScreen = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => navigation.navigate("SignUp")}
           style={styles.button}
-        >
+          >
           <Text style={styles.buttonText}>Sign Up!</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
           <Text style={styles.textClickable}>Forgot Password</Text>
         </TouchableOpacity>
       </View>
+    </View>
     </KeyboardAvoidingView>
   );
 };
