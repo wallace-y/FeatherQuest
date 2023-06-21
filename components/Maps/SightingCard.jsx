@@ -37,6 +37,7 @@ export default SightingCard = ( { sightedBird, navigation, sighting, modalVisibl
         navigation.navigate("Sighting", {...sightedBird, ...sighting})
     }
 
+    
     return (
         <Callout  onPress={handlePress} tooltip>
             <View style={{width: 200, height: 200, overflow: "hidden"}}>
@@ -46,16 +47,16 @@ export default SightingCard = ( { sightedBird, navigation, sighting, modalVisibl
                         backdropOpacity={1}
                         
                         children={
-                            <View style={{backgroundColor: "#5e7975", borderRadius: 20, marginTop: 100, borderColor: "red"}}>
-                                <Text style={{marginTop: 10, color: "white", fontFamily: "Virgil", fontSize: 15, textAlign: 'center', verticalAlign: "top"}}> 
+                            <View style={{backgroundColor: "#5e7975", borderRadius: 20, marginTop: 100, borderWidth: 3, borderColor: "#A18276", height: 70}}>
+                                <Text style={{color: "white", fontFamily: "Virgil", fontSize: 15, textAlign: 'center', verticalAlign: "top"}}> 
                                     {sightedBird.common_name +" " + dayjs(sighting.date_spotted).format("YYYY-MM-DD HH:mm:ss ")}
                                 </Text>
                             </View>
                         }
                         customBackdrop={ 
-                            <View style={{width: 200, height: 200, backgroundColor: "#5e7975", borderRadius: 10, }}>
+                            <View style={{width: 200, height: 200, backgroundColor: "#5e7975", borderRadius: 10,borderWidth: 2, borderColor:  "#A18276"}}>
                                 <Text style={{width: 2, marginTop: -40, textAlign: 'center', width: 200, height: 200}}>
-                                    <Image style={{ borderWidth: 2, height: 150, width: 180, borderWidth: 20}} source={{uri: sightedBird.bird_image_url}}></Image>
+                                    <Image style={{ borderWidth: 2, height: 150, width: 180}} source={{uri: sightedBird.bird_image_url}}></Image>
                                 </Text>
                             </View>
                         }
@@ -65,6 +66,7 @@ export default SightingCard = ( { sightedBird, navigation, sighting, modalVisibl
         </Callout>
     )
 
+        // MIGHT NEED TO REVERT TO THIS CODE
 {/* 
             <View style={[styles.birdCardContainerHorizontal, {height: 220, width:400}]}>
                 <Text style={{height: 200, width: 180, backgroundColor: "green", paddingBottom: 100, borderRadius: 20, borderWidth: 4}}>
