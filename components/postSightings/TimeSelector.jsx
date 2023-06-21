@@ -3,7 +3,7 @@ import { Text, View, Button, StyleSheet, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { styles, textStyles } from "../../styles/style.js";
 
-export default TimeSelector = ({ onChange, setTimeIsSet, time, setTime }) => {
+export default TimeSelector = ({ setTimeIsSet, time, setTime }) => {
   const [showTime, setShowTime] = useState(false);
 
   return (
@@ -26,7 +26,6 @@ export default TimeSelector = ({ onChange, setTimeIsSet, time, setTime }) => {
             setShowTime(false);
             setTime(date.toLocaleTimeString());
             setTimeIsSet(true);
-            // onChange(event, date)
           }}
         />
       )}
