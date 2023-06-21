@@ -29,10 +29,10 @@ function ManagePerch({ id }) {
               first_name: data.first_name,
               last_name: data.last_name,
               location: data.location,
-              username: data.username,
+              username: data.screen_name,
               profile_image_url: data.profile_image_url,
               perch_list: [...data.perch_list],
-              coordinates: currUser.coordinates
+              coordinates: currUser.coordinates,
             };
           });
         });
@@ -52,10 +52,10 @@ function ManagePerch({ id }) {
               first_name: data.first_name,
               last_name: data.last_name,
               location: data.location,
-              username: data.username,
+              username: data.screen_name,
               profile_image_url: data.profile_image_url,
               perch_list: [...data.perch_list],
-              coordinates: currUser.coordinates
+              coordinates: currUser.coordinates,
             };
           });
         });

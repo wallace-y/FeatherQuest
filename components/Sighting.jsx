@@ -26,6 +26,7 @@ import {
   orderBy,
   onSnapshot,
 } from "firebase/firestore";
+import LikeDislikeCard from "./LikeDislike";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -135,6 +136,14 @@ export default Sighting = ({ route, navigation }) => {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
+      <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.buttonText}>Go Back</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.birdName}>{bird}</Text>
         <Image
           source={{
@@ -194,20 +203,26 @@ export default Sighting = ({ route, navigation }) => {
                 </Text>
               </View>
               <Text>{comment.body}</Text>
-              {loadingDeleteComment ? (
-                <View style={styles.loadingTextContainer}>
-                  <Text style={styles.loadingText}>Loading...Please Wait</Text>
-                </View>
-              ) : (
-                <TouchableOpacity
-                  comment_id={comment.comment_id}
-                  onPress={() => {
-                    deleteComment(comment.comment_id);
-                  }}
-                >
-                  <Text style={styles.deleteButton}>Delete</Text>
-                </TouchableOpacity>
-              )}
+              <LikeDislikeCard comment = {comment} />
+              {comment.user === globalUser.username ? (
+                loadingDeleteComment ? (
+                  <View style={styles.loadingTextContainer}>
+                    <Text style={styles.loadingText}>
+                      Loading...Please Wait
+                    </Text>
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    comment_id={comment.comment_id}
+                    onPress={() => {
+                      deleteComment(comment.comment_id);
+                    }}
+                  >
+                    <Text style={styles.deleteButton}>Delete</Text>
+                  </TouchableOpacity>
+                )
+              ) : null}
+
             </View>
           ))}
         </View>
