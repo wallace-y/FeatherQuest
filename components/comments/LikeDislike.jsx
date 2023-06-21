@@ -36,7 +36,7 @@ export default LikeDislikeCard = ({ comment, votes, setVotes }) => {
 
   return (
       <TouchableOpacity style={buttonStyle.voteButton} onPress={() => { upVote() }}>
-        <Image style={[buttonStyle.voteButton, hasVoted ? {tintColor: "grey"} : {tintColor: "rgba(0,200,0,0.3)"}]} source={require("../../assets/feather.png")}/>
+        <Image style={[buttonStyle.voteButton, hasVoted ? {tintColor: "grey"} : {tintColor: "rgba(0,200,0,0.3)"}]} source={require("../../assets/chirps.png")}/>
       </TouchableOpacity>
   );
 };

@@ -104,11 +104,11 @@ export default Bird = ({ route, navigation }) => {
           </View>
           <Text style={textStyles.textMedium}> Interesting facts</Text>
           <View style={textStyles.textContainer}>
-            {facts.map( fact => {
-               return <Text style={[textStyles.text, {textAlign: "left"}]}> 
-                  <Image source={require("../assets/feather.png")} style={styles.buletPoint}/>
-                  {fact}
-                </Text>}
+            {facts.map( (fact, index) => {
+               return <Text key={index}style={[textStyles.text, {textAlign: "left"}]}> 
+                        <Image source={require("../assets/feather.png")} style={styles.buletPoint}/>
+                        {fact}
+                      </Text>}
             )}
           </View>
         </View>
