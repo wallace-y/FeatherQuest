@@ -62,14 +62,14 @@ export default Species = ({ navigation }) => {
           <Text style={styles.loadingText}>Loading...Please Wait</Text>
         )}
 
-        <View style={styles.buttonContainer}>
+        {/* <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.goBack()}
           >
             <Text style={styles.buttonText}>Go Back</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View style={styles.inputContainer}>
           <TextInput

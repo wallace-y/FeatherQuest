@@ -67,11 +67,11 @@ export default SightingList = ({ navigation }) => {
         </View>
         {loading && ( <Text style={textStyles.loadingText}>Loading...Please Wait</Text> )}
 
-        <View style={styles.buttonContainer}>
+        {/* <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
             <Text style={textStyles.buttonText}>Go Back</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View style={styles.listContainer}>
           {birdsByDistance.map((bird, index) => (

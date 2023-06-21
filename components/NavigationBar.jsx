@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { useRoute,CommonActions } from "@react-navigation/native";
 
 
 export default NavigationBar = ({ navigation }) => {
@@ -12,6 +12,14 @@ export default NavigationBar = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("SightingList");
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  { name: 'SightingList' },
+                ],
+              })
+            );
           }}
           title="SightingList"
           style={[
@@ -27,6 +35,14 @@ export default NavigationBar = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Species");
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  { name: 'Species' },
+                ],
+              })
+            );
           }}
           title="Species"
           style={[
@@ -42,6 +58,14 @@ export default NavigationBar = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("PostSighting");
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  { name: 'PostSighting' },
+                ],
+              })
+            );
           }}
           title="Sighting"
           style={[
@@ -57,6 +81,14 @@ export default NavigationBar = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Maps");
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  { name: 'Maps' },
+                ],
+              })
+            );
           }}
           title="Maps"
           style={[
@@ -72,6 +104,14 @@ export default NavigationBar = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Profile");
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  { name: 'Profile' },
+                ],
+              })
+            );
           }}
           title="Profile"
           style={[
