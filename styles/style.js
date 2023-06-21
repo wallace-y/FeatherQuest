@@ -30,12 +30,12 @@ const font = "Virgil";
 export const styles = StyleSheet.create({
 /* Containers */
     scrollView: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         minHeight: SCREEN_HEIGHT,
         backgroundColor: darkGreen,
     },
     scrollViewHorizontal: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
         minHeight: 180,
         paddingVertical: 20,
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     },
 
     pageContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
         alignItems: "center",
         alignContent: 'center',
@@ -52,43 +52,43 @@ export const styles = StyleSheet.create({
     },
 
     centeredContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: -100
     },
     logoContainer:{
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         width: 200,
         height: 200,
     },  
     titleContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         maxHeight: 60,
     },
     iconContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         justifyContent: "center",
         alignItems: "center",
         width: 60,
         height: 60,
     },
     buttonContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         width: "60%",
         justifyContent: "center",
         alignItems: "center",
         marginVertical: 5
     },
     inputContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         width: "80%",
         margin: 5,
     },
     listContainer: {
         flex: 1,
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flexDirection: "row",
         flexWrap: "wrap",
         alignItems: "flex-start",
@@ -143,7 +143,7 @@ export const styles = StyleSheet.create({
     },
     dateTimeContainer: {
         flexDirection: 'row',
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         width: "60%",
         justifyContent: "center",
         alignItems: "center",
@@ -186,7 +186,7 @@ export const styles = StyleSheet.create({
 
     /* Profile */
     container: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
         padding: 5,
         justifyContent: 'center',
@@ -194,7 +194,7 @@ export const styles = StyleSheet.create({
         width: "100%",
     },
     containerFilledLight: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
         width: "100%",
         padding: 5,
@@ -206,7 +206,7 @@ export const styles = StyleSheet.create({
         backgroundColor: lightGreen,
     },
     containerFilledLightH: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
         flexDirection: "row",
         width: "100%",
@@ -220,7 +220,7 @@ export const styles = StyleSheet.create({
     },
     
     containerFilledDark: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
         width: "100%",
         padding: 5,
@@ -237,7 +237,7 @@ export const styles = StyleSheet.create({
 
 export const textStyles = {
     textContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
         backgroundColor: lightGreen,
         borderRadius: 10,
@@ -323,7 +323,7 @@ export const textStyles = {
 const profilePicSize = 100;
 export const profileStyles = StyleSheet.create({
     avatarContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         width: profilePicSize,
         height: profilePicSize,
         maxHeight: profilePicSize,
@@ -336,7 +336,7 @@ export const profileStyles = StyleSheet.create({
         overflow: 'hidden',
     },
     userInfoConatainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
@@ -347,7 +347,7 @@ export const profileStyles = StyleSheet.create({
         borderColor: lightGreen,
     },
     perchContainer: {
-        borderWidth: devBoder,
+        borderWidth: devBorder,
         flex: 1,
         minWidth: SCREEN_WIDTH,
         flexDirection: "column",
