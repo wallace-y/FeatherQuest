@@ -42,6 +42,7 @@ export default PostSighting = ({ navigation }) => {
       //   user: globalUser.userId,
       //   sighting_img_url: "",
       // });
+      console.log(sightingData)
       // COOMENTED for dev purpososes
       try {
         const newSighting = await addDoc(collection(db, "sightings"), tempSightingData)
@@ -58,48 +59,50 @@ export default PostSighting = ({ navigation }) => {
 
   return (
     <View style={[styles.pageContainer]}>
-      <View style={styles.titleContainer}>
-        <Text style={textStyles.titleText}>Post Your Sighting</Text>
-      </View>
-      <BirdSelection
-        setSightingData={setSightingData}
-        sightingData={sightingData}
-      />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("IdentifyBird")}
-        >
-          <Text style={textStyles.buttonText}>Identify</Text>
-        </TouchableOpacity>
-      </View>
-      <DateSelection
-        setSightingData={setSightingData}
-        sightingData={sightingData}
-      />
+      <View style={styles.containerFilledDark}>
+          <View style={styles.titleContainer}>
+            <Text style={textStyles.titleText}>Post Your Sighting</Text>
+          </View>
+          <BirdSelection
+            setSightingData={setSightingData}
+            sightingData={sightingData}
+            />
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate("IdentifyBird")}
+              >
+              <Text style={textStyles.buttonText}>Identify</Text>
+            </TouchableOpacity>
+          </View>
+          <DateSelection
+            setSightingData={setSightingData}
+            sightingData={sightingData}
+            />
 
-      <SelectLocation
-        sightingData={sightingData}
-        setSightingData={setSightingData}
-      />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            (sightingData.bird === "" ||
-              sightingData.date_spotted === "" ||
-              sightingData.coordinates === "") &&
-              styles.disabledButton,
-          ]}
-          disabled={
-            sightingData.bird === "" ||
-            sightingData.date_spotted === "" ||
-            sightingData.coordinates === ""
-          }
-          onPress={Submit}
-        >
-          <Text style={textStyles.buttonText}>Submit</Text>
-        </TouchableOpacity>
+          <SelectLocation
+            sightingData={sightingData}
+            setSightingData={setSightingData}
+            />
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                (sightingData.bird === "" ||
+                sightingData.date_spotted === "" ||
+                sightingData.coordinates === "") &&
+                styles.disabledButton,
+              ]}
+              disabled={
+                sightingData.bird === "" ||
+                sightingData.date_spotted === "" ||
+                sightingData.coordinates === ""
+              }
+              onPress={Submit}
+              >
+              <Text style={textStyles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+          </View>
       </View>
     </View>
   );

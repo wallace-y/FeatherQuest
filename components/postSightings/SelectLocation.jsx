@@ -20,10 +20,11 @@ export default SelectLocation = ({ sightingData, setSightingData }) => {
     setRegion(region);
     let tempSightingData = { ...sightingData };
     tempSightingData.coordinates = {
-      coordinates: [region.longitude, region.latitude],
+      coordinates: [region.latitude, region.longitude],
       type: "Point",
     };
     setSightingData(tempSightingData);
+    console.log(tempSightingData)
   };
 
   return (
