@@ -30,26 +30,28 @@ export default PostSighting = ({ navigation }) => {
   const windowHeight = useWindowDimensions().height;
 
   //Post sightings data to db
-  const Submit = () => {
-    let tempSightingData = { ...sightingData };
-    tempSightingData.created_at = new Date().toISOString();
-    setSightingData({
-      bird: "",
-      date_spotted: "",
-      coordinates: "",
-      user: globalUser.userId,
-      sighting_img_url: "",
-    });
-    console.log("submited", tempSightingData);
-
-    // COOMENTED for dev purpososes
-    // addDoc(collection(db, "sightings"), tempSightingData)
-    // .then( docRef => {
-    //     // console.log(docRef)
-    // })
-    // .catch(err => {
-    //     console.log("Failed to submit a sighting")
-    // })
+  const Submit = async () => {
+      let tempSightingData = {...sightingData}
+      tempSightingData.created_at = new Date().toISOString()
+      setSightingData({ bird: "", date_spotted: "", coordinates: "", user: globalUser.userId, sighting_img_url: ""})
+      // console.log("submited", tempSightingData)
+      // setSightingData({
+      //   bird: "",
+      //   date_spotted: "",
+      //   coordinates: "",
+      //   user: globalUser.userId,
+      //   sighting_img_url: "",
+      // });
+      // COOMENTED for dev purpososes
+      try {
+        const newSighting = await addDoc(collection(db, "sightings"), tempSightingData)
+        alert("Sighting successfully posted.")
+        navigation.navigate("SightingList")
+      } catch (err) {
+        console.log(err)
+        alert("Error posting sighting. Please try again later.")
+      }
+      
 
     //TODO: navigate to the new sighting page
   };
@@ -102,40 +104,3 @@ export default PostSighting = ({ navigation }) => {
     </View>
   );
 };
-
-// const styles = StyleSheet.create({
-//   pageContainer: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     backgroundColor: "#7A918D",
-//   },
-//   submit: {
-//     position: "relative",
-//   },
-//   pageTitle: {
-//     fontSize: 30,
-//     color: "white",
-//     paddingLeft: 10,
-//     textAlign: "center",
-//     marginTop: 10,
-//     marginBottom: 20,
-//     fontFamily: "Virgil",
-//   },
-//   buttonContainer: {
-//     width: "60%",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     padding: 10,
-//     borderWidth: 2,
-//     borderRadius: 5,
-//     borderColor: "black",
-//     backgroundColor: "#AAC0AA",
-//     marginTop: 5,
-//     marginBottom: 5,
-//   },
-//   buttonText: {
-//     fontFamily: "Virgil",
-//     color: "white",
-//   },
-// });
