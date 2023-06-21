@@ -26,6 +26,7 @@ import {
   orderBy,
   onSnapshot,
 } from "firebase/firestore";
+import LikeDislikeCard from "./LikeDislike";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -194,6 +195,7 @@ export default Sighting = ({ route, navigation }) => {
                 </Text>
               </View>
               <Text>{comment.body}</Text>
+              <LikeDislikeCard comment = {comment} />
               {loadingDeleteComment ? (
                 <View style={styles.loadingTextContainer}>
                   <Text style={styles.loadingText}>Loading...Please Wait</Text>
