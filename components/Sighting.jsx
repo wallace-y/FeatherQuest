@@ -196,20 +196,25 @@ export default Sighting = ({ route, navigation }) => {
               </View>
               <Text>{comment.body}</Text>
               <LikeDislikeCard comment = {comment} />
-              {loadingDeleteComment ? (
-                <View style={styles.loadingTextContainer}>
-                  <Text style={styles.loadingText}>Loading...Please Wait</Text>
-                </View>
-              ) : (
-                <TouchableOpacity
-                  comment_id={comment.comment_id}
-                  onPress={() => {
-                    deleteComment(comment.comment_id);
-                  }}
-                >
-                  <Text style={styles.deleteButton}>Delete</Text>
-                </TouchableOpacity>
-              )}
+              {comment.user === globalUser.username ? (
+                loadingDeleteComment ? (
+                  <View style={styles.loadingTextContainer}>
+                    <Text style={styles.loadingText}>
+                      Loading...Please Wait
+                    </Text>
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    comment_id={comment.comment_id}
+                    onPress={() => {
+                      deleteComment(comment.comment_id);
+                    }}
+                  >
+                    <Text style={styles.deleteButton}>Delete</Text>
+                  </TouchableOpacity>
+                )
+              ) : null}
+
             </View>
           ))}
         </View>
