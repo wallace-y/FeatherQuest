@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
   Image,
   Alert,
   Keyboard,
+  Animated,
   TextInput,
   ScrollView,
   TouchableOpacity,
@@ -17,6 +18,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import NavToLoginBar from './NavToLoginBar.jsx'
 import * as ImagePicker from "expo-image-picker";
 import { styles, textStyles } from '../styles/style.js'
+
 
 
 // TODO: add scrolview or otherwise fix things going of the page
@@ -35,6 +37,7 @@ const SignUp = ( { navigation }) => {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
 
+  const [imageStatusStr, setImageStatusStr ]= useState("Uploading image");
   useEffect(() => {
     (async () => {
       const { status } =
@@ -50,6 +53,7 @@ const SignUp = ( { navigation }) => {
 
   const handleImageUpload = async () => {
     if (!uploading) {
+      
       try {
         const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -57,8 +61,9 @@ const SignUp = ( { navigation }) => {
           aspect: [4, 3],
           quality: 1,
         });
-
+        
         if (!result.canceled) {
+          fadeIn();
           setImage(result.assets[0].uri);//"result.uri" depricated
           setUploading(true);
           await uploadImage(result.assets[0].uri);
@@ -81,9 +86,12 @@ const SignUp = ( { navigation }) => {
       await uploadBytes(fileRef, blob);
       const downloadURL = await getDownloadURL(fileRef);
       setImageUrl(downloadURL);
-      Alert.alert("Photo uploaded successfully!");
+      setImageStatusStr("Image uploaded");
+      fadeOut();
+      // Alert.alert("Photo uploaded successfully!");
     } catch (error) {
       console.log(error);
+      setImageStatusStr("Failed to uploaded image");
       Alert.alert("Error uploading photo.", "Please try again later.");
     }
   };
@@ -157,6 +165,25 @@ const SignUp = ( { navigation }) => {
     }
   };
 
+  const fadeAnimation = useRef( new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    // Will change fadeAnim value to 0 in 3 seconds
+    Animated.timing(fadeAnimation, {
+      toValue: 1,
+      duration: 1500,
+      useNativeDriver: true,
+    }).start();
+  };
+  const fadeOut = () => {
+    // Will change fadeAnim value to 0 in 3 seconds
+    Animated.timing(fadeAnimation, {
+      toValue: 0,
+      duration: 3000,
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.pageContainer}>
@@ -208,6 +235,10 @@ const SignUp = ( { navigation }) => {
               <Image source={{ uri: image }} style={styles.imagePreview} />
             </View>
           )}
+        <Animated.Text style={[textStyles.textMedium, {opacity: fadeAnimation}]}>
+          {imageStatusStr}
+        </Animated.Text>
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={handleImageUpload}
