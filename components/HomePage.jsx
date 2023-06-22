@@ -21,33 +21,39 @@ export default HomePage = ({ navigation, route }) => {
 
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", () => true);
-
-    getUserLocation().then((location) => {
-      setUserLocation([...location]);
-      setLoadingUserLocation(false);
-    });
-
-    if (auth.currentUser) {
-      getUserData(auth.currentUser.uid)
-        .then((data) => {
-          setGlobalUser({
-            userId: auth.currentUser.uid,
-            first_name: data.first_name,
-            last_name: data.last_name,
-            location: data.location,
-            username: data.screen_name,
-            profile_image_url: data.profile_image_url,
-            perch_list: [...data.perch_list],
-            coordinates: [...userLocation],
-          });
-          setLoadingUser(false);
-        })
-        .catch((err) => {
-          console.log(err);
+    const fetchData = async () => {
+      try {
+        await getUserLocation().then((location) => {
+          setUserLocation([...location]);
+          setLoadingUserLocation(false);
         });
-    }
+
+        if (auth.currentUser) {
+          await getUserData(auth.currentUser.uid)
+            .then((data) => {
+              setGlobalUser({
+                userId: auth.currentUser.uid,
+                first_name: data.first_name,
+                last_name: data.last_name,
+                location: data.location,
+                username: data.screen_name,
+                profile_image_url: data.profile_image_url,
+                perch_list: [...data.perch_list],
+                coordinates: [...userLocation],
+              });
+              setLoadingUser(false);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
   }, [loadingUserLocation]);
-  
+
   if (loadingUser) {
     return (
       <View style={styles.pageContainer}>

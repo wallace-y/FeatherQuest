@@ -58,9 +58,9 @@ function App() {
           <Stack.Screen
             name="Home"
             component={HomePage}
-            options={({ navigation }) => ({
-              header: () => <NavigationBar navigation={navigation} />,
-            })}
+            // options={({ navigation }) => ({
+            //   header: () => <NavigationBar navigation={navigation} />,
+            // })}
           />
           <Stack.Screen
             name="Profile"
