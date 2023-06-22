@@ -49,8 +49,10 @@ export default HomePage = ({ navigation, route }) => {
   }, [loadingUserLocation]);
   if (loadingUser) {
     return (
-      <View styles={styles.pageContainer}>
-        <Text style={textStyles.loadingText}> Loading...</Text>
+      <View style={styles.pageContainer}>
+        <View style={styles.centeredContainer}>
+          <Text style={textStyles.loadingText}> Loading...Please Wait</Text>
+        </View>
       </View>
     );
   }
