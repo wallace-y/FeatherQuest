@@ -95,9 +95,9 @@ export default SightingList = ({ navigation }) => {
                       />
                   )}
                 </View>
-                <View style={textStyles.textContainer}> 
+                {/* <View style={textStyles.textContainer}>  */}
                   <Text style={textStyles.text} numberOfLines={2} ellipsizeMode="tail">{bird.bird}</Text>
-                </View>
+                {/* </View> */}
               </TouchableOpacity>
           ))}
         </View>

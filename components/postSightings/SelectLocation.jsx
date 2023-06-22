@@ -29,9 +29,7 @@ export default SelectLocation = ({ sightingData, setSightingData }) => {
 
   return (
     <View style={smallMapStyles.container}>
-      <View>
-        <Text style={textStyles.textMedium}>Select Location</Text>
-      </View>
+      <Text style={textStyles.textMedium}>Select Location</Text>
       <View style={smallMapStyles.mapContainer}>
         <MapView
           provider={PROVIDER_GOOGLE}

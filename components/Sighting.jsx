@@ -84,7 +84,7 @@ export default Sighting = ({ route, navigation }) => {
           {birdDetails && (
             <View style={textStyles.textContainer}>
               <Text style={textStyles.textMedium}>Details</Text>
-              <Text style={styles.birdInfo}> {birdDetails.description}</Text>
+              <Text style={textStyles.text}> {birdDetails.description}</Text>
             </View>
           )}
         </View>

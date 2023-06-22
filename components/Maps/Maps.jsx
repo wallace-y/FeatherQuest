@@ -42,7 +42,13 @@ export default Maps = ({ navigation }) => {
   }, [])
 
   if( loadingMarkers ){
-    return <Text style={textStyles.loadingText}>Loading...</Text>
+    return  (
+      <View style={styles.pageContainer}>
+        <View style={styles.centeredContainer}>
+          <Text style={textStyles.loadingText}>Loading...</Text>
+        </View>
+      </View>
+    ) 
   }else{
     return (
       <View style={styles.pageContainer}>

@@ -10,7 +10,7 @@ import { StyleSheet, Dimensions } from "react-native";
     purple:     #736372
 */
 
-const devBorder = 0;
+const devBorder = 1;
 
 let SCREEN_WIDTH = Dimensions.get("window").width;
 let SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
 /* Containers */
     scrollView: {
         borderWidth: devBorder,
-        minHeight: SCREEN_HEIGHT,
+        minHeight: "100%",
         backgroundColor: darkGreen,
     },
     scrollViewHorizontal: {
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         alignContent: 'center',
         backgroundColor: darkGreen,
-        paddingBottom: 70, //necesasary for scroll view
+        // paddingBottom: 70, //necesasary for scroll view
     },
 
     centeredContainer: {
@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
         width: "60%",
         justifyContent: "center",
         alignItems: "center",
-        marginVertical: 5
+        marginVertical: 2
     },
     inputContainer: {
         borderWidth: devBorder,
@@ -155,7 +155,7 @@ export const styles = StyleSheet.create({
         width: "60%",
         justifyContent: "center",
         alignItems: "center",
-        marginVertical: 5
+        marginVertical: 1
     },
     /* Input */
     input: {
@@ -499,7 +499,7 @@ export const smallMapStyles = StyleSheet.create({
         height: SCREEN_HEIGHT,
     },
     mapContainer: {
-        flex: 1,
+        flex: 2,
         borderWidth: 4,
         borderColor: salmon,
         borderRadius: 10,
