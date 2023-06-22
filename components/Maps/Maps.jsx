@@ -18,15 +18,26 @@ export default Maps = ({ navigation }) => {
   const [mapCentered, setMapCentered] = useState(false);
   const { globalUser } = useContext(UserContext);
   const [region, setRegion] = useState({})
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setRegion({
-      latitude: Number(globalUser.coordinates[0]),
-      longitude: Number(globalUser.coordinates[1]),
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01,
-    })
-  },[])
+    const setRegionData = async () => {
+      try {
+        setLoading(true);
+        await setRegion({
+          latitude: Number(globalUser.coordinates[0]),
+          longitude: Number(globalUser.coordinates[1]),
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        });
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    setRegionData();
+  }, [globalUser]);
 
   //Fetch sightings data
   useEffect(() => {

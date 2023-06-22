@@ -44,7 +44,7 @@ export default SightingMarker = ( { navigation, sighting, mapCentered, setMapCen
         return 
     }
     return <Marker coordinate={sightingCoordinates} 
-            image={require('../../assets/bino2_small.png')}
+            icon={require('../../assets/bino2_small.png')}
             title="Sighting"
             description="Sighting description"
             tracksViewChanges={false}
