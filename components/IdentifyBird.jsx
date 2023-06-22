@@ -21,6 +21,7 @@ import {
 import * as Clipboard from "expo-clipboard";
 import uuid from "uuid";
 import CustomButton from "./CustomButton";
+import { styles, textStyles } from "../styles/style.js";
 
 if (!getApps().length) {
   console.log("App not initalised");
@@ -28,7 +29,7 @@ if (!getApps().length) {
 
 LogBox.ignoreLogs([`Setting a timer for a long period`]);
 
-const IdentifyBird = ({ navigation }) => {
+export default IdentifyBird = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [googleResponse, setGoogleResponse] = useState(null);
@@ -44,7 +45,6 @@ const IdentifyBird = ({ navigation }) => {
       }
     })();
   }, []);
-
 
   const submitToGoogle = async () => {
     try {
@@ -110,37 +110,6 @@ const IdentifyBird = ({ navigation }) => {
     }
   };
 
-  const maybeRenderImage = () => {
-    if (!image) {
-      return;
-    }
-
-    return (
-      <View
-        style={{
-          marginTop: 30,
-          width: 250,
-          borderRadius: 3,
-          elevation: 2,
-        }}
-      >
-        <View
-          style={{
-            borderTopRightRadius: 3,
-            borderTopLeftRadius: 3,
-            shadowColor: "rgba(0,0,0,1)",
-            shadowOpacity: 0.2,
-            shadowOffset: { width: 4, height: 4 },
-            shadowRadius: 5,
-            overflow: "hidden",
-          }}
-        >
-          <Image source={{ uri: image }} style={{ width: 250, height: 250 }} />
-        </View>
-      </View>
-    );
-  };
-
   const handleImagePicked = async (assets) => {
     try {
       setUploading(true);
@@ -158,6 +127,7 @@ const IdentifyBird = ({ navigation }) => {
   };
 
   const takePhoto = async () => {
+    setGoogleResponse(null);
     const pickerResult = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -176,82 +146,164 @@ const IdentifyBird = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
+    <View style={styles.pageContainer}>
       <View style={styles.container}>
-        {googleResponse && (
-          <View>
-            <View>
-              <Text style={styles.bestGuess}>
-                Our best guess is:
-                {
-                  googleResponse.responses[0].webDetection.webEntities[0]
-                    .description
-                }
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.objectGuess}>
-                Main object:{" "}
-                {
-                  googleResponse.responses[0].localizedObjectAnnotations[0].name
-                }
-              </Text>
-              <Text>
-                Confidence: {(googleResponse.responses[0].localizedObjectAnnotations[0].score*100).toFixed(0)} %
-              </Text>
-            </View>
-            <View>
-              <Text>
-                Likely:{" "}
-                {googleResponse.responses[0].labelAnnotations[0].description}
-              </Text>
-              <Text>
-              Likely:{" "}
-                {googleResponse.responses[0].labelAnnotations[1].description}
-              </Text>
-              <Text>
-              Likely:{" "}
-                {googleResponse.responses[0].labelAnnotations[2].description}
-              </Text>
+        {/* Data of analysed picture */}
+        {googleResponse !== null ? (
+          <View style={[styles.container, { flex: 0.8 }]}>
+            <Text style={textStyles.titleText}> Results</Text>
+            <View style={styles.containerFilledLightH}>
+              <View
+                style={[
+                  styles.container,
+                  {
+                    paddingVertical: 10,
+                    paddingLeft: 20,
+                    alignContent: "flex-start",
+                  },
+                ]}
+              >
+                {googleResponse.responses[0].webDetection !== undefined ? (
+                  <Text style={textStyles.textRight}>Best guess:</Text>
+                ) : null}
+                {googleResponse.responses[0].localizedObjectAnnotations !==
+                undefined ? (
+                  <View>
+                    <Text style={textStyles.textRight}>Main object: </Text>
+                    <Text style={textStyles.textRight}>Confidence: </Text>
+                  </View>
+                ) : null}
+                {googleResponse.responses[0].labelAnnotations[0] !==
+                undefined ? (
+                  <Text style={textStyles.textRight}>Likely: </Text>
+                ) : null}
+                {googleResponse.responses[0].labelAnnotations[0] !==
+                undefined ? (
+                  <Text style={textStyles.textRight}>Likely: </Text>
+                ) : null}
+                {googleResponse.responses[0].labelAnnotations[0] !==
+                undefined ? (
+                  <Text style={textStyles.textRight}>Likely: </Text>
+                ) : null}
+              </View>
+              <View style={[styles.container, { paddingVertical: 15 }]}>
+                {googleResponse.responses[0].webDetection !== undefined ? (
+                  <Text style={textStyles.textLeft}>
+                    {
+                      googleResponse.responses[0].webDetection.webEntities[0]
+                        .description
+                    }
+                  </Text>
+                ) : null}
+                {googleResponse.responses[0].localizedObjectAnnotations !==
+                undefined ? (
+                  <View>
+                    <Text style={textStyles.textLeft}>
+                      {
+                        googleResponse.responses[0]
+                          .localizedObjectAnnotations[0].name
+                      }
+                    </Text>
+                    <Text style={textStyles.textLeft}>
+                      {(
+                        googleResponse.responses[0]
+                          .localizedObjectAnnotations[0].score * 100
+                      ).toFixed(0)}{" "}
+                      %
+                    </Text>
+                  </View>
+                ) : null}
+                {googleResponse.responses[0].labelAnnotations[0] !==
+                undefined ? (
+                  <Text style={textStyles.textLeft}>
+                    {
+                      googleResponse.responses[0].labelAnnotations[0]
+                        .description
+                    }
+                  </Text>
+                ) : null}
+                {googleResponse.responses[0].labelAnnotations[1] !==
+                undefined ? (
+                  <Text style={textStyles.textLeft}>
+                    {
+                      googleResponse.responses[0].labelAnnotations[1]
+                        .description
+                    }
+                  </Text>
+                ) : null}
+                {googleResponse.responses[0].labelAnnotations[2] !==
+                undefined ? (
+                  <Text style={textStyles.textLeft}>
+                    {
+                      googleResponse.responses[0].labelAnnotations[2]
+                        .description
+                    }
+                  </Text>
+                ) : null}
+              </View>
             </View>
 
             <TouchableOpacity>
-              <Text>To use this guess in a posting please click</Text>
               <CustomButton
-                title="here"
+                title="Go back to posting"
                 onPress={() => {
                   navigation.goBack();
                 }}
               ></CustomButton>
             </TouchableOpacity>
           </View>
-        )}
+        ) : null}
 
+        {/* Initial page view */}
         {!image && (
-          <View>
-            <CustomButton
-              title="Pick an image from camera roll"
-              onPress={pickImage}
-            ></CustomButton>
-            <CustomButton
-              title="Take a photo"
-              onPress={takePhoto}
-            ></CustomButton>
+          <View style={styles.centeredContainer}>
+            <View style={{ margin: 10 }}>
+              <Text style={textStyles.titleText}> Identify a bird</Text>
+            </View>
+            <View style={styles.buttonContainer80}>
+              <CustomButton
+                title="Take a photo"
+                onPress={takePhoto}
+              ></CustomButton>
+              <CustomButton
+                title="Upload from phone"
+                onPress={pickImage}
+              ></CustomButton>
+            </View>
           </View>
         )}
 
-        {maybeRenderImage()}
-        {maybeRenderUploadingOverlay()}
+        {/* <View style={styles.container}> */}
 
         <StatusBar barStyle="default" />
 
+        {/* Analyze  uploaded picture */}
         {image && (
           <View>
-            <CustomButton onPress={submitToGoogle} title="Analyze!" />
+            <View style={styles.imagePreviewContainer}>
+              <Image
+                source={{ uri: image }}
+                style={{ width: 250, height: 250 }}
+              />
+            </View>
+            {maybeRenderUploadingOverlay()}
+
+            <View>
+              <CustomButton onPress={takePhoto} title="Retake?" />
+              {!googleResponse && (
+                <TouchableOpacity
+                  style={styles.buttonLarge}
+                  onPress={submitToGoogle}
+                >
+                  <Text style={textStyles.buttonTextLarge}>Analyze!</Text>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
         )}
+        {/* </View> */}
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -277,18 +329,3 @@ async function uploadImageAsync(uri) {
 
   return await getDownloadURL(fileRef);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#7A918D",
-  },
-  bestGuess: {
-    fontFamily: "Virgil",
-    fontWeight: "700",
-  },
-});
-
-export default IdentifyBird;
