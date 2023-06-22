@@ -58,7 +58,7 @@ export default CommentList = ( { route }) => {
     }, []);
 
    
-    
+    // If no comments done render
     return (
         <View style={styles.containerFilledLight}>
             {loadingComments && (

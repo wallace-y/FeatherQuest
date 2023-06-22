@@ -2,7 +2,6 @@ import { StyleSheet, Dimensions } from "react-native";
 
 /*
     Colors:
-
     darkGreen : #5e7975
     lightGreen: #AAC0AA
     salmon:     #A18276
@@ -89,6 +88,13 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         marginVertical: 2
     },
+    buttonContainer80: {
+        borderWidth: devBorder,
+        width: "80%",
+        justifyContent: "center",
+        alignItems: "center",
+        marginVertical: 2
+    },
     inputContainer: {
         borderWidth: devBorder,
         width: "80%",
@@ -143,7 +149,7 @@ export const styles = StyleSheet.create({
     imagePreviewContainer: {
         margin: 10,
         minHeight: 150,
-        width: "60%",
+        width: "80%",
         borderRadius: 20,
         borderWidth: 4,
         borderColor: "#7A918D",
@@ -177,7 +183,21 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         marginVertical: 2,
         borderWidth: 2,
-        shadowRadius: 100,
+        shadowRadius: 2,
+    },
+    buttonLarge: {
+        backgroundColor: lightGreen,
+        borderColor: purple,
+        width: "100%",
+        height: 100,
+        paddingHorizontal: 15,
+        paddingVertical: 3,
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: 'center',
+        marginVertical: 2,
+        borderWidth: 2,
+        shadowRadius: 2,
     },
     disabledButton:{
         opacity: 0.5
@@ -335,6 +355,16 @@ export const textStyles = {
         textAlign: "center",
         fontSize: 12,
     },
+    textLeft:{
+        fontFamily: font,
+        textAlign: "left",
+        fontSize: 12,
+    },
+    textRight:{
+        fontFamily: font,
+        textAlign: "right",
+        fontSize: 12,
+    },
     textEmphasized: {
         fontFamily: font,
         textAlign: "center",
@@ -391,6 +421,11 @@ export const textStyles = {
         fontFamily: font,
         color: textBlack,
         fontSize: 18,
+    },
+    buttonTextLarge: {
+        fontFamily: font,
+        color: textBlack,
+        fontSize: 22,
     },
     buttonDeleteText: {
         fontSize: 18,
