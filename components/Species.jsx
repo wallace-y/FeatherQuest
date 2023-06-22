@@ -100,12 +100,7 @@ export default Species = ({ navigation }) => {
               }}
             >
               <View style={styles.birdCardImageContainer}>
-                <Image
-                  source={{
-                    uri: bird.bird_image_url,
-                  }}
-                  style={[styles.birdCardImage]}
-                />
+                <Image source={{ uri: bird.bird_image_url}} style={[styles.birdCardImage]}/>
               </View>
               <Text style={textStyles.text} numberOfLines={2} ellipsizeMode="tail">
                 {bird.common_name}
