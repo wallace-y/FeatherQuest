@@ -8,10 +8,10 @@ import mapStyle from "../../styles/mapStyle.js";
 export default SelectLocation = ({ sightingData, setSightingData }) => {
   const { globalUser } = useContext(UserContext);
   const [region, setRegion] = useState({
-    latitude: Number(globalUser.coordinates[0]),
-    longitude: Number(globalUser.coordinates[1]),
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
+    // latitude: Number(globalUser.coordinates[0]),
+    // longitude: Number(globalUser.coordinates[1]),
+    // latitudeDelta: 0.01,
+    // longitudeDelta: 0.01,
   });
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default SelectLocation = ({ sightingData, setSightingData }) => {
       latitudeDelta: 0.01,
       longitudeDelta: 0.01,
     })
-  },[globalUser])
+  },[])
 
 
   const handleRegionChange = (region) => {
