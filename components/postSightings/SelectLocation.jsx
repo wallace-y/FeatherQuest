@@ -75,7 +75,7 @@ export default SelectLocation = ({ sightingData, setSightingData }) => {
             </MapView>
           ) : (
             <View>
-              <Text>Loading map please wait</Text>
+              <Text style={textStyles.textMedium}>Loading map please wait</Text>
             </View>
           )}
         </View>
