@@ -47,6 +47,7 @@ export default HomePage = ({ navigation, route }) => {
         });
     }
   }, [loadingUserLocation]);
+  
   if (loadingUser) {
     return (
       <View style={styles.pageContainer}>

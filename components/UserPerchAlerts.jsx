@@ -46,7 +46,6 @@ function UserPerchAlerts({ birds, user, navigation }) {
             <TouchableOpacity key={bird["id"] + bird["common_name"]}
               onPress={() => { navigation.navigate("Bird", bird) }}
               style={styles.birdCardContainerHorizontal}>
-              {/* <View > */}
                 <View style={styles.birdCardImageContainer}>
                   <Image
                     source={{ uri: bird["bird_image_url"] }}
@@ -54,7 +53,6 @@ function UserPerchAlerts({ birds, user, navigation }) {
                     />
                 </View>
                 <Text style={textStyles.text}>{bird["common_name"]}</Text>
-              {/* </View> */}
             </TouchableOpacity>
             
           );

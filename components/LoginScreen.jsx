@@ -32,7 +32,6 @@ export default LoginScreen = ({ navigation }) => {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredentials) => {
-      alert("Logged in");
     })
     .catch((error) => {
       alert(error.message);
