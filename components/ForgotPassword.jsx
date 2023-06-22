@@ -63,7 +63,7 @@ const ForgotPassword = () => {
                 style={styles.input}
               />
               {emailError !== "" && (
-                <Text style={styles.warningText}>{emailError}</Text>
+                <Text style={textStyles.warningText}>{emailError}</Text>
               )}
             </View>
             <View style={styles.buttonContainer}>
