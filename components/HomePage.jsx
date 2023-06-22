@@ -24,6 +24,7 @@ export default HomePage = ({ navigation, route }) => {
     const fetchData = async () => {
       try {
         await getUserLocation().then((location) => {
+          console.log(location)
           setUserLocation([...location]);
           setLoadingUserLocation(false);
         });
