@@ -1,4 +1,4 @@
-import { VISION_API_KEY } from "@env";
+import { EXPO_PUBLIC_VISION_API_KEY } from "@env";
 import * as ImagePicker from "expo-image-picker";
 import { getApps } from "firebase/app";
 import { storage } from "../firebaseConfig";
@@ -72,7 +72,7 @@ export default IdentifyBird = ({ navigation }) => {
         ],
       });
       const response = await fetch(
-        `https://vision.googleapis.com/v1/images:annotate?key=${VISION_API_KEY}`,
+        `https://vision.googleapis.com/v1/images:annotate?key=${EXPO_PUBLIC_VISION_API_KEY}`,
         {
           headers: {
             Accept: "application/json",
