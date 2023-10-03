@@ -2,15 +2,16 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import "dotenv/config";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCobTdUX2DnKVVi0VX9E3r69imLCc3Pt58",
-  authDomain: "feather-quest-15e50.firebaseapp.com",
-  projectId: "feather-quest-15e50",
-  storageBucket: "feather-quest-15e50.appspot.com",
-  messagingSenderId: "896175282066",
-  appId: "1:896175282066:web:911a685d20cfdef3a2934b",
-  measurementId: "G-621Y1M7ZYH",
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID,
 };
 
 // Initialize Firebase
